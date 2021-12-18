@@ -26,7 +26,6 @@ import com.jdabtieu.DungeonEscape.Window;
 import com.jdabtieu.DungeonEscape.MapComponent.Coins;
 import com.jdabtieu.DungeonEscape.MapComponent.DarkGround;
 import com.jdabtieu.DungeonEscape.MapComponent.Ground;
-import com.jdabtieu.DungeonEscape.MapComponent.Sensor;
 import com.jdabtieu.DungeonEscape.MapComponent.Spike;
 import com.jdabtieu.DungeonEscape.MapComponent.Text;
 import com.jdabtieu.DungeonEscape.MapComponent.Tile;
@@ -47,7 +46,6 @@ public class Stage extends JPanel {
     public Stage() {
         super();
         setBounds(Window.width, 0, Window.width, Window.height);
-        Main.me.getContentPane().add(this);
         setBackground(Color.black);
         setLayout(null);
         stage = new Tile[0][0];
@@ -58,11 +56,12 @@ public class Stage extends JPanel {
 			long time = System.currentTimeMillis();
 			final int delay = 1000 / kbdPollRate;
             while (true) {
-                while (System.currentTimeMillis() - time < delay);
+                try {
+                    Thread.sleep(delay + time - System.currentTimeMillis());
+                } catch (InterruptedException e) {
+                    return;
+                }
 				time = System.currentTimeMillis();
-				if (Thread.currentThread().isInterrupted()) {
-					return;
-				}
 				threadTgt();
             }
         });

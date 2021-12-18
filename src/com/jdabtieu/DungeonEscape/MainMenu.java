@@ -22,7 +22,6 @@ public class MainMenu extends JPanel {
         super();
         setBounds(0, 0, Window.width, Window.height);
         setLayout(null);
-        Main.me.getContentPane().add(this);
         
         MenuButton btnStart = new MenuButton("Start Game");
         btnStart.setBounds((Window.width - 400) / 2, 350, 400, 40);

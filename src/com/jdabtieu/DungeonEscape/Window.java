@@ -1,11 +1,10 @@
 package com.jdabtieu.DungeonEscape;
 
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JLayeredPane;
 
 public class Window extends JFrame {
     public static final int width = 960, height = 720;
@@ -18,10 +17,10 @@ public class Window extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage("assets/icon.png"));
         setResizable(false);
         setTitle("DungeonGame");
-        setBackground(Color.WHITE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(width, height);
         setLocationRelativeTo(null);
-        setLayout(null);
+        setContentPane(new JLayeredPane());
+        getContentPane().setLayout(null);
     }
 }

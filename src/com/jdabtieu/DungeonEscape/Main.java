@@ -31,18 +31,19 @@ public class Main {
                 gameOver = false;
                 drawSafe(() -> {
                     activeWindow = new MainMenu();
-                    me.getContentPane().add(activeWindow);
+                    me.getContentPane().add(activeWindow, 1, 0);
                     player = new Player();
                     sd = new StatusDisplay();
-                    me.getContentPane().add(sd);
+                    me.getContentPane().add(sd, 2, 0);
                     player.x = 1200;
                     player.y = 500;
                 });
                 pause();
                 drawSafe(() -> {
-                    me.getContentPane().add(player);
+                    me.getContentPane().add(player, 2, 0);
                 });
-                swapWindow(Stage1.class, true);
+                swapWindow(Stage1.class, true, 1);
+                sd.setVisible(true);
                 pause();
             } catch (GameOverException e) {
                 drawSafe(() -> {
@@ -61,15 +62,15 @@ public class Main {
         if (activeWindow instanceof Stage) {
             ((Stage) activeWindow).finish();
         }
-        swapWindow(GameOver.class, false);
+        swapWindow(GameOver.class, false, 3);
     }
     
-    private static void swapWindow(Class<?> newWindow, boolean redrawPlayer) {
+    private static void swapWindow(Class<?> newWindow, boolean redrawPlayer, int layer) {
         drawSafe(() -> {
            activeWindow.setVisible(false);
            me.getContentPane().remove(activeWindow);
            activeWindow = (JPanel) newWindow.getConstructors()[0].newInstance();
-           me.getContentPane().add(activeWindow);
+           me.getContentPane().add(activeWindow, layer, 0);
            if (redrawPlayer) {
                player.setVisible(true);
                player.repaint();

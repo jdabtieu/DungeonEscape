@@ -25,7 +25,6 @@ public class Player extends Tile {
             return;
         }
         health = 0;
-        System.out.println("You're dead!");
         Main.triggerGameOver();
     }
     

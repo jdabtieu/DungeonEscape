@@ -11,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.plaf.basic.BasicBorders;
 import javax.swing.plaf.metal.MetalProgressBarUI;
 
 import com.jdabtieu.DungeonEscape.Main;
@@ -24,7 +23,7 @@ public class StatusDisplay extends JPanel {
         setBounds(10, 10, 140, 100);
         setLayout(null);
         setOpaque(false);
-        Main.me.getContentPane().add(this);
+        setVisible(false);
         try {
             BufferedImage titleText = ImageIO.read(new File("assets/coins.png"));
             JLabel labelTitleText = new JLabel(new ImageIcon(titleText));

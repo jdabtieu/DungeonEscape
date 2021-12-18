@@ -25,7 +25,6 @@ public class GameOver extends JPanel {
         super();
         setBounds(0, 0, Window.width, Window.height);
         setLayout(null);
-        Main.me.getContentPane().add(this);
         
         MenuButton btnStart = new MenuButton("Back to Main Menu");
         btnStart.setBounds((Window.width - 400) / 2, 450, 400, 40);
