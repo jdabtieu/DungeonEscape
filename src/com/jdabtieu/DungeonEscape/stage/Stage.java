@@ -1,4 +1,4 @@
-package com.jdabtieu.DungeonEscape.Stage;
+package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -22,22 +22,23 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import com.jdabtieu.DungeonEscape.Main;
-import com.jdabtieu.DungeonEscape.Window;
-import com.jdabtieu.DungeonEscape.MapComponent.Coins;
-import com.jdabtieu.DungeonEscape.MapComponent.DarkGround;
-import com.jdabtieu.DungeonEscape.MapComponent.Ground;
-import com.jdabtieu.DungeonEscape.MapComponent.Spike;
-import com.jdabtieu.DungeonEscape.MapComponent.Text;
-import com.jdabtieu.DungeonEscape.MapComponent.Tile;
-import com.jdabtieu.DungeonEscape.MapComponent.Triggerable;
-import com.jdabtieu.DungeonEscape.MapComponent.Wall;
+import com.jdabtieu.DungeonEscape.core.Window;
+import com.jdabtieu.DungeonEscape.map.Coins;
+import com.jdabtieu.DungeonEscape.map.DarkGround;
+import com.jdabtieu.DungeonEscape.map.Ground;
+import com.jdabtieu.DungeonEscape.map.Spike;
+import com.jdabtieu.DungeonEscape.map.Text;
+import com.jdabtieu.DungeonEscape.map.Tile;
+import com.jdabtieu.DungeonEscape.map.Triggerable;
+import com.jdabtieu.DungeonEscape.map.Wall;
 
 public class Stage extends JPanel {
     protected static Tile[][] stage;
     protected static ArrayList<Text> texts;
     private HashSet<Character> keysPressed;
-    private final int kbdPollRate = 50;
+    private static final int KBD_POLL_RATE = 50;
     private Thread movement;
+    public static boolean pauseMovement = false;
 
     /**
      * Create the frame.
@@ -45,7 +46,7 @@ public class Stage extends JPanel {
      */
     public Stage() {
         super();
-        setBounds(Window.width, 0, Window.width, Window.height);
+        setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
         setBackground(Color.black);
         setLayout(null);
         stage = new Tile[0][0];
@@ -54,12 +55,15 @@ public class Stage extends JPanel {
         registerKbd();
         movement = new Thread(() -> {
 			long time = System.currentTimeMillis();
-			final int delay = 1000 / kbdPollRate;
+			final int delay = 1000 / KBD_POLL_RATE;
             while (true) {
                 try {
                     Thread.sleep(delay + time - System.currentTimeMillis());
                 } catch (InterruptedException e) {
                     return;
+                } catch (IllegalArgumentException e) {
+                    // uh oh, the game is lagging. that's fine though
+                    System.err.println("INFO: Game lagging. Skipped a few milliseconds.");
                 }
 				time = System.currentTimeMillis();
 				threadTgt();
@@ -72,7 +76,7 @@ public class Stage extends JPanel {
         redraw();
         texts.stream().forEach(e -> add(e));
         Arrays.stream(stage).forEach(a -> Arrays.stream(a).forEach(e -> add(e)));
-        setBounds(0, 0, Window.width, Window.height);
+        setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
     }
     
     public void finish() {
@@ -131,23 +135,23 @@ public class Stage extends JPanel {
     
     public void redraw() {
         Main.drawSafe(() -> {
-            setBounds(Window.width, 0, Window.width, Window.height);
+            setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
             for (int i = 0; i < stage.length; i++) {
                 for (int j = 0; j < stage[i].length; j++) {
-                    stage[i][j].setBounds((j * 20) - Main.player.x + (Window.width - 20) / 2,
-                                          (i * 20) - Main.player.y + (Window.height - 20) / 2,
+                    stage[i][j].setBounds((j * 20) - Main.player.x + (Window.WIDTH - 20) / 2,
+                                          (i * 20) - Main.player.y + (Window.HEIGHT - 20) / 2,
                                           20,
                                           20);
                 }
             }
             for (Text lab : texts) {
-                lab.setBounds(lab.getXFixed() - Main.player.x + (Window.width - 20) / 2,
-                              lab.getYFixed() - Main.player.y + (Window.height - 20) / 2,
+                lab.setBounds(lab.getXFixed() - Main.player.x + (Window.WIDTH - 20) / 2,
+                              lab.getYFixed() - Main.player.y + (Window.HEIGHT - 20) / 2,
                               1000,
                               20);
             }
 
-            setBounds(0, 0, Window.width, Window.height);
+            setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
             Main.player.repaint();
             Main.sd.repaint();
         });
@@ -256,6 +260,7 @@ public class Stage extends JPanel {
     }
     
     private void threadTgt() {
+        if (pauseMovement) return;
         int wx = 0;
         int wy = 0;
         if (keysPressed.contains('w')) wy--;
