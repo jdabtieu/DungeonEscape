@@ -1,3 +1,3 @@
-package com.jdabtieu.DungeonEscape;
+package com.jdabtieu.DungeonEscape.core;
 
 public class GameOverException extends RuntimeException {}

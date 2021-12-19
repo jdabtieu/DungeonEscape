@@ -1,4 +1,4 @@
-package com.jdabtieu.DungeonEscape.MapComponent;
+package com.jdabtieu.DungeonEscape.map;
 
 import java.awt.Color;
 
@@ -19,7 +19,7 @@ public class Coins extends Ground implements Triggerable {
         if (value == 0) return;
         Main.player.coins += value;
         value = 0;
-        setBackground(Ground.color);
+        setBackground(Ground.COLOR);
         repaint();
     }
 }

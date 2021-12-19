@@ -1,11 +1,11 @@
-package com.jdabtieu.DungeonEscape.MapComponent;
+package com.jdabtieu.DungeonEscape.map;
 
 import java.awt.Color;
 
 public class Ground extends Tile {
-    public final static Color color = Color.gray;
+    public final static Color COLOR = Color.gray;
     public Ground() {
         super();
-        setBackground(color);
+        setBackground(COLOR);
     }
 }

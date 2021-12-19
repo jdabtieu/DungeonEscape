@@ -1,15 +1,19 @@
 package com.jdabtieu.DungeonEscape;
 
 import java.awt.EventQueue;
-import java.awt.Point;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.jdabtieu.DungeonEscape.Component.StatusDisplay;
-import com.jdabtieu.DungeonEscape.Stage.*;
+import com.jdabtieu.DungeonEscape.component.StatusDisplay;
+import com.jdabtieu.DungeonEscape.core.Drawable;
+import com.jdabtieu.DungeonEscape.core.GameOver;
+import com.jdabtieu.DungeonEscape.core.GameOverException;
+import com.jdabtieu.DungeonEscape.core.MainMenu;
+import com.jdabtieu.DungeonEscape.core.Player;
+import com.jdabtieu.DungeonEscape.core.Window;
+import com.jdabtieu.DungeonEscape.stage.Stage;
+import com.jdabtieu.DungeonEscape.stage.Stage1;
 
 public class Main {
     public static Object mon = new Object();
@@ -17,7 +21,7 @@ public class Main {
     public static Thread mainThread;
     public static JFrame me = null;
     public static StatusDisplay sd = null;
-    private static JPanel activeWindow = null;
+    public static JPanel activeWindow = null;
     public static Player player;
     public static void main(String[] args) {
         mainThread = Thread.currentThread();

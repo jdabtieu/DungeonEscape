@@ -1,4 +1,4 @@
-package com.jdabtieu.DungeonEscape.Component;
+package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
