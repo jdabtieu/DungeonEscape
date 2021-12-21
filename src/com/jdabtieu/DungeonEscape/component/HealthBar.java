@@ -6,8 +6,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JProgressBar;
 import javax.swing.plaf.metal.MetalProgressBarUI;
 
-import com.jdabtieu.DungeonEscape.Main;
-
 public class HealthBar extends JProgressBar {
     public HealthBar(int maxHealth) {
         super(0, maxHealth);
@@ -29,7 +27,8 @@ public class HealthBar extends JProgressBar {
         setString(Integer.toString(maxHealth));
     }
     
-    public void updateHealth(int newHealth) {
+    public void setHealth(int newHealth) {
+        newHealth = Math.max(newHealth, 0);
         setValue(newHealth);
         setString(Integer.toString(newHealth));
     }

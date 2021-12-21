@@ -18,7 +18,7 @@ public class BasicPopup extends JPanel {
      * Create the panel.
      */
     public BasicPopup(String text, Color color) {
-        Stage.pauseMovement = true;
+        Main.player.pauseMovement = true;
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 75, 300, 150);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
@@ -41,7 +41,7 @@ public class BasicPopup extends JPanel {
         btnClose.addActionListener(e -> {
             setVisible(false);
             Main.me.remove(this);
-            Stage.pauseMovement = false;
+            Main.player.pauseMovement = false;
         });
     }
 }

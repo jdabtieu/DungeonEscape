@@ -25,6 +25,7 @@ public class BossBanner extends JPanel {
     }
     
     public void animate() {
+        setVisible(true);
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
@@ -44,6 +45,7 @@ public class BossBanner extends JPanel {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        setVisible(false);
     }
 
 }

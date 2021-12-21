@@ -15,7 +15,6 @@ import javax.swing.text.DocumentFilter;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Window;
-import com.jdabtieu.DungeonEscape.stage.Stage;
 import com.jdabtieu.DungeonEscape.stage.Stage1;
 
 public class Stage1_ComboLock extends JPanel {
@@ -24,7 +23,7 @@ public class Stage1_ComboLock extends JPanel {
      * Create the panel.
      */
     public Stage1_ComboLock() {
-        Stage.pauseMovement = true;
+        Main.player.pauseMovement = true;
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 100, 300, 200);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
@@ -72,7 +71,7 @@ public class Stage1_ComboLock extends JPanel {
         btnClose.addActionListener(e -> {
             setVisible(false);
             Main.me.remove(this);
-            Stage.pauseMovement = false;
+            Main.player.pauseMovement = false;
         });
 
         input.addActionListener(e -> {
@@ -81,7 +80,7 @@ public class Stage1_ComboLock extends JPanel {
             } else {
                 setVisible(false);
                 Main.me.remove(this);
-                Stage.pauseMovement = false;
+                Main.player.pauseMovement = false;
                 ((Stage1) Main.activeWindow).correctCombo();
             }
         });
