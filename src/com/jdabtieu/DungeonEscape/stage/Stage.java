@@ -27,14 +27,14 @@ import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.core.DEBUG_FLAGS;
 import com.jdabtieu.DungeonEscape.core.EnemyAttackPattern;
 import com.jdabtieu.DungeonEscape.core.Window;
-import com.jdabtieu.DungeonEscape.map.Coins;
-import com.jdabtieu.DungeonEscape.map.DarkGround;
-import com.jdabtieu.DungeonEscape.map.Ground;
-import com.jdabtieu.DungeonEscape.map.Spike;
-import com.jdabtieu.DungeonEscape.map.Text;
-import com.jdabtieu.DungeonEscape.map.Tile;
-import com.jdabtieu.DungeonEscape.map.Triggerable;
-import com.jdabtieu.DungeonEscape.map.Wall;
+import com.jdabtieu.DungeonEscape.tile.Coins;
+import com.jdabtieu.DungeonEscape.tile.DarkGround;
+import com.jdabtieu.DungeonEscape.tile.Ground;
+import com.jdabtieu.DungeonEscape.tile.Spike;
+import com.jdabtieu.DungeonEscape.tile.Text;
+import com.jdabtieu.DungeonEscape.tile.Tile;
+import com.jdabtieu.DungeonEscape.tile.Triggerable;
+import com.jdabtieu.DungeonEscape.tile.Wall;
 
 public class Stage extends JPanel {
     public Object mon;

@@ -16,13 +16,13 @@ import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Stage1_ComboLock;
 import com.jdabtieu.DungeonEscape.core.Weapon;
 import com.jdabtieu.DungeonEscape.core.Window;
-import com.jdabtieu.DungeonEscape.map.Coins;
-import com.jdabtieu.DungeonEscape.map.Ground;
-import com.jdabtieu.DungeonEscape.map.GroundWeapon;
-import com.jdabtieu.DungeonEscape.map.HiddenSensor;
-import com.jdabtieu.DungeonEscape.map.Sensor;
-import com.jdabtieu.DungeonEscape.map.Text;
-import com.jdabtieu.DungeonEscape.map.Wall;
+import com.jdabtieu.DungeonEscape.tile.Coins;
+import com.jdabtieu.DungeonEscape.tile.Ground;
+import com.jdabtieu.DungeonEscape.tile.GroundWeapon;
+import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
+import com.jdabtieu.DungeonEscape.tile.Sensor;
+import com.jdabtieu.DungeonEscape.tile.Text;
+import com.jdabtieu.DungeonEscape.tile.Wall;
 
 public class Stage1 extends Stage {
     private boolean bossInit;

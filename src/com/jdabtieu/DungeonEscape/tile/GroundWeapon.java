@@ -1,4 +1,4 @@
-package com.jdabtieu.DungeonEscape.map;
+package com.jdabtieu.DungeonEscape.tile;
 
 import java.awt.Color;
 import java.io.File;

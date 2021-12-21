@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
-import com.jdabtieu.DungeonEscape.map.Tile;
+import com.jdabtieu.DungeonEscape.tile.Tile;
 
 public class Player extends Tile {
     public int coins;
