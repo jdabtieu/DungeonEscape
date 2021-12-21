@@ -1,19 +1,14 @@
 package com.jdabtieu.DungeonEscape.core;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Font;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
 public class Inventory extends JPanel {
 
@@ -24,13 +19,6 @@ public class Inventory extends JPanel {
         setBounds(Window.WIDTH / 2 - 60, Window.HEIGHT - 100, 120, 40);
         setLayout(null);
         setOpaque(false);
-        
-        JLabel lblNewLabel = new JLabel("New label");
-        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblNewLabel.setForeground(Color.WHITE);
-        lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        lblNewLabel.setBounds(0, 26, 40, 14);
-        add(lblNewLabel);
         repaint();
     }
     
@@ -48,14 +36,14 @@ public class Inventory extends JPanel {
                 durability.setFont(new Font("Tahoma", Font.PLAIN, 11));
                 durability.setForeground(Color.WHITE);
                 durability.setHorizontalAlignment(SwingConstants.RIGHT);
-                durability.setBounds(0, 26, 40, 14);
+                durability.setBounds(i*40, 26, 40, 14);
                 add(durability);
                 
                 JLabel dmg = new JLabel(Integer.toString(Main.player.getWeapons().get(i).getDamage()));
                 dmg.setFont(new Font("Tahoma", Font.PLAIN, 11));
                 dmg.setForeground(Color.WHITE);
                 dmg.setHorizontalAlignment(SwingConstants.RIGHT);
-                dmg.setBounds(0, 0, 40, 14);
+                dmg.setBounds(i*40, 0, 40, 14);
                 add(dmg);
             }
             wp.setBounds(i*40, 0, 40, 40);

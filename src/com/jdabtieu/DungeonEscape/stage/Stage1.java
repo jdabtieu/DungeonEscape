@@ -16,6 +16,7 @@ import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Stage1_ComboLock;
 import com.jdabtieu.DungeonEscape.core.Weapon;
 import com.jdabtieu.DungeonEscape.core.Window;
+import com.jdabtieu.DungeonEscape.map.Coins;
 import com.jdabtieu.DungeonEscape.map.Ground;
 import com.jdabtieu.DungeonEscape.map.GroundWeapon;
 import com.jdabtieu.DungeonEscape.map.HiddenSensor;
@@ -26,6 +27,7 @@ import com.jdabtieu.DungeonEscape.map.Wall;
 public class Stage1 extends Stage {
     private boolean bossInit;
     private boolean comboLockEnabled;
+    private boolean bossDone;
     /**
      * Create the frame.
      * @throws IOException 
@@ -87,6 +89,7 @@ public class Stage1 extends Stage {
     private void initBoss() {
         if (bossInit || stage[6][100] instanceof GroundWeapon) return;
         bossInit = true;
+        bossDone = false;
         changeTile(3, 124, Wall.class);
         changeTile(4, 124, Wall.class);
         changeTile(5, 124, Wall.class);
@@ -98,26 +101,72 @@ public class Stage1 extends Stage {
         Main.player.setHealth(100);
         Main.player.x = 2760;
         Main.player.y = 184;
-        pauseMovement = true;
+        Main.player.pauseMovement = true;
         redraw();
         BossBanner bb = new BossBanner();
         add(bb);
         bb.animate();
         remove(bb);
+        
+        JLabel boss;
         try {
-            JLabel boss = new JLabel(new ImageIcon(ImageIO.read(new File("assets/boss1.png"))));
-            boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
-            Main.me.getContentPane().add(boss, 3, 0);
-            
-            HealthBar healthBar = new HealthBar(30);
-            healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
-            Main.me.getContentPane().add(healthBar, 3, 0);
+            boss = new JLabel(new ImageIcon(ImageIO.read(new File("assets/boss1.png"))));
         } catch (IOException e) {
-            e.printStackTrace();
+            boss = new JLabel();
         }
+        boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
+        Main.me.getContentPane().add(boss, 3, 0);
+        
+        HealthBar healthBar = new HealthBar(30);
+        healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
+        Main.me.getContentPane().add(healthBar, 3, 0);
+        
         Main.player.weaponSelect(mon);
         pause();
-        System.out.println("E");
+        
+        fight(30, healthBar, () -> (int) (Math.random() + 0.3) * (int) (Math.random() * 5 + 1));
+        new BasicPopup("You defeated the boss!", Color.BLACK);
+        healthBar.setVisible(false);
+        Main.me.getContentPane().remove(healthBar);
+        boss.setVisible(false);
+        Main.me.getContentPane().remove(boss);
+        Main.player.pauseMovement = false;
+        changeTile(7, 149, Coins.class, 1000);
+        changeTile(7, 150, Coins.class, 1000);
+        changeTile(8, 149, Coins.class, 1000);
+        changeTile(9, 152, GroundWeapon.class, new Runnable() {
+            public void run() {
+                Main.player.addWeapon(new Weapon("Cubic Scales", 5, 30, "cubic_scales.png"));
+                changeTile(9, 152, Ground.class);
+                redraw();
+            }
+        });
+        
+        for (int i = 164; i < 192; i++) {
+            changeTile(4, i, Ground.class);
+            changeTile(5, i, Ground.class);
+        }
+        changeTile(4, 192, Sensor.class, new Runnable() {
+            public void run() {
+                if (bossDone) return;
+                bossDone = true;
+                finish();
+                synchronized(Main.mon) {
+                    Main.mon.notify();
+                }
+            }
+        });
+        changeTile(5, 192, Sensor.class, new Runnable() {
+            public void run() {
+                if (bossDone) return;
+                bossDone = true;
+                finish();
+                synchronized(Main.mon) {
+                    Main.mon.notify();
+                }
+            }
+        });
+        redraw();
     }
     
     public void correctCombo() {
