@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.BossBanner;
+import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Stage1_ComboLock;
 import com.jdabtieu.DungeonEscape.core.Weapon;
 import com.jdabtieu.DungeonEscape.core.Window;
@@ -103,15 +104,19 @@ public class Stage1 extends Stage {
         add(bb);
         bb.animate();
         remove(bb);
-        Main.player.weaponSelect(mon);
-        pause();
         try {
             JLabel boss = new JLabel(new ImageIcon(ImageIO.read(new File("assets/boss1.png"))));
             boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
             Main.me.getContentPane().add(boss, 3, 0);
+            
+            HealthBar healthBar = new HealthBar(30);
+            healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
+            Main.me.getContentPane().add(healthBar, 3, 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Main.player.weaponSelect(mon);
+        pause();
         System.out.println("E");
     }
     

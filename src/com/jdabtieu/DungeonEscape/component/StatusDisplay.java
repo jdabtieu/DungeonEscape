@@ -10,15 +10,13 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.plaf.metal.MetalProgressBarUI;
 
 import com.jdabtieu.DungeonEscape.Main;
 
 public class StatusDisplay extends JPanel {
     private JLabel coins;
     private JLabel keys;
-    private JProgressBar healthBar;
+    private HealthBar healthBar;
     public StatusDisplay() {
         super();
         setBounds(10, 10, 160, 120);
@@ -50,23 +48,8 @@ public class StatusDisplay extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         } 
-        healthBar = new JProgressBar();
-        healthBar.setBackground(Color.gray);
-        healthBar.setForeground(Color.red);
-        healthBar.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        healthBar.setValue(100);
-        healthBar.setStringPainted(true);
+        healthBar = new HealthBar(100);
         healthBar.setBounds(50, 6, 100, 20);
-        healthBar.setUI(new MetalProgressBarUI() {
-            @Override
-            protected Color getSelectionForeground() {
-                return Color.white;
-            }
-            @Override
-            protected Color getSelectionBackground() {
-                return Color.white;
-            }
-        });
         add(healthBar);
         
         coins = new JLabel();
