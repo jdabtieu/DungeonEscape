@@ -57,13 +57,14 @@ public class Stage extends JPanel {
 			long time = System.currentTimeMillis();
 			final int delay = 1000 / KBD_POLL_RATE;
             while (true) {
+                long delayTime = delay + time - System.currentTimeMillis();
                 try {
-                    Thread.sleep(delay + time - System.currentTimeMillis());
+                    Thread.sleep(delayTime);
                 } catch (InterruptedException e) {
                     return;
                 } catch (IllegalArgumentException e) {
                     // uh oh, the game is lagging. that's fine though
-                    System.err.println("INFO: Game lagging. Skipped a few milliseconds.");
+                    System.err.printf("INFO: Game lagging. Skipped %d ms\n", -delayTime);
                 }
 				time = System.currentTimeMillis();
 				threadTgt();
@@ -152,7 +153,6 @@ public class Stage extends JPanel {
             }
 
             setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
-            Main.player.repaint();
             Main.sd.repaint();
         });
     }
@@ -279,5 +279,16 @@ public class Stage extends JPanel {
         Point offsetY = testCollision(0, wy);
         Main.player.y += wy + offsetY.y;
         redraw();
+    }
+    
+    protected void changeTile(int x, int y, Class<?> newTile, Object... args) {
+        remove(stage[x][y]);
+        try {
+            stage[x][y] = (Tile) newTile.getConstructors()[0].newInstance(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Reset original tile if the new tile cannot be added
+        }
+        add(stage[x][y]);
     }
 }
