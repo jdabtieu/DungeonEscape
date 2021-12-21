@@ -10,11 +10,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.map.Tile;
-import com.jdabtieu.DungeonEscape.stage.Stage;
 
 public class Player extends Tile {
     public int coins;
@@ -23,6 +23,7 @@ public class Player extends Tile {
     public int y;
     public int keys;
     private Inventory inv;
+    public boolean pauseMovement;
     private final ArrayList<Weapon> weapons;
     private Weapon activeWeapon;
     public Player() {
@@ -37,6 +38,7 @@ public class Player extends Tile {
         keys = 0;
         weapons = new ArrayList<>();
         inv = new Inventory();
+        pauseMovement = false;
         setVisible(false);
         Main.me.getContentPane().add(inv, 5, 0);
     }
@@ -46,8 +48,8 @@ public class Player extends Tile {
     }
 
     public void weaponSelect(Object monitor) {
-        boolean movementPaused = Stage.pauseMovement;
-        Stage.pauseMovement = true;
+        boolean movementPaused = pauseMovement;
+        pauseMovement = true;
         JPanel contentPane = new JPanel();
         contentPane.setBounds(Window.WIDTH / 2 - 90, Window.HEIGHT / 2 - 120, 180, 240);
         contentPane.setLayout(null);
@@ -75,7 +77,7 @@ public class Player extends Tile {
             container.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     activeWeapon = weapons.get(f);
-                    Stage.pauseMovement = movementPaused;
+                    pauseMovement = movementPaused;
                     contentPane.setVisible(false);
                     Main.me.getContentPane().remove(contentPane);
                     synchronized(monitor) {
@@ -130,6 +132,9 @@ public class Player extends Tile {
 
     public void setHealth(int health) {
         this.health = health;
-        
+    }
+    
+    public void repaintInventory() {
+        SwingUtilities.invokeLater(() -> inv.repaint());
     }
 }

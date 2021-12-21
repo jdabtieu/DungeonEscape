@@ -50,6 +50,9 @@ public class Main {
                 sd.setVisible(true);
                 player.setVisible(true);
                 pause();
+                System.out.println("Wowwww, you beat the game!"); // TODO stage 2
+                me.getContentPane().removeAll();
+                me.repaint();
             } catch (GameOverException e) {
                 drawSafe(() -> {
                     me.getContentPane().removeAll();

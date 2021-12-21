@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,8 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.core.DEBUG_FLAGS;
-import com.jdabtieu.DungeonEscape.core.GameOverException;
+import com.jdabtieu.DungeonEscape.core.EnemyAttackPattern;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.map.Coins;
 import com.jdabtieu.DungeonEscape.map.DarkGround;
@@ -41,7 +43,6 @@ public class Stage extends JPanel {
     private HashSet<Character> keysPressed;
     private static final int KBD_POLL_RATE = 50;
     private Thread movement;
-    public static boolean pauseMovement = false;
 
     /**
      * Create the frame.
@@ -92,6 +93,19 @@ public class Stage extends JPanel {
         synchronized(mon) {
             try {
                 mon.wait();
+            } catch (InterruptedException e) {}
+        }
+    }
+    
+    protected void fight(int enemyHealth, HealthBar enemyHealthBar, EnemyAttackPattern ap) {
+        while (enemyHealth > 0 && Main.player.getHealth() > 0) { // simulate attacks
+            enemyHealth -= Main.player.getActiveWeapon().attack();
+            Main.player.changeHealth(-ap.attack());
+            enemyHealthBar.setHealth(enemyHealth);
+            Main.sd.repaint();
+            Main.player.repaintInventory();
+            try {
+                Thread.sleep(800);
             } catch (InterruptedException e) {}
         }
     }
@@ -272,7 +286,7 @@ public class Stage extends JPanel {
     }
     
     private void threadTgt() {
-        if (pauseMovement) return;
+        if (Main.player.pauseMovement) return;
         int wx = 0;
         int wy = 0;
         if (keysPressed.contains('w')) wy--;
@@ -299,7 +313,11 @@ public class Stage extends JPanel {
     protected void changeTile(int x, int y, Class<?> newTile, Object... args) {
         remove(stage[x][y]);
         try {
-            stage[x][y] = (Tile) newTile.getConstructors()[0].newInstance(args);
+            for (Constructor<?> cons : newTile.getConstructors()) {
+                if (cons.getParameterCount() == args.length) {
+                    stage[x][y] = (Tile) cons.newInstance(args);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             // Reset original tile if the new tile cannot be added
