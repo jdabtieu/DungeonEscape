@@ -98,12 +98,12 @@ public class Stage extends JPanel {
     }
     
     protected void fight(int enemyHealth, HealthBar enemyHealthBar, EnemyAttackPattern ap) {
-        while (enemyHealth > 0 && Main.player.getHealth() > 0) { // simulate attacks
-            enemyHealth -= Main.player.getActiveWeapon().attack();
-            Main.player.changeHealth(-ap.attack());
+        while (enemyHealth > 0 && Main.getPlayer().getHealth() > 0) { // simulate attacks
+            enemyHealth -= Main.getPlayer().getActiveWeapon().attack();
+            Main.getPlayer().changeHealth(-ap.attack());
             enemyHealthBar.setHealth(enemyHealth);
-            Main.sd.repaint();
-            Main.player.repaintInventory();
+            Main.getSD().repaint();
+            Main.getPlayer().repaintInventory();
             try {
                 Thread.sleep(800);
             } catch (InterruptedException e) {}
@@ -165,27 +165,27 @@ public class Stage extends JPanel {
             setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
             for (int i = 0; i < stage.length; i++) {
                 for (int j = 0; j < stage[i].length; j++) {
-                    stage[i][j].setBounds((j * 20) - Main.player.x + (Window.WIDTH - 20) / 2,
-                                          (i * 20) - Main.player.y + (Window.HEIGHT - 20) / 2,
+                    stage[i][j].setBounds((j * 20) - Main.getPlayer().x + (Window.WIDTH - 20) / 2,
+                                          (i * 20) - Main.getPlayer().y + (Window.HEIGHT - 20) / 2,
                                           20,
                                           20);
                 }
             }
             for (Text lab : texts) {
-                lab.setBounds(lab.getXFixed() - Main.player.x + (Window.WIDTH - 20) / 2,
-                              lab.getYFixed() - Main.player.y + (Window.HEIGHT - 20) / 2,
+                lab.setBounds(lab.getXFixed() - Main.getPlayer().x + (Window.WIDTH - 20) / 2,
+                              lab.getYFixed() - Main.getPlayer().y + (Window.HEIGHT - 20) / 2,
                               1000,
                               20);
             }
 
             setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
-            Main.sd.repaint();
+            Main.getSD().repaint();
         });
     }
     
     public Point testCollision(int Ox, int Oy) {
-        int i1 = Main.player.x, i2 = i1;
-        int j1 = Main.player.y, j2 = j1;
+        int i1 = Main.getPlayer().x, i2 = i1;
+        int j1 = Main.getPlayer().y, j2 = j1;
         if (Ox < 0) {
             i1 += Ox;
             i2 += Ox;
@@ -213,19 +213,19 @@ public class Stage extends JPanel {
         int dy = 0, dx = 0;
         if (stage[j1 / 20][i1 / 20] instanceof Wall || stage[j2 / 20][i2 / 20] instanceof Wall) {
             if (Oy < 0) {
-                dy = Main.player.y % 20;
+                dy = Main.getPlayer().y % 20;
                 if (dy == 0) dy = -Oy;
             }
             if (Ox < 0) {
-                dx = Main.player.x % 20;
+                dx = Main.getPlayer().x % 20;
                 if (dx == 0) dx = -Ox;
             }
             if (Oy > 0) {
-                dy = (Main.player.y % 20) - 20;
+                dy = (Main.getPlayer().y % 20) - 20;
                 if (dy == -20) dy = -Oy;
             }
             if (Ox > 0) {
-                dx = (Main.player.x % 20) - 20;
+                dx = (Main.getPlayer().x % 20) - 20;
                 if (dx == -20) dx = -Ox;
             }
         }
@@ -286,7 +286,7 @@ public class Stage extends JPanel {
     }
     
     private void threadTgt() {
-        if (Main.player.pauseMovement) return;
+        if (Main.getPlayer().movementPaused()) return;
         int wx = 0;
         int wy = 0;
         if (keysPressed.contains('w')) wy--;
@@ -296,7 +296,7 @@ public class Stage extends JPanel {
         if (wx == 0 && wy == 0) return;
         movePlayer(wx, wy);
         if (DEBUG_FLAGS.PRINT_LOCATION.get()) {
-            System.out.println(Main.player.x + " " + Main.player.y);
+            System.out.println(Main.getPlayer().x + " " + Main.getPlayer().y);
         }
     }
     
@@ -304,9 +304,9 @@ public class Stage extends JPanel {
         wx *= 4;
         wy *= 4;
         Point offsetX = testCollision(wx, 0);
-        Main.player.x += wx + offsetX.x;
+        Main.getPlayer().x += wx + offsetX.x;
         Point offsetY = testCollision(0, wy);
-        Main.player.y += wy + offsetY.y;
+        Main.getPlayer().y += wy + offsetY.y;
         redraw();
     }
     

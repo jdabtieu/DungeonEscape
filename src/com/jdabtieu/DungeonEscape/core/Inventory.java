@@ -25,21 +25,21 @@ public class Inventory extends JPanel {
     public void repaint() {
         removeAll();
         super.repaint();
-        if (Main.player == null) return;
+        if (Main.getPlayer() == null) return;
         for (int i = 0; i < 3; i++) {
             JLabel wp;
-            if (Main.player.getWeapons().size() <= i) {
+            if (Main.getPlayer().getWeapons().size() <= i) {
                 wp = new JLabel();
             } else {
-                wp = Main.player.getWeapons().get(i);
-                JLabel durability = new JLabel(Integer.toString(Main.player.getWeapons().get(i).getDurability()));
+                wp = Main.getPlayer().getWeapons().get(i);
+                JLabel durability = new JLabel(Integer.toString(Main.getPlayer().getWeapons().get(i).getDurability()));
                 durability.setFont(new Font("Tahoma", Font.PLAIN, 11));
                 durability.setForeground(Color.WHITE);
                 durability.setHorizontalAlignment(SwingConstants.RIGHT);
                 durability.setBounds(i*40, 26, 40, 14);
                 add(durability);
                 
-                JLabel dmg = new JLabel(Integer.toString(Main.player.getWeapons().get(i).getDamage()));
+                JLabel dmg = new JLabel(Integer.toString(Main.getPlayer().getWeapons().get(i).getDamage()));
                 dmg.setFont(new Font("Tahoma", Font.PLAIN, 11));
                 dmg.setForeground(Color.WHITE);
                 dmg.setHorizontalAlignment(SwingConstants.RIGHT);

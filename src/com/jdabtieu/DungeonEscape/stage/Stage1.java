@@ -58,7 +58,7 @@ public class Stage1 extends Stage {
         stage[3][14] = new HiddenSensor(() -> {
             if (comboLockEnabled) {
                 comboLockEnabled = false;
-                new Stage1_ComboLock();
+                new Stage1_ComboLock(this);
             }
         });
         
@@ -72,11 +72,11 @@ public class Stage1 extends Stage {
             changeTile(3, 73, Ground.class);
             new BasicPopup("You found a key!", Color.BLACK);
             redraw();
-            Main.player.keys++;
+            Main.getPlayer().keys++;
         }, Color.YELLOW);
         
         stage[6][100] = new GroundWeapon(() -> {
-            Main.player.addWeapon(new Weapon("Wooden Axe", 3, 30, "wood_axe.png"));
+            Main.getPlayer().addWeapon(new Weapon("Wooden Axe", 3, 30, "wood_axe.png"));
             changeTile(6, 100, Ground.class);
             redraw();
         });
@@ -98,10 +98,10 @@ public class Stage1 extends Stage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Main.player.setHealth(100);
-        Main.player.x = 2760;
-        Main.player.y = 184;
-        Main.player.pauseMovement = true;
+        Main.getPlayer().setHealth(100);
+        Main.getPlayer().x = 2760;
+        Main.getPlayer().y = 184;
+        Main.getPlayer().pauseMovement();
         redraw();
         BossBanner bb = new BossBanner();
         add(bb);
@@ -115,28 +115,28 @@ public class Stage1 extends Stage {
             boss = new JLabel();
         }
         boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
-        Main.me.getContentPane().add(boss, 3, 0);
+        Main.getContentPane().add(boss, 3, 0);
         
         HealthBar healthBar = new HealthBar(30);
         healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
-        Main.me.getContentPane().add(healthBar, 3, 0);
+        Main.getContentPane().add(healthBar, 3, 0);
         
-        Main.player.weaponSelect(mon);
+        Main.getPlayer().weaponSelect(mon);
         pause();
         
         fight(30, healthBar, () -> (int) (Math.random() + 0.3) * (int) (Math.random() * 5 + 1));
         new BasicPopup("You defeated the boss!", Color.BLACK);
         healthBar.setVisible(false);
-        Main.me.getContentPane().remove(healthBar);
+        Main.getContentPane().remove(healthBar);
         boss.setVisible(false);
-        Main.me.getContentPane().remove(boss);
-        Main.player.pauseMovement = false;
+        Main.getContentPane().remove(boss);
+        Main.getPlayer().unpauseMovement();
         changeTile(7, 149, Coins.class, 1000);
         changeTile(7, 150, Coins.class, 1000);
         changeTile(8, 149, Coins.class, 1000);
         changeTile(9, 152, GroundWeapon.class, new Runnable() {
             public void run() {
-                Main.player.addWeapon(new Weapon("Cubic Scales", 5, 30, "cubic_scales.png"));
+                Main.getPlayer().addWeapon(new Weapon("Cubic Scales", 5, 30, "cubic_scales.png"));
                 changeTile(9, 152, Ground.class);
                 redraw();
             }

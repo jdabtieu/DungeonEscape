@@ -23,7 +23,7 @@ public class Player extends Tile {
     public int y;
     public int keys;
     private Inventory inv;
-    public boolean pauseMovement;
+    private boolean pauseMovement;
     private final ArrayList<Weapon> weapons;
     private Weapon activeWeapon;
     public Player() {
@@ -40,11 +40,23 @@ public class Player extends Tile {
         inv = new Inventory();
         pauseMovement = false;
         setVisible(false);
-        Main.me.getContentPane().add(inv, 5, 0);
+        Main.getContentPane().add(inv, 5, 0);
     }
     
     public Weapon getActiveWeapon() {
         return activeWeapon;
+    }
+    
+    public void pauseMovement() {
+        pauseMovement = true;
+    }
+    
+    public void unpauseMovement() {
+        pauseMovement = false;
+    }
+    
+    public boolean movementPaused() {
+        return pauseMovement;
     }
 
     public void weaponSelect(Object monitor) {
@@ -79,7 +91,7 @@ public class Player extends Tile {
                     activeWeapon = weapons.get(f);
                     pauseMovement = movementPaused;
                     contentPane.setVisible(false);
-                    Main.me.getContentPane().remove(contentPane);
+                    Main.getContentPane().remove(contentPane);
                     synchronized(monitor) {
                         monitor.notify();
                     }
@@ -87,7 +99,7 @@ public class Player extends Tile {
             });
             contentPane.add(container);
         }
-        Main.me.getContentPane().add(contentPane, 5, 0);
+        Main.getContentPane().add(contentPane, 5, 0);
     }
 
     public int score() {
@@ -102,7 +114,7 @@ public class Player extends Tile {
             return;
         }
         health = 0;
-        Main.triggerGameOver();
+        Main.triggerLoss();
     }
     
     public void addWeapon(Weapon wp) {
@@ -136,5 +148,10 @@ public class Player extends Tile {
     
     public void repaintInventory() {
         SwingUtilities.invokeLater(() -> inv.repaint());
+    }
+    
+    public void setLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 }

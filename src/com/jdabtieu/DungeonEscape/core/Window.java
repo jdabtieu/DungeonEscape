@@ -12,7 +12,7 @@ public class Window extends JFrame {
      * Create the frame.
      * @throws IOException 
      */
-    public Window() throws IOException {
+    public Window() {
         setIconImage(Toolkit.getDefaultToolkit().getImage("assets/icon.png"));
         setResizable(false);
         setTitle("DungeonGame");

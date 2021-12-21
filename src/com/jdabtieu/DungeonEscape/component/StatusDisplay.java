@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Player;
 
 public class StatusDisplay extends JPanel {
     private JLabel coins;
@@ -65,12 +66,13 @@ public class StatusDisplay extends JPanel {
     }
     
     public void repaint() {
+        Player p = Main.getPlayer();
         if (healthBar != null) {
-            healthBar.setValue(Main.player.getHealth());
-            healthBar.setString(Integer.toString(Main.player.getHealth()));
+            healthBar.setValue(p.getHealth());
+            healthBar.setString(Integer.toString(p.getHealth()));
         }
-        if (coins != null) coins.setText(Integer.toString(Main.player.coins));
-        if (keys != null) keys.setText(Integer.toString(Main.player.keys));
+        if (coins != null) coins.setText(Integer.toString(p.coins));
+        if (keys != null) keys.setText(Integer.toString(p.keys));
         super.repaint();
     }
 }

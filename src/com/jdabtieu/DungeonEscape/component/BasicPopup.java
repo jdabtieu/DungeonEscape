@@ -10,19 +10,25 @@ import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Window;
-import com.jdabtieu.DungeonEscape.stage.Stage;
-
+/**
+ * BasicPopup is used to display a simple text-based popup in the popup layer.
+ * 
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class BasicPopup extends JPanel {
-
     /**
-     * Create the panel.
+     * Creates the popup
+     * @param text  text to be displayed
+     * @param color color of the text
      */
     public BasicPopup(String text, Color color) {
-        Main.player.pauseMovement = true;
+        Main.getPlayer().pauseMovement();
+        
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 75, 300, 150);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
-        Main.me.getContentPane().add(this, 5, 0);
+        Main.getContentPane().add(this, 5, 0);
         
         JButton btnClose = new JButton("X");
         btnClose.setBackground(Color.LIGHT_GRAY);
@@ -38,10 +44,11 @@ public class BasicPopup extends JPanel {
         txt.setBounds(0, 11, 300, 128);
         txt.setForeground(color);
         add(txt);
+        
         btnClose.addActionListener(e -> {
             setVisible(false);
-            Main.me.remove(this);
-            Main.player.pauseMovement = false;
+            Main.getContentPane().remove(this);
+            Main.getPlayer().unpauseMovement();
         });
     }
 }

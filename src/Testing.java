@@ -1,19 +1,18 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.BorderFactory;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.jdabtieu.DungeonEscape.core.Player;
-import com.jdabtieu.DungeonEscape.core.Weapon;
 import com.jdabtieu.DungeonEscape.core.Window;
-import javax.swing.SwingConstants;
 
 public class Testing extends JFrame {
 
@@ -48,40 +47,24 @@ public class Testing extends JFrame {
         contentPane.setLayout(null);
         contentPane.setBackground(Color.GREEN);
         
-        JLabel title = new JLabel("Choose a Weapon");
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setFont(new Font("Sitka Text", Font.PLAIN, 14));
-        title.setBounds(0, 0, 180, 30);
-        contentPane.add(title);
+        JLabel title = new JLabel();
+        title.setBounds(0, 0, 40, 40);
         
-        Player p = new Player();
+        BufferedImage titleText;
         try {
-            p.getWeapons().add(new Weapon("Wooden Axe", 3, 30, "wood_axe.png"));
-        } catch (Exception e) {}
-        try {
-            p.getWeapons().add(new Weapon("Stone Axe", 10, 30, "wood_axe.png"));
-        } catch (Exception e) {}
-        
-        ArrayList<Weapon> weapons = p.getWeapons();
-        for (int i = 0; i < weapons.size(); i++) {
-            JPanel container = new JPanel();
-            container.setLayout(null);
-            container.setBounds(20, 60 * i + 30, 140, 60);
-            container.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-            Weapon wp = weapons.get(i).clone();
-            wp.setBounds(0, 10, 40, 40);
-            JLabel lab = new JLabel("<html>" + wp.toString() + "</html>");
-            lab.setFont(new Font("Tahoma", Font.PLAIN, 12));
-            lab.setBounds(40, 0, 200, 60);
-            container.add(wp);
-            container.add(lab);
-            container.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    //p.setActiveWeapon(weapons.get(i));
-                    container.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                }
-            });
-            contentPane.add(container);
+            titleText = ImageIO.read(new File("assets/weapon/wood_xe.png"));
+            title.setIcon(new ImageIcon(titleText));
+        } catch (IOException e) {
+            e.printStackTrace();
+            BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = (Graphics2D) img.getGraphics();
+            g.setStroke(new BasicStroke(4));
+            g.setColor(Color.RED);
+            g.drawLine(0, 0, 40, 40);
+            g.drawLine(0, 40, 40, 0);
+            title.setIcon(new ImageIcon(img));
+            
         }
+        contentPane.add(title);
     }
 }

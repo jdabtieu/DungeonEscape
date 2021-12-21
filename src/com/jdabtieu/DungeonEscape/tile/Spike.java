@@ -11,6 +11,6 @@ public class Spike extends Wall implements Triggerable {
     }
 
     public void trigger() {
-        Main.player.changeHealth(-2);
+        Main.getPlayer().changeHealth(-2);
     }
 }

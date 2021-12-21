@@ -38,7 +38,7 @@ public class GameOver extends JPanel {
         lblDead.setBounds(0, 240, Window.WIDTH, 20);
         add(lblDead);
         
-        JLabel lblScore = new JLabel("Final Score: " + Main.player.score());
+        JLabel lblScore = new JLabel("Final Score: " + Main.getPlayer().score());
         lblScore.setHorizontalAlignment(SwingConstants.CENTER);
         lblScore.setFont(new Font("Sitka Text", Font.BOLD, 16));
         lblScore.setForeground(Color.RED);
@@ -58,7 +58,7 @@ public class GameOver extends JPanel {
         
         btnStart.addActionListener(e -> {
             Main.gameOver = true;
-            Main.mainThread.interrupt();
+            Main.getMainThread().interrupt();
         });
     }
 }

@@ -1,5 +1,8 @@
 package com.jdabtieu.DungeonEscape.core;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +48,13 @@ public class Weapon extends JLabel implements Cloneable {
             setIcon(new ImageIcon(titleText));
         } catch (IOException e) {
             e.printStackTrace();
+            BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = (Graphics2D) img.getGraphics();
+            g.setStroke(new BasicStroke(4));
+            g.setColor(Color.RED);
+            g.drawLine(0, 0, 40, 40);
+            g.drawLine(0, 40, 40, 0);
+            setIcon(new ImageIcon(img));
         }
     }
     
