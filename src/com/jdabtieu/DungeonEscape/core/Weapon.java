@@ -1,12 +1,20 @@
 package com.jdabtieu.DungeonEscape.core;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 /**
  * <p>A class storing details about a weapon
  * 
  * <p>A weapon deals 0 damage if it has no durability left, and weapons cannot
  * be switched out during battle.
  */
-public class Weapon {
+public class Weapon extends JLabel {
     /**
      * The name of the weapon
      */
@@ -22,10 +30,16 @@ public class Weapon {
      */
     private int durability;
     
-    public Weapon(final String name, final int damage, final int durability) {
+    public Weapon(final String name, final int damage, final int durability, final String fileName) {
         this.damage = damage;
         this.durability = durability;
         this.name = name;
+        try {
+            BufferedImage titleText = ImageIO.read(new File("assets/weapon/" + fileName));
+            setIcon(new ImageIcon(titleText));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -36,6 +50,22 @@ public class Weapon {
      */
     public int score() {
         return damage * durability / 2;
+    }
+    
+    /**
+     * Returns the durability of this weapon
+     * @return this weapon's durability
+     */
+    public int getDurability() {
+        return durability;
+    }
+    
+    /**
+     * Returns the damage of this weapon
+     * @return this weapon's damage
+     */
+    public int getDamage() {
+        return damage;
     }
     
     /**
@@ -64,6 +94,6 @@ public class Weapon {
     
     @Override
     public String toString() {
-        return String.format("%s\tDamage: %d\tDurability: %d", name, damage, durability);
+        return String.format("%s<br>Damage: %d<br>Durability: %d", name, damage, durability);
     }
 }
