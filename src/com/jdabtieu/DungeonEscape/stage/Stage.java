@@ -22,6 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.DEBUG_FLAGS;
+import com.jdabtieu.DungeonEscape.core.GameOverException;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.map.Coins;
 import com.jdabtieu.DungeonEscape.map.DarkGround;
@@ -33,6 +35,7 @@ import com.jdabtieu.DungeonEscape.map.Triggerable;
 import com.jdabtieu.DungeonEscape.map.Wall;
 
 public class Stage extends JPanel {
+    public Object mon;
     protected static Tile[][] stage;
     protected static ArrayList<Text> texts;
     private HashSet<Character> keysPressed;
@@ -49,6 +52,7 @@ public class Stage extends JPanel {
         setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
         setBackground(Color.black);
         setLayout(null);
+        mon = new Object();
         stage = new Tile[0][0];
         texts = new ArrayList<>();
         keysPressed = new HashSet<>();
@@ -82,6 +86,14 @@ public class Stage extends JPanel {
     
     public void finish() {
         movement.interrupt();
+    }
+    
+    protected void pause() {
+        synchronized(mon) {
+            try {
+                mon.wait();
+            } catch (InterruptedException e) {}
+        }
     }
     
     protected void generateImg(String fname) {
@@ -269,6 +281,9 @@ public class Stage extends JPanel {
         if (keysPressed.contains('d')) wx++;
         if (wx == 0 && wy == 0) return;
         movePlayer(wx, wy);
+        if (DEBUG_FLAGS.PRINT_LOCATION.get()) {
+            System.out.println(Main.player.x + " " + Main.player.y);
+        }
     }
     
     public void movePlayer(int wx, int wy) {

@@ -2,13 +2,19 @@ package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.BossBanner;
 import com.jdabtieu.DungeonEscape.component.Stage1_ComboLock;
 import com.jdabtieu.DungeonEscape.core.Weapon;
+import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.map.Ground;
 import com.jdabtieu.DungeonEscape.map.GroundWeapon;
 import com.jdabtieu.DungeonEscape.map.HiddenSensor;
@@ -34,7 +40,7 @@ public class Stage1 extends Stage {
         texts.add(new Text(">>> This looks like my basement. But something's off.", 880, 510));
         texts.add(new Text(">>> Where am I?", 880, 530));
         texts.add(new Text("Tip: Sensors can trigger different actions", 1350, 550));
-        texts.add(new Text("Tip: Watch out for spikes! They deal a ton of damage", 1220, 730));
+        texts.add(new Text("Tip: Watch out for spikes! They deal a ton of damage", 1260, 700));
         texts.add(new Text("Tip: Look around each room for room numbers and clue", 1040, 50));
         texts.add(new Text("1__34_", 870, 320));
         texts.add(new Text("_42__2", 710, 320));
@@ -43,8 +49,8 @@ public class Stage1 extends Stage {
         stage[3][126] = new Sensor(() -> initBoss());
         stage[4][126] = new Sensor(() -> initBoss());
         stage[5][126] = new Sensor(() -> initBoss());
-        stage[29][74] = new Sensor(() -> changeTile(31, 74, Wall.class));
-        stage[33][74] = new Sensor(() -> changeTile(31, 74, Ground.class));
+        stage[29][74] = new Sensor(() -> changeTile(30, 76, Wall.class));
+        stage[31][74] = new Sensor(() -> changeTile(30, 76, Ground.class));
         
         stage[3][14] = new HiddenSensor(() -> {
             if (comboLockEnabled) {
@@ -88,6 +94,7 @@ public class Stage1 extends Stage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        Main.player.setHealth(100);
         Main.player.x = 2760;
         Main.player.y = 184;
         pauseMovement = true;
@@ -96,6 +103,16 @@ public class Stage1 extends Stage {
         add(bb);
         bb.animate();
         remove(bb);
+        Main.player.weaponSelect(mon);
+        pause();
+        try {
+            JLabel boss = new JLabel(new ImageIcon(ImageIO.read(new File("assets/boss1.png"))));
+            boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
+            Main.me.getContentPane().add(boss, 3, 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("E");
     }
     
     public void correctCombo() {

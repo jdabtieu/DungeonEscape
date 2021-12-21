@@ -40,18 +40,18 @@ public class Inventory extends JPanel {
         if (Main.player == null) return;
         for (int i = 0; i < 3; i++) {
             JLabel wp;
-            if (Main.player.weapons.size() <= i) {
+            if (Main.player.getWeapons().size() <= i) {
                 wp = new JLabel();
             } else {
-                wp = Main.player.weapons.get(i);
-                JLabel durability = new JLabel(Integer.toString(Main.player.weapons.get(i).getDurability()));
+                wp = Main.player.getWeapons().get(i);
+                JLabel durability = new JLabel(Integer.toString(Main.player.getWeapons().get(i).getDurability()));
                 durability.setFont(new Font("Tahoma", Font.PLAIN, 11));
                 durability.setForeground(Color.WHITE);
                 durability.setHorizontalAlignment(SwingConstants.RIGHT);
                 durability.setBounds(0, 26, 40, 14);
                 add(durability);
                 
-                JLabel dmg = new JLabel(Integer.toString(Main.player.weapons.get(i).getDamage()));
+                JLabel dmg = new JLabel(Integer.toString(Main.player.getWeapons().get(i).getDamage()));
                 dmg.setFont(new Font("Tahoma", Font.PLAIN, 11));
                 dmg.setForeground(Color.WHITE);
                 dmg.setHorizontalAlignment(SwingConstants.RIGHT);
