@@ -1,4 +1,4 @@
-package com.jdabtieu.DungeonEscape.map;
+package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,14 +12,14 @@ import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.stage.Stage;
 
-public class Stage1_KeyPopup extends JPanel {
+public class BasicPopup extends JPanel {
 
     /**
      * Create the panel.
      */
-    public Stage1_KeyPopup() {
+    public BasicPopup(String text, Color color) {
         Stage.pauseMovement = true;
-        setBounds(Window.WIDTH / 2 - 100, Window.HEIGHT / 2 - 50, 200, 100);
+        setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 75, 300, 150);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         Main.me.getContentPane().add(this, 5, 0);
@@ -29,14 +29,15 @@ public class Stage1_KeyPopup extends JPanel {
         btnClose.setBorder(null);
         btnClose.setFocusPainted(false);
         btnClose.setFont(new Font("Tahoma", Font.PLAIN, 10));
-        btnClose.setBounds(162, 7, 28, 23);
+        btnClose.setBounds(262, 11, 28, 23);
         add(btnClose);
         
-        JLabel lblWrong = new JLabel("You found a key!");
-        lblWrong.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblWrong.setHorizontalAlignment(SwingConstants.CENTER);
-        lblWrong.setBounds(0, 49, 200, 14);
-        add(lblWrong);
+        JLabel txt = new JLabel(text);
+        txt.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        txt.setHorizontalAlignment(SwingConstants.CENTER);
+        txt.setBounds(0, 11, 300, 128);
+        txt.setForeground(color);
+        add(txt);
         btnClose.addActionListener(e -> {
             setVisible(false);
             Main.me.remove(this);

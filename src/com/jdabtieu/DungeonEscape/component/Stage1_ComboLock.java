@@ -1,4 +1,4 @@
-package com.jdabtieu.DungeonEscape.map;
+package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
 import java.awt.Font;
