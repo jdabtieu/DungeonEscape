@@ -46,8 +46,9 @@ public class Main {
                 drawSafe(() -> {
                     me.getContentPane().add(player, 2, 0);
                 });
-                swapWindow(Stage1.class, true, 1);
+                swapWindow(Stage1.class, 1);
                 sd.setVisible(true);
+                player.setVisible(true);
                 pause();
             } catch (GameOverException e) {
                 drawSafe(() -> {
@@ -66,19 +67,15 @@ public class Main {
         if (activeWindow instanceof Stage) {
             ((Stage) activeWindow).finish();
         }
-        swapWindow(GameOver.class, false, 3);
+        swapWindow(GameOver.class, 100);
     }
     
-    private static void swapWindow(Class<?> newWindow, boolean redrawPlayer, int layer) {
+    private static void swapWindow(Class<?> newWindow, int layer) {
         drawSafe(() -> {
            activeWindow.setVisible(false);
            me.getContentPane().remove(activeWindow);
            activeWindow = (JPanel) newWindow.getConstructors()[0].newInstance();
            me.getContentPane().add(activeWindow, layer, 0);
-           if (redrawPlayer) {
-               player.setVisible(true);
-               player.repaint();
-           }
         });
     }
     
