@@ -81,8 +81,6 @@ public class Stage1 extends Stage {
             redraw();
         });
 
-        
-        generateImg("stage1");
         finishConstructor();
     }
     

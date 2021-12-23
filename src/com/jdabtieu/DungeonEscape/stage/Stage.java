@@ -110,25 +110,6 @@ public class Stage extends JPanel {
         }
     }
     
-    protected void generateImg(String fname) {
-        BufferedImage map = new BufferedImage(Arrays.stream(stage).mapToInt(a -> a.length)
-                                                    .reduce(Integer::max).getAsInt() * 20,
-                                              stage.length * 20,
-                                              BufferedImage.TYPE_INT_ARGB);
-        Graphics2D mg = (Graphics2D) map.getGraphics();
-        for (int i = 0; i < stage.length; i++) {
-            for (int j = 0; j < stage[i].length; j++) {
-                mg.setColor(stage[i][j].getBackground());
-                mg.fillRect(j * 20, i * 20, 20, 20);
-            }
-        }
-        try {
-            ImageIO.write(map, "png", new File(fname + ".png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
     protected void fillStage(String fname) {
         String[] rm;
         try {

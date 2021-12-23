@@ -80,7 +80,6 @@ public class Stage2 extends Stage {
         stage[19][42] = new Sensor(() -> initBoss());
         stage[20][42] = new Sensor(() -> initBoss());
         
-        generateImg("stage2");
         finishConstructor();
     }
     
