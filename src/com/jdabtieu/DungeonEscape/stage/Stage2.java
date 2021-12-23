@@ -18,7 +18,7 @@ import com.jdabtieu.DungeonEscape.component.BasicConfirm;
 import com.jdabtieu.DungeonEscape.component.BasicDialog;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.BasicQuiz;
-import com.jdabtieu.DungeonEscape.component.BossBanner;
+import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.core.Weapon;
 import com.jdabtieu.DungeonEscape.core.Window;
@@ -164,7 +164,7 @@ public class Stage2 extends Stage {
         Main.getPlayer().y = 184;
         Main.getPlayer().pauseMovement();
         redraw();
-        BossBanner bb = new BossBanner();
+        Banner bb = new Banner("BOSS FIGHT!");
         add(bb);
         bb.animate();
         remove(bb);

@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
-import com.jdabtieu.DungeonEscape.component.BossBanner;
+import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Stage1_ComboLock;
 import com.jdabtieu.DungeonEscape.core.Weapon;
@@ -103,7 +103,7 @@ public class Stage1 extends Stage {
         Main.getPlayer().y = 184;
         Main.getPlayer().pauseMovement();
         redraw();
-        BossBanner bb = new BossBanner();
+        Banner bb = new Banner("BOSS FIGHT!");
         add(bb);
         bb.animate();
         remove(bb);

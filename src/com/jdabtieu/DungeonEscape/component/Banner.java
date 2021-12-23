@@ -13,7 +13,7 @@ import java.awt.Font;
  * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
  * @date 2022-01-01
  */
-public class BossBanner extends JPanel {
+public class Banner extends JPanel {
     /**
      * The text to be animated.
      */
@@ -22,12 +22,12 @@ public class BossBanner extends JPanel {
     /**
      * Create the banner.
      */
-    public BossBanner() {
+    public Banner(String text) {
         setBackground(Color.RED);
         setBounds(0, 80, Window.WIDTH, 60);
         setLayout(null);
         
-        lblFight = new JLabel("BOSS FIGHT!");
+        lblFight = new JLabel(text);
         lblFight.setFont(new Font("Sitka Text", Font.PLAIN, 32));
         lblFight.setForeground(Color.WHITE);
         lblFight.setBounds(-200, 0, Window.WIDTH, 60);
