@@ -8,11 +8,8 @@ BEGIN
     BEGIN
       VALUE "CompanyName", "Jonathan Wu"
       VALUE "FileDescription", "DungeonEscape Launcher"
-      VALUE "FileVersion", "1.0"
-      VALUE "LegalCopyright", "Jonathan Wu"
-      VALUE "OriginalFilename", "Launcher.exe"
+      VALUE "LegalCopyright", "Jonathan Wu, 2021-2022. All rights reserved."
       VALUE "ProductName", "DungeonEscape Launcher"
-      VALUE "ProductVersion", "1.0"
     END
   END
   BLOCK "VarFileInfo"
