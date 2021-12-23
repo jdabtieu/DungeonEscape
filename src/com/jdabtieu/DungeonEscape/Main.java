@@ -15,6 +15,7 @@ import com.jdabtieu.DungeonEscape.core.Player;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.stage.Stage;
 import com.jdabtieu.DungeonEscape.stage.Stage1;
+import com.jdabtieu.DungeonEscape.stage.Stage2;
 /**
  * DungeonEscape is an adventure game that follows the main character with amnesia as
  * they traverse a vast dungeon with three floors (stages). Solve puzzles, defeat enemies
@@ -91,12 +92,15 @@ public class Main {
                 pause(); // unpaused by Start Game button in MainMenu
                 
                 // Stage 1, make player and status display visible
-                swapWindow(Stage1.class, 1);
+//                swapWindow(Stage1.class, 1);
                 sd.setVisible(true);
                 player.setVisible(true);
                 
-                pause(); // unpaused by beating Stage 1 boss
+//                pause(); // unpaused by beating Stage 1 boss
                 
+                swapWindow(Stage2.class, 1);
+                
+                pause(); 
                 System.out.println("Wowwww, you beat the game!"); // TODO stage 2
                 throw new GameOverException();
             } catch (GameOverException e) {

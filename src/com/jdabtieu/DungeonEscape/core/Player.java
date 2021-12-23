@@ -26,6 +26,8 @@ public class Player extends Tile {
     private boolean pauseMovement;
     private final ArrayList<Weapon> weapons;
     private Weapon activeWeapon;
+    private boolean interviewComplete;
+    
     public Player() {
         super();
         setBackground(Color.green);
@@ -43,6 +45,14 @@ public class Player extends Tile {
         Main.getContentPane().add(inv, 5, 0);
     }
     
+    public boolean isInterviewComplete() {
+        return interviewComplete;
+    }
+
+    public void setInterviewComplete() {
+        interviewComplete = true;
+    }
+
     public Weapon getActiveWeapon() {
         return activeWeapon;
     }
