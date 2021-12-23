@@ -3,6 +3,7 @@ package com.jdabtieu.DungeonEscape.stage;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,17 +15,18 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.BasicConfirm;
 import com.jdabtieu.DungeonEscape.component.BasicDialog;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.BasicQuiz;
-import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Weapon;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
 import com.jdabtieu.DungeonEscape.tile.Ground;
 import com.jdabtieu.DungeonEscape.tile.GroundWeapon;
+import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
 import com.jdabtieu.DungeonEscape.tile.Sensor;
 import com.jdabtieu.DungeonEscape.tile.Text;
 import com.jdabtieu.DungeonEscape.tile.Wall;
@@ -34,6 +36,7 @@ public class Stage2 extends Stage {
     private boolean interviewInit;
     private boolean ambushInit;
     private boolean bossDone;
+    private boolean activeVending;
     /**
      * Create the frame.
      * @throws IOException 
@@ -44,11 +47,16 @@ public class Stage2 extends Stage {
         bossInit = false;
         interviewInit = false;
         ambushInit = false;
+        activeVending = true;
         fillStage("stage2");
         texts.add(new Text(">>> That was the longest flight of stairs ever", 40, 1600));
         texts.add(new Text(">>> ...", 40, 1620));
         texts.add(new Text(">>> It's brighter now...does that mean I'm closer to the surface?", 40, 1640));
         texts.add(new Text("Tip: Coins can be used at the vending machine, but the more coins you have at the end of the game, the higher your score.", 30, 1860));
+        texts.add(new Text("V", 740, 1580));
+        texts.add(new Text("C", 740, 1400));
+        texts.add(new Text("T", 740, 900));
+        texts.add(new Text("O", 740, 530));
         {
             Text txt = new Text("Interview Room", 500, 1180);
             txt.setHorizontalAlignment(SwingConstants.CENTER);
@@ -76,6 +84,16 @@ public class Stage2 extends Stage {
         }
         stage[69][36] = new Sensor(() -> initInterview());
         stage[69][35] = new Sensor(() -> initInterview());
+        stage[53][16] = new HiddenSensor(() -> initAmbush());
+        stage[53][17] = new HiddenSensor(() -> initAmbush());
+        stage[53][18] = new HiddenSensor(() -> initAmbush());
+        stage[17][10] = new GroundWeapon(null);
+        stage[20][10] = new Sensor(() -> vendingMachine());
+        stage[21][8] = new HiddenSensor(() -> activeVending = true);
+        stage[22][9] = new HiddenSensor(() -> activeVending = true);
+        stage[22][10] = new HiddenSensor(() -> activeVending = true);
+        stage[22][11] = new HiddenSensor(() -> activeVending = true);
+        stage[21][12] = new HiddenSensor(() -> activeVending = true);
         stage[18][42] = new Sensor(() -> initBoss());
         stage[19][42] = new Sensor(() -> initBoss());
         stage[20][42] = new Sensor(() -> initBoss());
@@ -83,11 +101,83 @@ public class Stage2 extends Stage {
         finishConstructor();
     }
     
+    private void vendingMachine() {
+        if (!activeVending) return;
+        activeVending = false;
+        Main.getPlayer().pauseMovement();
+        Weapon wp = new Weapon("One Hit Blade", 2000, 1, "ohb.png");
+        if (new BasicConfirm("<html>For 3300 coins, Vending Machine offers:<br>" + wp + "<br>Would you like to purchase it?</html>").selection()) {
+            if (Main.getPlayer().coins < 3300) {
+                new BasicPopup("You don't have enough coins!", Color.RED);
+            } else {
+                changeTile(20, 10, Ground.class);
+                changeTile(17, 10, Ground.class);
+                redraw();
+                Main.getPlayer().coins -= 3300;
+                Main.getPlayer().addWeapon(wp);
+                Main.getSD().repaint();
+            }
+        }
+        Main.getPlayer().unpauseMovement();
+    }
+    
+    private void initAmbush() {
+        if (ambushInit) return;
+        ambushInit = true;
+        Main.getPlayer().x = 336;
+        Main.getPlayer().y = 1000;
+        Main.getPlayer().pauseMovement();
+        changeTile(53, 16, Ground.class);
+        changeTile(53, 17, Ground.class);
+        changeTile(53, 18, Ground.class);
+        redraw();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Banner bb = new Banner("AMBUSH!");
+        Main.getContentPane().add(bb, 2, 0);
+        bb.animate();
+        Main.getContentPane().remove(bb);
+        JLabel enemy;
+        try {
+            enemy = new JLabel(new ImageIcon(ImageIO.read(new File("assets/ambush.png"))));
+        } catch (IOException e) {
+            enemy = new JLabel();
+        }
+        enemy.setBounds(156, 90, 740, 320);
+        Main.getContentPane().add(enemy, 3, 0);
+        Point[] offsets = {new Point(115, 4), new Point(38, 60), new Point(40, 190),
+                           new Point(172, 161), new Point(260, 63), new Point(304, 184),
+                           new Point(375, 16), new Point(520, 72), new Point(483, 177)};
+        HealthBar[] healthBars = new HealthBar[offsets.length];
+        for (int i = 0; i < offsets.length; i++) {
+            healthBars[i] = new HealthBar(8);
+            healthBars[i].setBounds(enemy.getX() + offsets[i].x, enemy.getY() + offsets[i].y, 80, 20);
+            Main.getContentPane().add(healthBars[i], 3, 0);
+        }
+        Main.getPlayer().weaponSelect(mon);
+        pause();
+        for (int i = 0; i < offsets.length; i++) {
+            fight(8, healthBars[i], () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 5 + 1));
+        }
+        Main.getPlayer().unpauseMovement();
+        new BasicPopup("You defeated the enemies!", Color.BLACK);
+        
+        for (int i = 0; i < offsets.length; i++) {
+            healthBars[i].setVisible(false);
+            Main.getContentPane().remove(healthBars[i]);
+        }
+        enemy.setVisible(false);
+        Main.getContentPane().remove(enemy);
+        redraw();
+    }
+    
     private void initInterview() {
         if (interviewInit) return;
         interviewInit = true;
-        boolean res = new BasicConfirm("<html>The Dungeon Mester would like to<br>invite you to create new levels.<br>Accept the offer?</html>").selection();
-        if (!res) {
+        if (!new BasicConfirm("<html>The Dungeon Mester would like to<br>invite you to create new levels.<br>Accept the offer?</html>").selection()) {
             interviewInit = false;
             Main.getPlayer().setLocation(712, 1408);
             return;
