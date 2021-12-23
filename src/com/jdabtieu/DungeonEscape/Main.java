@@ -84,23 +84,25 @@ public class Main {
                     me.getContentPane().add(currScene, 1, 0);
                     player = new Player();
                     sd = new StatusDisplay();
-                    getContentPane().add(sd, 2, 0);
+                    getContentPane().add(sd, 3, 0);
                     getContentPane().add(player, 2, 0);
                     player.setLocation(1200, 500);
                 });
                 pause(); // unpaused by Start Game button in MainMenu
                 
                 // Stage 1, make player and status display visible
-//                swapWindow(Stage1.class, 1);
+                swapWindow(Stage1.class, 1);
                 sd.setVisible(true);
                 player.setVisible(true);
                 
-//                pause(); // unpaused by beating Stage 1 boss
+                pause(); // unpaused by beating Stage 1 boss
                 
+                // Stage 2
                 swapWindow(Stage2.class, 1);
                 
-                pause(); 
-                System.out.println("Wowwww, you beat the game!"); // TODO stage 2
+                pause(); // unpaused by beating Stage 2 boss
+                
+                System.out.println("Wowwww, you beat the game!"); // TODO stage 3
                 throw new GameOverException();
             } catch (GameOverException e) {
                 // Clear the screen if the game is over
