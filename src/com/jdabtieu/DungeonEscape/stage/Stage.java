@@ -174,8 +174,8 @@ public class Stage extends JPanel {
             for (Text lab : texts) {
                 lab.setBounds(lab.getXFixed() - Main.getPlayer().x + (Window.WIDTH - 20) / 2,
                               lab.getYFixed() - Main.getPlayer().y + (Window.HEIGHT - 20) / 2,
-                              1000,
-                              20);
+                              lab.getWidth(),
+                              lab.getHeight());
             }
 
             setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
@@ -206,8 +206,7 @@ public class Stage extends JPanel {
         }
         if (stage[j1 / 20][i1 / 20] instanceof Triggerable) {
             ((Triggerable) stage[j1 / 20][i1 / 20]).trigger();
-        }
-        if (stage[j2 / 20][i2 / 20] instanceof Triggerable) {
+        } else if (stage[j2 / 20][i2 / 20] instanceof Triggerable) {
             ((Triggerable) stage[j2 / 20][i2 / 20]).trigger();
         }
         int dy = 0, dx = 0;

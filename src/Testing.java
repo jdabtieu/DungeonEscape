@@ -1,18 +1,14 @@
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Font;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.core.Window;
+import com.jdabtieu.DungeonEscape.tile.Text;
 
 public class Testing extends JFrame {
 
@@ -42,29 +38,16 @@ public class Testing extends JFrame {
         setBounds(100, 100, Window.WIDTH, Window.HEIGHT);
         getContentPane().setLayout(null);
         contentPane = new JPanel();
-        contentPane.setBounds(Window.WIDTH / 2 - 90, Window.HEIGHT / 2 - 120, 180, 240);
+        contentPane.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
         getContentPane().add(contentPane);
         contentPane.setLayout(null);
         contentPane.setBackground(Color.GREEN);
         
-        JLabel title = new JLabel();
-        title.setBounds(0, 0, 40, 40);
-        
-        BufferedImage titleText;
-        try {
-            titleText = ImageIO.read(new File("assets/weapon/wood_xe.png"));
-            title.setIcon(new ImageIcon(titleText));
-        } catch (IOException e) {
-            e.printStackTrace();
-            BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g = (Graphics2D) img.getGraphics();
-            g.setStroke(new BasicStroke(4));
-            g.setColor(Color.RED);
-            g.drawLine(0, 0, 40, 40);
-            g.drawLine(0, 40, 40, 0);
-            title.setIcon(new ImageIcon(img));
-            
-        }
-        contentPane.add(title);
+        Text txt = new Text("Interview Room", 100, 100);
+        txt.setHorizontalAlignment(SwingConstants.CENTER);
+        txt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        txt.setBounds(100, 100, 148, 40);
+        txt.setFont(new Font("Sitka Text", Font.BOLD, 16));
+        contentPane.add(txt);
     }
 }

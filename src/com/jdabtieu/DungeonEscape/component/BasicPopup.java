@@ -23,6 +23,7 @@ public class BasicPopup extends JPanel {
      * @param color color of the text
      */
     public BasicPopup(String text, Color color) {
+        boolean movementPaused = Main.getPlayer().movementPaused();
         Main.getPlayer().pauseMovement();
         
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 75, 300, 150);
@@ -48,7 +49,9 @@ public class BasicPopup extends JPanel {
         btnClose.addActionListener(e -> {
             setVisible(false);
             Main.getContentPane().remove(this);
-            Main.getPlayer().unpauseMovement();
+            if (!movementPaused) {
+                Main.getPlayer().unpauseMovement();
+            }
         });
     }
 }
