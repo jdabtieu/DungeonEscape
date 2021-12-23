@@ -85,11 +85,6 @@ public class Stage2 extends Stage {
     }
     
     private void initInterview() {
-        Thread t = new Thread(() -> interview());
-        t.start();
-    }
-    
-    private void interview() {
         if (interviewInit) return;
         interviewInit = true;
         boolean res = new BasicConfirm("<html>The Dungeon Mester would like to<br>invite you to create new levels.<br>Accept the offer?</html>").selection();
