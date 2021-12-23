@@ -123,12 +123,12 @@ public class Stage1 extends Stage {
         pause();
         
         fight(30, healthBar, () -> (int) (Math.random() + 0.3) * (int) (Math.random() * 5 + 1));
+        Main.getPlayer().unpauseMovement();
         new BasicPopup("You defeated the boss!", Color.BLACK);
         healthBar.setVisible(false);
         Main.getContentPane().remove(healthBar);
         boss.setVisible(false);
         Main.getContentPane().remove(boss);
-        Main.getPlayer().unpauseMovement();
         changeTile(7, 149, Coins.class, 1000);
         changeTile(7, 150, Coins.class, 1000);
         changeTile(8, 149, Coins.class, 1000);

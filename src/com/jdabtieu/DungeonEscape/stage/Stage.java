@@ -1,11 +1,8 @@
 package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.nio.charset.StandardCharsets;
@@ -15,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -275,7 +271,7 @@ public class Stage extends JPanel {
         if (keysPressed.contains('d')) wx++;
         if (wx == 0 && wy == 0) return;
         movePlayer(wx, wy);
-        if (DEBUG_FLAGS.PRINT_LOCATION.get()) {
+        if (DEBUG_FLAGS.PRINT_LOCATION) {
             System.out.println(Main.getPlayer().x + " " + Main.getPlayer().y);
         }
     }
