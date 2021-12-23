@@ -20,7 +20,7 @@ import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.BasicQuiz;
 import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
-import com.jdabtieu.DungeonEscape.core.Weapon;
+import com.jdabtieu.DungeonEscape.component.Weapon;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
 import com.jdabtieu.DungeonEscape.tile.Ground;

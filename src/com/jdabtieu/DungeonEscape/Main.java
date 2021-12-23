@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.jdabtieu.DungeonEscape.component.StatusDisplay;
-import com.jdabtieu.DungeonEscape.core.Drawable;
 import com.jdabtieu.DungeonEscape.core.GameOver;
 import com.jdabtieu.DungeonEscape.core.GameOverException;
 import com.jdabtieu.DungeonEscape.core.MainMenu;
@@ -205,9 +204,9 @@ public class Main {
      * Runs code as specified by dr in the AWT Event Thread
      * @param dr    the code to be run
      */
-    public static void drawSafe(Drawable dr) {
+    public static void drawSafe(Runnable dr) {
         EventQueue.invokeLater(() -> {
-            dr.draw();
+            dr.run();
         });
     }
     

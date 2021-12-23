@@ -1,4 +1,4 @@
-package com.jdabtieu.DungeonEscape.core;
+package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Window;
 
 public class Inventory extends JPanel {
 

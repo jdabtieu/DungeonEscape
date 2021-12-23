@@ -14,6 +14,8 @@ import javax.swing.SwingUtilities;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
+import com.jdabtieu.DungeonEscape.component.Inventory;
+import com.jdabtieu.DungeonEscape.component.Weapon;
 import com.jdabtieu.DungeonEscape.tile.Tile;
 
 public class Player extends Tile {

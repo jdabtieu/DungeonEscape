@@ -15,7 +15,7 @@ public class Window extends JFrame {
     public Window() {
         setIconImage(Toolkit.getDefaultToolkit().getImage("assets/icon.png"));
         setResizable(false);
-        setTitle("DungeonGame");
+        setTitle("DungeonEscape");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);

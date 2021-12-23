@@ -1,4 +1,4 @@
-package com.jdabtieu.DungeonEscape.core;
+package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
