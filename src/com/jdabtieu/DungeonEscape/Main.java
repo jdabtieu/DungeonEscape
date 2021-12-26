@@ -86,7 +86,6 @@ public class Main {
                     sd = new StatusDisplay();
                     getContentPane().add(sd, 3, 0);
                     getContentPane().add(player, 2, 0);
-                    player.setLocation(1200, 500);
                 });
                 pause(); // unpaused by Start Game button in MainMenu
                 
@@ -185,7 +184,7 @@ public class Main {
     
     /**
      * Pauses the main thread until the monitor object is notified.
-     * While paused, the game runs stages in a second thread. When unpaused. the game
+     * While paused, the game runs stages in a second thread. When unpaused, the game
      * moves to the next scene/stage.
      */
     private static void pause() {
