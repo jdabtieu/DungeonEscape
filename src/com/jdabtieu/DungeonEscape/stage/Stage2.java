@@ -234,64 +234,64 @@ public class Stage2 extends Stage {
         if (bossInit) return;
         bossInit = true;
         bossDone = false;
-        // TODO
-        changeTile(3, 124, Wall.class);
-        changeTile(4, 124, Wall.class);
-        changeTile(5, 124, Wall.class);
+        changeTile(18, 40, Wall.class);
+        changeTile(19, 40, Wall.class);
+        changeTile(20, 40, Wall.class);
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Main.getPlayer().setHealth(100);
-        Main.getPlayer().x = 2760;
-        Main.getPlayer().y = 184;
+        Main.getPlayer().x = 930;
+        Main.getPlayer().y = 500;
         Main.getPlayer().pauseMovement();
         redraw();
         Banner bb = new Banner("BOSS FIGHT!");
-        add(bb);
+        Main.getContentPane().add(bb, 2, 0);
         bb.animate();
-        remove(bb);
+        Main.getContentPane().remove(bb);
         
         JLabel boss;
         try {
-            boss = new JLabel(new ImageIcon(ImageIO.read(new File("assets/boss1.png"))));
+            boss = new JLabel(new ImageIcon(ImageIO.read(new File("assets/boss2.png"))));
         } catch (IOException e) {
             boss = new JLabel();
         }
         boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
         Main.getContentPane().add(boss, 3, 0);
         
-        HealthBar healthBar = new HealthBar(30);
+        HealthBar healthBar = new HealthBar(100);
         healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
         Main.getContentPane().add(healthBar, 3, 0);
         
         Main.getPlayer().weaponSelect(mon);
         pause();
         
-        fight(30, healthBar, () -> (int) (Math.random() + 0.3) * (int) (Math.random() * 5 + 1));
+        fight(100, healthBar, () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 8 + 1));
         new BasicPopup("You defeated the boss!", Color.BLACK);
         healthBar.setVisible(false);
         Main.getContentPane().remove(healthBar);
         boss.setVisible(false);
         Main.getContentPane().remove(boss);
         Main.getPlayer().unpauseMovement();
-        changeTile(7, 149, Coins.class, 1000);
-        changeTile(7, 150, Coins.class, 1000);
-        changeTile(8, 149, Coins.class, 1000);
-        changeTile(9, 152, GroundWeapon.class, new Runnable() {
+        changeTile(22, 65, Coins.class, 1000);
+        changeTile(24, 67, Coins.class, 1000);
+        changeTile(22, 63, Coins.class, 1000);
+        changeTile(23, 64, Coins.class, 1000);
+        changeTile(21, 65, Coins.class, 1000);
+        changeTile(24, 63, GroundWeapon.class, new Runnable() {
             public void run() {
-                Main.getPlayer().addWeapon(new Weapon("Cubic Scales", 5, 30, "cubic_scales.png"));
-                changeTile(9, 152, Ground.class);
+                Main.getPlayer().addWeapon(new Weapon("Shiny Axe", 20, 40, "shiny_axe.png"));
+                changeTile(24, 63, Ground.class);
                 redraw();
             }
         });
         
-        for (int i = 164; i < 192; i++) {
-            changeTile(4, i, Ground.class);
-            changeTile(5, i, Ground.class);
+        for (int i = 2; i < 16; i++) {
+            changeTile(i, 62, Ground.class);
+            changeTile(i, 63, Ground.class);
         }
-        changeTile(4, 192, Sensor.class, new Runnable() {
+        changeTile(1, 62, Sensor.class, new Runnable() {
             public void run() {
                 if (bossDone) return;
                 bossDone = true;
@@ -301,7 +301,7 @@ public class Stage2 extends Stage {
                 }
             }
         });
-        changeTile(5, 192, Sensor.class, new Runnable() {
+        changeTile(1, 63, Sensor.class, new Runnable() {
             public void run() {
                 if (bossDone) return;
                 bossDone = true;
