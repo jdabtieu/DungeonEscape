@@ -36,6 +36,7 @@ public class Stage1 extends Stage {
         super();
         bossInit = false;
         comboLockEnabled = false;
+        Main.getPlayer().setLocation(1200, 500);
         fillStage("stage1");
         texts.add(new Text(">>> Where am I?", 880, 450));
         texts.add(new Text(">>> ...", 880, 470));
