@@ -70,8 +70,12 @@ public class Player extends Tile {
     public boolean movementPaused() {
         return pauseMovement;
     }
-
+    
     public void weaponSelect(Object monitor) {
+        weaponSelect(monitor, "Choose a Weapon");
+    }
+
+    public void weaponSelect(Object monitor, String pmt) {
         boolean movementPaused = pauseMovement;
         pauseMovement = true;
         JPanel contentPane = new JPanel();
@@ -79,7 +83,7 @@ public class Player extends Tile {
         contentPane.setLayout(null);
         contentPane.setBackground(Color.GREEN);
         
-        JLabel title = new JLabel("Choose a Weapon");
+        JLabel title = new JLabel(pmt);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font("Sitka Text", Font.PLAIN, 14));
         title.setBounds(0, 0, 180, 30);
@@ -130,13 +134,21 @@ public class Player extends Tile {
     }
     
     public void addWeapon(Weapon wp) {
-        if (getWeapons().size() >= 3) {
-            // TODO discard extra
-            return;
+        weapons.add(wp);
+        if (weapons.size() > 3) {
+            weaponSelect(this, "<html>You found a new weapon,<br>but you can only hold 3.<br>Choose one to discard.</html>");
+            try {
+                synchronized(this) {
+                    wait();                    
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            weapons.remove(activeWeapon);
+            activeWeapon = null;
         } else {
             new BasicPopup("<html>You found a new weapon!<br>" + wp + "</html>", Color.BLACK);
         }
-        getWeapons().add(wp);
         inv.repaint();
     }
     
