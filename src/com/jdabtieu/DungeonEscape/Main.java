@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.jdabtieu.DungeonEscape.component.StatusDisplay;
+import com.jdabtieu.DungeonEscape.core.Credits;
 import com.jdabtieu.DungeonEscape.core.GameOver;
 import com.jdabtieu.DungeonEscape.core.GameOverException;
 import com.jdabtieu.DungeonEscape.core.MainMenu;
@@ -15,6 +16,8 @@ import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.stage.Stage;
 import com.jdabtieu.DungeonEscape.stage.Stage1;
 import com.jdabtieu.DungeonEscape.stage.Stage2;
+import com.jdabtieu.DungeonEscape.stage.Stage3Part1;
+import com.jdabtieu.DungeonEscape.stage.Stage3Part2;
 /**
  * DungeonEscape is an adventure game that follows the main character with amnesia as
  * they traverse a vast dungeon with three floors (stages). Solve puzzles, defeat enemies
@@ -93,15 +96,30 @@ public class Main {
                 swapWindow(Stage1.class, 1);
                 sd.setVisible(true);
                 player.setVisible(true);
-                
+               
                 pause(); // unpaused by beating Stage 1 boss
                 
                 // Stage 2
                 swapWindow(Stage2.class, 1);
                 
                 pause(); // unpaused by beating Stage 2 boss
+
+                // Stage 3
+                swapWindow(Stage3Part1.class, 1);
                 
-                System.out.println("Wowwww, you beat the game!"); // TODO stage 3
+                pause(); // unpaused by finishing the stage 3 maze
+                
+                swapWindow(Stage3Part2.class, 1);
+                
+                pause();
+                
+                // Player won! Credits!!
+                currScene.setVisible(false);
+                getContentPane().remove(currScene);
+                currScene = new Credits();
+                getContentPane().add(currScene, 1, 0);
+                ((Credits) currScene).animate();
+                
                 throw new GameOverException();
             } catch (GameOverException e) {
                 // Clear the screen if the game is over
