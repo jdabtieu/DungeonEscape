@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,6 +13,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 /**
@@ -54,13 +54,13 @@ public class ComboLock extends JPanel {
                 replace(fb, offset, len, str, a);
             }
         });
-        input.setFont(new Font("Consolas", Font.PLAIN, 14));
+        input.setFont(Fonts.MONO);
         input.setBounds(100, 85, 100, 30);
         add(input);
         
         JLabel title = new JLabel("ComboLock 8100");
         title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setFont(new Font("Sitka Text", Font.BOLD, 12));
+        title.setFont(Fonts.TITLE);
         title.setBounds(0, 0, 300, 40);
         add(title);
         
@@ -68,13 +68,13 @@ public class ComboLock extends JPanel {
         btnClose.setBackground(Color.LIGHT_GRAY);
         btnClose.setBorder(null);
         btnClose.setFocusPainted(false);
-        btnClose.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        btnClose.setFont(Fonts.CLOSE_BTN);
         btnClose.setBounds(262, 7, 28, 23);
         add(btnClose);
         
         JLabel lblWrong = new JLabel("That's the wrong combination...");
         lblWrong.setForeground(Color.RED);
-        lblWrong.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        lblWrong.setFont(Fonts.STD_PARA);
         lblWrong.setHorizontalAlignment(SwingConstants.CENTER);
         lblWrong.setBounds(0, 149, 300, 14);
         lblWrong.setVisible(false);

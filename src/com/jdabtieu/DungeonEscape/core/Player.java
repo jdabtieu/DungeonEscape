@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.core;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -89,7 +88,7 @@ public class Player extends Tile {
         
         JLabel title = new JLabel(pmt);
         title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setFont(new Font("Sitka Text", Font.PLAIN, 14));
+        title.setFont(Fonts.SUBTITLE);
         title.setBounds(0, 0, 180, 60);
         contentPane.add(title);
         
@@ -103,7 +102,7 @@ public class Player extends Tile {
             Weapon wp = weapons.get(i).clone();
             wp.setBounds(0, 10, 40, 40);
             JLabel lab = new JLabel("<html>" + wp.toString() + "</html>");
-            lab.setFont(new Font("Tahoma", Font.PLAIN, 12));
+            lab.setFont(Fonts.STD_PARA);
             lab.setBounds(40, 0, 200, 60);
             container.add(wp);
             container.add(lab);
@@ -139,6 +138,7 @@ public class Player extends Tile {
     public void changeHealth(int dh) {
         if (health + dh > 0) {
             health += dh;
+            repaintInventory();
             return;
         }
         health = 0;

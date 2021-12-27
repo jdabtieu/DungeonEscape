@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -9,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Window;
 /**
  * Creates the inventory displaying all weapons and their stats.
@@ -39,14 +39,14 @@ public class Inventory extends JPanel {
             } else {
                 wp = Main.getPlayer().getWeapons().get(i);
                 JLabel durability = new JLabel(Integer.toString(Main.getPlayer().getWeapons().get(i).getDurability()));
-                durability.setFont(new Font("Tahoma", Font.PLAIN, 11));
+                durability.setFont(Fonts.INVENTORY);
                 durability.setForeground(Color.WHITE);
                 durability.setHorizontalAlignment(SwingConstants.RIGHT);
                 durability.setBounds(i*40, 26, 40, 14);
                 add(durability);
                 
                 JLabel dmg = new JLabel(Integer.toString(Main.getPlayer().getWeapons().get(i).getDamage()));
-                dmg.setFont(new Font("Tahoma", Font.PLAIN, 11));
+                dmg.setFont(Fonts.INVENTORY);
                 dmg.setForeground(Color.WHITE);
                 dmg.setHorizontalAlignment(SwingConstants.RIGHT);
                 dmg.setBounds(i*40, 0, 40, 14);

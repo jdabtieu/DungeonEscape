@@ -88,8 +88,6 @@ public class Stage extends JPanel {
             enemyHealth -= Main.getPlayer().getActiveWeapon().attack();
             Main.getPlayer().changeHealth(-ap.attack());
             enemyHealthBar.setHealth(enemyHealth);
-            Main.getSD().repaint();
-            Main.getPlayer().repaintInventory();
             try {
                 Thread.sleep(800);
             } catch (InterruptedException e) {}

@@ -1,5 +1,6 @@
 package com.jdabtieu.DungeonEscape.core;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,13 +9,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.MenuButton;
-
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.SwingConstants;
 
 public class GameOver extends JPanel {
 
@@ -33,14 +31,14 @@ public class GameOver extends JPanel {
         
         JLabel lblDead = new JLabel("You died!");
         lblDead.setHorizontalAlignment(SwingConstants.CENTER);
-        lblDead.setFont(new Font("Sitka Text", Font.BOLD, 16));
+        lblDead.setFont(Fonts.TITLE);
         lblDead.setForeground(Color.RED);
         lblDead.setBounds(0, 240, Window.WIDTH, 20);
         add(lblDead);
         
         JLabel lblScore = new JLabel("Final Score: " + Main.getPlayer().score());
         lblScore.setHorizontalAlignment(SwingConstants.CENTER);
-        lblScore.setFont(new Font("Sitka Text", Font.BOLD, 16));
+        lblScore.setFont(Fonts.TITLE);
         lblScore.setForeground(Color.RED);
         lblScore.setBounds(0, 300, Window.WIDTH, 20);
         add(lblScore);

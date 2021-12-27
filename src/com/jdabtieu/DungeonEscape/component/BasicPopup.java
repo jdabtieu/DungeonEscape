@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 /**
@@ -36,12 +36,12 @@ public class BasicPopup extends JPanel {
         btnClose.setBackground(Color.LIGHT_GRAY);
         btnClose.setBorder(null);
         btnClose.setFocusPainted(false);
-        btnClose.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        btnClose.setFont(Fonts.CLOSE_BTN);
         btnClose.setBounds(getWidth() - 40, 10, 28, 23);
         add(btnClose);
         
         JLabel txt = new JLabel(text);
-        txt.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 10, getWidth(), getHeight() - 10);
         txt.setForeground(color);

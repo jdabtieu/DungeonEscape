@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -11,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 /**
@@ -42,7 +42,7 @@ public class QuizShow extends JPanel {
         JLabel txt = new JLabel(question);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 10, getWidth(), 40);
-        txt.setFont(new Font("Sitka Text", Font.BOLD, 16));
+        txt.setFont(Fonts.TITLE);
         add(txt);
         
         letters = new ArrayList<>();

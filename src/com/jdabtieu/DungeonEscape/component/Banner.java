@@ -1,12 +1,13 @@
 package com.jdabtieu.DungeonEscape.component;
 
+import java.awt.Color;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Window;
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
 /**
  * Boss alert banner to be displayed when entering a boss battle room.
  * 
@@ -28,7 +29,7 @@ public class Banner extends JPanel {
         setLayout(null);
         
         lblFight = new JLabel(text);
-        lblFight.setFont(new Font("Sitka Text", Font.PLAIN, 32));
+        lblFight.setFont(Fonts.LARGE);
         lblFight.setForeground(Color.WHITE);
         lblFight.setBounds(-200, 0, Window.WIDTH, 60);
         add(lblFight);

@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -22,6 +21,7 @@ import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.BasicQuiz;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Weapon;
+import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
@@ -63,7 +63,7 @@ public class Stage2 extends Stage {
             txt.setHorizontalAlignment(SwingConstants.CENTER);
             txt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             txt.setBounds(500, 1180, 148, 40);
-            txt.setFont(new Font("Sitka Text", Font.BOLD, 16));
+            txt.setFont(Fonts.TITLE);
             texts.add(txt);
         }
         try {

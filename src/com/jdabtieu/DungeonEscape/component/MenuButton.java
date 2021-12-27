@@ -1,10 +1,11 @@
 package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+
+import com.jdabtieu.DungeonEscape.core.Fonts;
 /**
  * Specifies the style for a menu button, used in the main menu and death screens.
  * 
@@ -21,7 +22,7 @@ public class MenuButton extends JButton {
         setForeground(Color.WHITE);
         setBackground(Color.GRAY);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        setFont(new Font("Sitka Text", Font.BOLD, 16));
+        setFont(Fonts.TITLE);
         setFocusPainted(false);
     }
 }

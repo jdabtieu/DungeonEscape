@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 /**
@@ -36,14 +36,14 @@ public class BasicConfirm extends JPanel {
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
         JLabel txt = new JLabel(text);
-        txt.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 11, getWidth(), getHeight() - 75);
         txt.setForeground(Color.BLACK);
         add(txt);
         
         JButton btnYes = new JButton("Yes");
-        btnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnYes.setFont(Fonts.STD_PARA);
         btnYes.setBounds(30, getHeight() - 34, 80, 24);
         add(btnYes);
         btnYes.addActionListener(e -> {
@@ -54,7 +54,7 @@ public class BasicConfirm extends JPanel {
         });
         
         JButton btnNo = new JButton("No");
-        btnNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnNo.setFont(Fonts.STD_PARA);
         btnNo.setBounds(getWidth() - 110, getHeight() - 34, 80, 24);
         add(btnNo);
         btnNo.addActionListener(e -> {

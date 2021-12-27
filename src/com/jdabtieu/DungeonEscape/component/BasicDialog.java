@@ -2,14 +2,13 @@ package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
 
-import java.awt.Font;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 
@@ -32,14 +31,14 @@ public class BasicDialog extends JPanel {
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
         JLabel txt = new JLabel(text);
-        txt.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(10, 11, getWidth() - 20, getHeight() - 75);
         txt.setForeground(Color.BLACK);
         add(txt);
         
         JButton btnYes = new JButton("OK");
-        btnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnYes.setFont(Fonts.STD_PARA);
         btnYes.setBounds(getWidth() / 2 - 40, getHeight() - 34, 80, 24);
         add(btnYes);
         btnYes.addActionListener(e -> {

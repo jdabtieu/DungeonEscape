@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -11,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 /**
@@ -46,7 +46,7 @@ public class BasicQuiz extends JPanel {
         this.ans = ans;
         
         JLabel txt = new JLabel("<html>" + text + "</html>");
-        txt.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        txt.setFont(Fonts.STD_PARA);
         txt.setBounds(5, 5, getWidth() - 10, 50);
         txt.setForeground(Color.BLACK);
         add(txt);
@@ -56,7 +56,7 @@ public class BasicQuiz extends JPanel {
             final BasicQuiz c = this;
             JLabel lab = new JLabel("<html>" + answers[i] + "</html>");
             lab.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLUE), BorderFactory.createEmptyBorder(2, 2, 2, 2)));
-            lab.setFont(new Font("Tahoma", Font.PLAIN, 12));
+            lab.setFont(Fonts.STD_PARA);
             lab.setBounds(30, 50 * i + 80, 140, 44);
             lab.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
