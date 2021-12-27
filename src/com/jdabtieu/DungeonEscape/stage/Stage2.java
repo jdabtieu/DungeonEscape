@@ -124,8 +124,7 @@ public class Stage2 extends Stage {
     private void initAmbush() {
         if (ambushInit) return;
         ambushInit = true;
-        Main.getPlayer().x = 336;
-        Main.getPlayer().y = 1000;
+        Main.getPlayer().setLocation(336, 1000);
         Main.getPlayer().pauseMovement();
         changeTile(53, 16, Ground.class);
         changeTile(53, 17, Ground.class);
