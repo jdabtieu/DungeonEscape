@@ -83,14 +83,6 @@ public class Stage extends JPanel {
         movement.interrupt();
     }
     
-    protected void pause() {
-        synchronized(this) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {}
-        }
-    }
-    
     protected void fight(int enemyHealth, HealthBar enemyHealthBar, EnemyAttackPattern ap) {
         while (enemyHealth > 0 && Main.getPlayer().getHealth() > 0) { // simulate attacks
             enemyHealth -= Main.getPlayer().getActiveWeapon().attack();
