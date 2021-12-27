@@ -26,6 +26,7 @@ import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
 import com.jdabtieu.DungeonEscape.tile.DarkGround;
 import com.jdabtieu.DungeonEscape.tile.Ground;
+import com.jdabtieu.DungeonEscape.tile.HealthPot;
 import com.jdabtieu.DungeonEscape.tile.Spike;
 import com.jdabtieu.DungeonEscape.tile.Text;
 import com.jdabtieu.DungeonEscape.tile.Tile;
@@ -129,6 +130,8 @@ public class Stage extends JPanel {
                     stage[i][j] = new Spike();
                 } else if ("C".contains(rm[i].substring(j, j+1))) {
                     stage[i][j] = new Coins();
+                } else if ("H".contains(rm[i].substring(j, j+1))) {
+                    stage[i][j] = new HealthPot();
                 } else {
                     System.err.printf("WARN: Unrecognized token at %d:%d, assuming ground\n", i, j);
                     stage[i][j] = new Ground();
