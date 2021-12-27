@@ -103,8 +103,7 @@ public class Stage1 extends Stage {
             e.printStackTrace();
         }
         Main.getPlayer().setHealth(100);
-        Main.getPlayer().x = 2760;
-        Main.getPlayer().y = 184;
+        Main.getPlayer().setLocation(2760, 184);
         Main.getPlayer().pauseMovement();
         redraw();
         Banner bb = new Banner("BOSS FIGHT!");

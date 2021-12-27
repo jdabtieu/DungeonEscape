@@ -13,11 +13,31 @@ import javax.swing.JPanel;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Player;
-
+/**
+ * The status bar for the player. This displays health, coins, and keys.
+ * 
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class StatusDisplay extends JPanel {
+    /**
+     * Label for the number of coins
+     */
     private JLabel coins;
+    
+    /**
+     * Label for number of keys
+     */
     private JLabel keys;
+    
+    /**
+     * Healthbar
+     */
     private HealthBar healthBar;
+    
+    /**
+     * Creates the status display.
+     */
     public StatusDisplay() {
         super();
         setBounds(10, 10, 160, 120);
@@ -65,12 +85,10 @@ public class StatusDisplay extends JPanel {
         repaint();
     }
     
+    @Override
     public void repaint() {
         Player p = Main.getPlayer();
-        if (healthBar != null) {
-            healthBar.setValue(p.getHealth());
-            healthBar.setString(Integer.toString(p.getHealth()));
-        }
+        if (healthBar != null) healthBar.setValue(p.getHealth());
         if (coins != null) coins.setText(Integer.toString(p.coins));
         if (keys != null) keys.setText(Integer.toString(p.keys));
         super.repaint();

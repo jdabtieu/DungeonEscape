@@ -10,11 +10,15 @@ import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Window;
-
+/**
+ * Creates the inventory displaying all weapons and their stats.
+ * 
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class Inventory extends JPanel {
-
     /**
-     * Create the panel.
+     * Create the container.
      */
     public Inventory() {
         setBounds(Window.WIDTH / 2 - 60, Window.HEIGHT - 100, 120, 40);
@@ -23,6 +27,7 @@ public class Inventory extends JPanel {
         repaint();
     }
     
+    @Override
     public void repaint() {
         removeAll();
         super.repaint();
@@ -48,7 +53,6 @@ public class Inventory extends JPanel {
                 add(dmg);
             }
             wp.setBounds(i*40, 0, 40, 40);
-            wp.setBackground(new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256)));
             wp.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
             add(wp);
         }

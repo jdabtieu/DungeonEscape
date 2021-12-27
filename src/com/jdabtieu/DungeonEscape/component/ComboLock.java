@@ -16,12 +16,21 @@ import javax.swing.text.DocumentFilter;
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
-
+/**
+ * ComboLock is used to display a simple 6-digit combination lock for stage 1.
+ * 
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class ComboLock extends JPanel {
+    /**
+     * Whether the user's answer is correct
+     */
     private boolean correct;
 
     /**
-     * Create the panel.
+     * Create the panel
+     * @param combo String representation of the correct combination
      */
     public ComboLock(String combo) {
         correct = false;
@@ -30,6 +39,7 @@ public class ComboLock extends JPanel {
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         
+        // Force only numeric digits, with a length up to 6
         JTextField input = new JTextField();
         ((AbstractDocument) input.getDocument()).setDocumentFilter(new DocumentFilter() {
             public void replace(FilterBypass fb, int offset, int len, String str, AttributeSet a) throws BadLocationException {
@@ -95,6 +105,10 @@ public class ComboLock extends JPanel {
         Main.getContentPane().add(this, Layer.POPUP, 0);
     }
     
+    /**
+     * Wait for the user to exit or enter the correct combination
+     * @return  whether the user entered the correct combination
+     */
     public boolean run() {
         synchronized(this) {
             try {

@@ -45,4 +45,10 @@ public class HealthBar extends JProgressBar {
         setValue(newHealth);
         setString(Integer.toString(newHealth));
     }
+    
+    @Override
+    public void setValue(int val) {
+        super.setValue(val);
+        setString(Integer.toString(val));
+    }
 }

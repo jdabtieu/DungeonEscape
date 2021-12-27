@@ -12,10 +12,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- * <p>A class storing details about a weapon
+ * Weapon stores details about a weapon. A weapon deals 1 damage if it has no durability
+ * left, and weapons cannot be switched out during battle.
  * 
- * <p>A weapon deals 0 damage if it has no durability left, and weapons cannot
- * be switched out during battle.
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
  */
 public class Weapon extends JLabel implements Cloneable {
     /**
@@ -38,6 +39,13 @@ public class Weapon extends JLabel implements Cloneable {
      */
     private final String fileName;
     
+    /**
+     * Create a weapon to be displayed
+     * @param name          name of the weapon
+     * @param damage        damage the weapon deals
+     * @param durability    durability of the weapon
+     * @param fileName      file path to find icon
+     */
     public Weapon(final String name, final int damage, final int durability, final String fileName) {
         this.damage = damage;
         this.durability = durability;
@@ -52,16 +60,16 @@ public class Weapon extends JLabel implements Cloneable {
             Graphics2D g = (Graphics2D) img.getGraphics();
             g.setStroke(new BasicStroke(4));
             g.setColor(Color.RED);
-            g.drawLine(0, 0, 40, 40);
-            g.drawLine(0, 40, 40, 0);
+            g.drawLine(0, 0, 39, 39);
+            g.drawLine(0, 39, 39, 0);
             setIcon(new ImageIcon(img));
         }
     }
     
     /**
-     * <p>Calculates the score of the current weapon.
+     * Calculates the score of the current weapon.
+     * Mathematically, it is half the product of the damage and durability.
      * 
-     * <p>Mathematically, it is half the product of the damage and durability
      * @return  this weapon's score
      */
     public int score() {
@@ -70,6 +78,7 @@ public class Weapon extends JLabel implements Cloneable {
     
     /**
      * Returns the durability of this weapon
+     * 
      * @return this weapon's durability
      */
     public int getDurability() {
@@ -78,6 +87,7 @@ public class Weapon extends JLabel implements Cloneable {
     
     /**
      * Returns the damage of this weapon
+     * 
      * @return this weapon's damage
      */
     public int getDamage() {
@@ -89,6 +99,7 @@ public class Weapon extends JLabel implements Cloneable {
      * 100-120% of the weapon's base damage for a normal hit. There is a 30% chance of a critical
      * hit, which would deal between 220-240% of the weapon's base damage. If the weapon has no
      * durability remaining, it deals 1 (fist) damage.
+     * 
      * @return  how much damage should be dealt
      */
     public int attack() {

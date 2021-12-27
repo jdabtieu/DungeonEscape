@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -12,16 +13,33 @@ import javax.swing.SwingConstants;
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
-import com.jdabtieu.DungeonEscape.tile.Text;
-
+/**
+ * QuizShow is used to display a fill-in-the-blank question for the stage 3 quiz show.
+ * 
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class QuizShow extends JPanel {
+    /**
+     * The correct answer, without spaces, all lowercase
+     */
     private String ans;
+    
+    /**
+     * A list of all the input fields, in order
+     */
     private ArrayList<JTextField> letters;
-    public QuizShow(String title, String ans) {
+    
+    /**
+     * Creates the question panel
+     * @param question  the question to be asked
+     * @param ans       the answer to the question
+     */
+    public QuizShow(String question, String ans) {
         setBounds(Window.WIDTH / 4, Window.HEIGHT / 2 - 100, Window.WIDTH / 2, 200);
         setLayout(null);
         setBackground(Color.GRAY);
-        Text txt = new Text(title, 0, 10);
+        JLabel txt = new JLabel(question);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 10, getWidth(), 40);
         txt.setFont(new Font("Sitka Text", Font.BOLD, 16));
@@ -49,6 +67,10 @@ public class QuizShow extends JPanel {
         Main.getContentPane().add(this, Layer.POPUP, 0);
     }
     
+    /**
+     * Waits for the user to submit an answer, and return whether it's correct
+     * @return  whether the user's answer is correct
+     */
     public boolean selection() {
         synchronized(this) {
             try {
