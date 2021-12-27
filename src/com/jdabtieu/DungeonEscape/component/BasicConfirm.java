@@ -69,6 +69,7 @@ public class BasicConfirm extends JPanel {
      * @return  whether the user clicked Yes
      */
     public boolean selection() {
+        boolean movementPaused = Main.getPlayer().movementPaused();
         Main.getPlayer().pauseMovement();
         setVisible(true);
         try {
@@ -80,7 +81,7 @@ public class BasicConfirm extends JPanel {
             selection = false;
         }
         
-        Main.getPlayer().unpauseMovement();
+        if (!movementPaused) Main.getPlayer().unpauseMovement();
         Main.getContentPane().remove(this);
         Main.getContentPane().repaint();
         return selection;
