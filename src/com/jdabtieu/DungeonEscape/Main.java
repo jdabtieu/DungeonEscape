@@ -113,15 +113,13 @@ public class Main {
                 swapWindow(Stage3Part2.class, 1);
                 
                 pause(); // unpaused by getting to the credits scene in stage 3
-                System.out.println("E");
+                
                 // Player won! Credits!!
-                drawSafe(() -> {
-                    currScene.setVisible(false);
-                    getContentPane().remove(currScene);
-                    currScene = new Credits();
-                    getContentPane().add(currScene, Layer.MAP, 0);
-                    ((Credits) currScene).animate();
-                });
+                currScene.setVisible(false);
+                getContentPane().remove(currScene);
+                currScene = new Credits();
+                getContentPane().add(currScene, Layer.MAP, 0);
+                ((Credits) currScene).animate();
                 
                 throw new GameOverException();
             } catch (GameOverException e) {

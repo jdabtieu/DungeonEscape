@@ -83,21 +83,21 @@ public class Player extends Tile {
         boolean movementPaused = pauseMovement;
         pauseMovement = true;
         JPanel contentPane = new JPanel();
-        contentPane.setBounds(Window.WIDTH / 2 - 90, Window.HEIGHT / 2 - 120, 180, 240);
+        contentPane.setBounds(Window.WIDTH / 2 - 90, Window.HEIGHT / 2 - 150, 180, 300);
         contentPane.setLayout(null);
         contentPane.setBackground(Color.GREEN);
         
         JLabel title = new JLabel(pmt);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font("Sitka Text", Font.PLAIN, 14));
-        title.setBounds(0, 0, 180, 30);
+        title.setBounds(0, 0, 180, 60);
         contentPane.add(title);
         
         for (int i = 0; i < weapons.size(); i++) {
             final int f = i;
             JPanel container = new JPanel();
             container.setLayout(null);
-            container.setBounds(20, 60 * i + 30, 140, 60);
+            container.setBounds(20, 60 * i + 60, 140, 60);
             container.setBorder(BorderFactory.createLineBorder(Color.BLUE));
             Weapon wp = weapons.get(i).clone();
             wp.setBounds(0, 10, 40, 40);

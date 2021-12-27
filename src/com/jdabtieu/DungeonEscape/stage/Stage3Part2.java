@@ -195,6 +195,9 @@ public class Stage3Part2 extends Stage {
             creditsbg.step(i);
         }
         finish();
+        Main.getPlayer().setVisible(false);
+        for (Text t : texts) Main.getContentPane().remove(t);
+        Main.getContentPane().remove(creditsbg);
         synchronized(Main.mon) {
             Main.mon.notify();
         }
