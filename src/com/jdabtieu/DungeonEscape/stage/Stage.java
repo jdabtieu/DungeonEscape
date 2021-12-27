@@ -37,6 +37,7 @@ public class Stage extends JPanel {
     protected static ArrayList<Text> texts;
     private HashSet<Character> keysPressed;
     private static final int KBD_POLL_RATE = 50;
+    private static final int KBD_POLL_DELAY = 1000 / KBD_POLL_RATE;
     private Thread movement;
 
     /**
@@ -54,9 +55,8 @@ public class Stage extends JPanel {
         registerKbd();
         movement = new Thread(() -> {
 			long time = System.currentTimeMillis();
-			final int delay = 1000 / KBD_POLL_RATE;
             while (true) {
-                long delayTime = delay + time - System.currentTimeMillis();
+                long delayTime = KBD_POLL_DELAY + time - System.currentTimeMillis();
                 try {
                     Thread.sleep(delayTime);
                 } catch (InterruptedException e) {
@@ -127,7 +127,7 @@ public class Stage extends JPanel {
         }
     }
     
-    public void redraw() {
+    protected void redraw() {
         Main.drawSafe(() -> {
             setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
             for (int i = 0; i < stage.length; i++) {
@@ -150,7 +150,7 @@ public class Stage extends JPanel {
         });
     }
     
-    public Point testCollision(int Ox, int Oy) {
+    private Point testCollision(int Ox, int Oy) {
         int i1 = Main.getPlayer().x, i2 = i1;
         int j1 = Main.getPlayer().y, j2 = j1;
         if (Ox < 0) {
@@ -263,7 +263,7 @@ public class Stage extends JPanel {
         movePlayer(wx, wy);
     }
     
-    public void movePlayer(int wx, int wy) {
+    private void movePlayer(int wx, int wy) {
         wx *= 4;
         wy *= 4;
         Point offsetX = testCollision(wx, 0);
