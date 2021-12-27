@@ -13,13 +13,30 @@ import javax.swing.border.CompoundBorder;
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
+/**
+ * BasicQuiz is used to display a multiple-choice quiz question, for the stage 2 interview
+ * 
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class BasicQuiz extends JPanel {
-    private Object mon;
+    /**
+     * Stores the index of the correct answer
+     */
     private int ans;
+    
+    /**
+     * Stores the index of the user-selected answer
+     */
     private int selection;
     
-    public BasicQuiz(String text, int ans, String... answers) { 
-        mon = new Object();
+    /**
+     * Creates a quiz question
+     * @param text      the question
+     * @param ans       the index of the correct answer
+     * @param answers   a list of answer choices
+     */
+    public BasicQuiz(String text, int ans, String... answers) {
         setBounds(Window.WIDTH / 2 - 100, Window.HEIGHT / 2 - 150, 200, 300);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
@@ -28,7 +45,7 @@ public class BasicQuiz extends JPanel {
         
         this.ans = ans;
         
-        JLabel txt = new JLabel("<html>" + text + "</html");
+        JLabel txt = new JLabel("<html>" + text + "</html>");
         txt.setFont(new Font("Tahoma", Font.PLAIN, 12));
         txt.setBounds(5, 5, getWidth() - 10, 50);
         txt.setForeground(Color.BLACK);
@@ -36,15 +53,16 @@ public class BasicQuiz extends JPanel {
         
         for (int i = 0; i < answers.length; i++) {
             final int f = i;
+            final BasicQuiz c = this;
             JLabel lab = new JLabel("<html>" + answers[i] + "</html>");
             lab.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLUE), BorderFactory.createEmptyBorder(2, 2, 2, 2)));
             lab.setFont(new Font("Tahoma", Font.PLAIN, 12));
             lab.setBounds(30, 50 * i + 80, 140, 44);
             lab.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    synchronized(mon) {
+                    synchronized(c) {
                         selection = f;
-                        mon.notify();
+                        c.notify();
                     }
                 }
             });
@@ -52,11 +70,15 @@ public class BasicQuiz extends JPanel {
         }
     }
     
+    /**
+     * Displays the question and waits for the user to select an answer
+     * @return  whether the player's answer is correct
+     */
     public boolean selection() {
         setVisible(true);
         try {
-            synchronized(mon) {
-                mon.wait();
+            synchronized(this) {
+                wait();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
