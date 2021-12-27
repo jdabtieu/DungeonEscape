@@ -16,7 +16,6 @@ import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.BasicConfirm;
 import com.jdabtieu.DungeonEscape.component.BasicDialog;
-import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.QuizShow;
 import com.jdabtieu.DungeonEscape.core.Layer;
@@ -126,8 +125,7 @@ public class Stage3Part2 extends Stage {
         healthBar.setBounds(240, 100, 80, 20);
         Main.getContentPane().add(healthBar, 3, 0);
         
-        Main.getPlayer().weaponSelect(mon);
-        pause();
+        Main.getPlayer().weaponSelect();
         
         fight(850, healthBar, () -> (int) (Math.random() + 1.7));
         new BasicDialog("You defeated the boss! 5000 coins acquired!").selection();

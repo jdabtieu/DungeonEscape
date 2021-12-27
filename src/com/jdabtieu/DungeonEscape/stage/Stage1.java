@@ -124,8 +124,7 @@ public class Stage1 extends Stage {
         healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
         Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
         
-        Main.getPlayer().weaponSelect(mon);
-        pause();
+        Main.getPlayer().weaponSelect();
         
         fight(30, healthBar, () -> (int) (Math.random() + 0.3) * (int) (Math.random() * 5 + 1));
         Main.getPlayer().unpauseMovement();

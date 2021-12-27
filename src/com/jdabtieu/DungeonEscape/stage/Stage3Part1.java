@@ -78,8 +78,8 @@ public class Stage3Part1 extends Stage {
             healthBars[i].setBounds(enemy.getX() + offsets[i].x, enemy.getY() + offsets[i].y, 80, 20);
             Main.getContentPane().add(healthBars[i], Layer.ENEMY, 0);
         }
-        Main.getPlayer().weaponSelect(mon);
-        pause();
+        Main.getPlayer().weaponSelect();
+        
         for (int i = 0; i < offsets.length; i++) {
             fight(11, healthBars[i], () -> (int) (Math.random() + 0.5) * (int) (Math.random() * 5 + 1));
         }

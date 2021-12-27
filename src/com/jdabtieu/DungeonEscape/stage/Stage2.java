@@ -157,8 +157,8 @@ public class Stage2 extends Stage {
             healthBars[i].setBounds(enemy.getX() + offsets[i].x, enemy.getY() + offsets[i].y, 80, 20);
             Main.getContentPane().add(healthBars[i], Layer.ENEMY, 0);
         }
-        Main.getPlayer().weaponSelect(mon);
-        pause();
+        Main.getPlayer().weaponSelect();
+        
         for (int i = 0; i < offsets.length; i++) {
             fight(8, healthBars[i], () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 5 + 1));
         }
@@ -264,8 +264,7 @@ public class Stage2 extends Stage {
         healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
         Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
         
-        Main.getPlayer().weaponSelect(mon);
-        pause();
+        Main.getPlayer().weaponSelect();
         
         fight(100, healthBar, () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 8 + 1));
         new BasicPopup("You defeated the boss!", Color.BLACK);

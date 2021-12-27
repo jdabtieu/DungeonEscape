@@ -33,7 +33,6 @@ import com.jdabtieu.DungeonEscape.tile.Triggerable;
 import com.jdabtieu.DungeonEscape.tile.Wall;
 
 public class Stage extends JPanel {
-    public Object mon;
     protected static Tile[][] stage;
     protected static ArrayList<Text> texts;
     private HashSet<Character> keysPressed;
@@ -49,7 +48,6 @@ public class Stage extends JPanel {
         setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
         setBackground(Color.black);
         setLayout(null);
-        mon = new Object();
         stage = new Tile[0][0];
         texts = new ArrayList<>();
         keysPressed = new HashSet<>();
@@ -86,9 +84,9 @@ public class Stage extends JPanel {
     }
     
     protected void pause() {
-        synchronized(mon) {
+        synchronized(this) {
             try {
-                mon.wait();
+                this.wait();
             } catch (InterruptedException e) {}
         }
     }

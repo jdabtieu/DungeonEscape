@@ -75,11 +75,11 @@ public class Player extends Tile {
         return pauseMovement;
     }
     
-    public void weaponSelect(Object monitor) {
-        weaponSelect(monitor, "Choose a Weapon");
+    public void weaponSelect() {
+        weaponSelect("Choose a Weapon");
     }
 
-    public void weaponSelect(Object monitor, String pmt) {
+    public void weaponSelect(String pmt) {
         boolean movementPaused = pauseMovement;
         pauseMovement = true;
         JPanel contentPane = new JPanel();
@@ -95,6 +95,7 @@ public class Player extends Tile {
         
         for (int i = 0; i < weapons.size(); i++) {
             final int f = i;
+            final Object mon = this;
             JPanel container = new JPanel();
             container.setLayout(null);
             container.setBounds(20, 60 * i + 60, 140, 60);
@@ -112,14 +113,21 @@ public class Player extends Tile {
                     pauseMovement = movementPaused;
                     contentPane.setVisible(false);
                     Main.getContentPane().remove(contentPane);
-                    synchronized(monitor) {
-                        monitor.notify();
+                    synchronized(mon) {
+                        mon.notify();
                     }
                 }
             });
             contentPane.add(container);
         }
         Main.getContentPane().add(contentPane, Layer.POPUP, 0);
+        synchronized(this) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public int score() {
@@ -140,7 +148,7 @@ public class Player extends Tile {
     public void addWeapon(Weapon wp) {
         weapons.add(wp);
         if (weapons.size() > 3) {
-            weaponSelect(this, "<html>You found a new weapon,<br>but you can only hold 3.<br>Choose one to discard.</html>");
+            weaponSelect("<html>You found a new weapon,<br>but you can only hold 3.<br>Choose one to discard.</html>");
             try {
                 synchronized(this) {
                     wait();                    
