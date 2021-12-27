@@ -44,7 +44,7 @@ public class Player extends Tile {
         inv = new Inventory();
         pauseMovement = false;
         setVisible(false);
-        Main.getContentPane().add(inv, 5, 0);
+        Main.getContentPane().add(inv, 3, 0);
     }
     
     public void setInventoryVisible(boolean aFlag) {

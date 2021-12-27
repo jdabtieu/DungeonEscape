@@ -28,7 +28,6 @@ import com.jdabtieu.DungeonEscape.tile.Wall;
 
 public class Stage3Part2 extends Stage {
     private boolean bossInit;
-    private boolean bossDone;
     private boolean activeGameShow;
     /**
      * Create the frame.
@@ -103,7 +102,6 @@ public class Stage3Part2 extends Stage {
     private void initBoss() {
         if (bossInit) return;
         bossInit = true;
-        bossDone = false;
         Main.getPlayer().pauseMovement();
         changeTile(92, 62, Wall.class);
         changeTile(92, 63, Wall.class);
@@ -196,7 +194,7 @@ public class Stage3Part2 extends Stage {
         CreditsBG creditsbg = new CreditsBG();
         creditsbg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
         creditsbg.setBackground(Color.BLACK);
-        Main.getContentPane().add(creditsbg, 10, 0);
+        Main.getContentPane().add(creditsbg, 7, 0);
         for (int i = 0; i < 128; i++) {
             Main.safeSleep(50);
             creditsbg.step(i);

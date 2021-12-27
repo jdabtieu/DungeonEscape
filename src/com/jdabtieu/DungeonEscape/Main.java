@@ -84,7 +84,7 @@ public class Main {
                     // Initialize new game variables
                     gameOver = false;
                     currScene = new MainMenu();
-                    me.getContentPane().add(currScene, 1, 0);
+                    getContentPane().add(currScene, 1, 0);
                     player = new Player();
                     sd = new StatusDisplay();
                     getContentPane().add(sd, 3, 0);
@@ -111,7 +111,7 @@ public class Main {
                 
                 swapWindow(Stage3Part2.class, 1);
                 
-                pause();
+                pause(); // unpaused by getting to the credits scene in stage 3
                 
                 // Player won! Credits!!
                 currScene.setVisible(false);
@@ -133,7 +133,7 @@ public class Main {
     
     /**
      * Gets a reference to the window's content pane
-     * @return  the content pane
+     * @return  the current window's content pane
      */
     public static Container getContentPane() {
         return me.getContentPane();
@@ -169,8 +169,8 @@ public class Main {
     public static void triggerLoss() {
         player.setVisible(false);
         sd.setVisible(false);
-        me.getContentPane().remove(player);
-        me.getContentPane().remove(sd);
+        getContentPane().remove(player);
+        getContentPane().remove(sd);
         
         // Stop keyboard listener
         if (currScene instanceof Stage) {
@@ -187,7 +187,7 @@ public class Main {
     private static void swapWindow(Class<?> newWindow, int layer) {
         drawSafe(() -> {
             currScene.setVisible(false);
-            me.getContentPane().remove(currScene);
+            getContentPane().remove(currScene);
             
             try {
                 currScene = (JPanel) newWindow.getConstructors()[0].newInstance();
@@ -196,7 +196,7 @@ public class Main {
                 e.printStackTrace();
                 System.exit(-1);
             }
-            me.getContentPane().add(currScene, layer, 0);
+            getContentPane().add(currScene, layer, 0);
         });
     }
     
