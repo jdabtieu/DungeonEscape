@@ -274,9 +274,6 @@ public class Stage extends JPanel {
         if (keysPressed.contains('d')) wx++;
         if (wx == 0 && wy == 0) return;
         movePlayer(wx, wy);
-        if (DEBUG_FLAGS.PRINT_LOCATION) {
-            System.out.println(Main.getPlayer().x + " " + Main.getPlayer().y);
-        }
     }
     
     public void movePlayer(int wx, int wy) {

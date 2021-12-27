@@ -15,14 +15,15 @@ import javax.swing.text.DocumentFilter;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Window;
-import com.jdabtieu.DungeonEscape.stage.Stage1;
 
-public class Stage1_ComboLock extends JPanel {
+public class ComboLock extends JPanel {
+    private boolean correct;
 
     /**
      * Create the panel.
      */
-    public Stage1_ComboLock(Stage1 stage) {
+    public ComboLock(String combo) {
+        correct = false;
         Main.getPlayer().pauseMovement();
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 100, 300, 200);
         setBackground(Color.LIGHT_GRAY);
@@ -72,17 +73,35 @@ public class Stage1_ComboLock extends JPanel {
             setVisible(false);
             Main.getContentPane().remove(this);
             Main.getPlayer().unpauseMovement();
+            synchronized(this) {
+                correct = false;
+                notify();
+            }
         });
 
         input.addActionListener(e -> {
-            if (!input.getText().equals("142342")) {
+            if (!input.getText().equals(combo)) {
                 lblWrong.setVisible(true);
             } else {
                 setVisible(false);
                 Main.getContentPane().remove(this);
                 Main.getPlayer().unpauseMovement();
-                stage.correctCombo();
+                synchronized(this) {
+                    correct = true;
+                    notify();
+                }
             }
         });
+    }
+    
+    public boolean run() {
+        synchronized(this) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return correct;
     }
 }

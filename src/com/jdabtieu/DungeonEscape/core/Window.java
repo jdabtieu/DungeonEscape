@@ -7,12 +7,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 /**
- * Main window for the game. The content pane is layered, and the following components should use the following layers:
- * 7: stage 3 ending credits scene
- * 5: popups / any other pop-up window that the player can interact with
- * 3: status display, inventory, enemies, enemy health bars
- * 2: player, boss banner
- * 1: background, map
+ * Main window for the game. The content pane is layered, and components should use the layers specified by LAYER.java.
  * 
  * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
  * @date 2022-01-01

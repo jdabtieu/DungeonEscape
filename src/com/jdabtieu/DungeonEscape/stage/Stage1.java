@@ -10,10 +10,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import com.jdabtieu.DungeonEscape.Main;
-import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.Banner;
+import com.jdabtieu.DungeonEscape.component.BasicPopup;
+import com.jdabtieu.DungeonEscape.component.ComboLock;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
-import com.jdabtieu.DungeonEscape.component.Stage1_ComboLock;
 import com.jdabtieu.DungeonEscape.component.Weapon;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
@@ -59,7 +59,11 @@ public class Stage1 extends Stage {
         stage[3][14] = new HiddenSensor(() -> {
             if (comboLockEnabled) {
                 comboLockEnabled = false;
-                new Stage1_ComboLock(this);
+                if (new ComboLock("142342").run()) {
+                    changeTile(2, 14, Ground.class);
+                    changeTile(3, 14, Ground.class);
+                    redraw();
+                }
             }
         });
         
@@ -165,12 +169,6 @@ public class Stage1 extends Stage {
                 }
             }
         });
-        redraw();
-    }
-    
-    public void correctCombo() {
-        changeTile(2, 14, Ground.class);
-        changeTile(3, 14, Ground.class);
         redraw();
     }
 }
