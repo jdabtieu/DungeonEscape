@@ -47,6 +47,10 @@ public class Player extends Tile {
         Main.getContentPane().add(inv, 5, 0);
     }
     
+    public void setInventoryVisible(boolean aFlag) {
+        inv.setVisible(aFlag);
+    }
+    
     public boolean isInterviewComplete() {
         return interviewComplete;
     }

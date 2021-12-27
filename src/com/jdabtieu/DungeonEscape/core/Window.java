@@ -1,5 +1,6 @@
 package com.jdabtieu.DungeonEscape.core;
 
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.IOException;
 
@@ -21,5 +22,6 @@ public class Window extends JFrame {
         setLocationRelativeTo(null);
         setContentPane(new JLayeredPane());
         getContentPane().setLayout(null);
+        getContentPane().setBackground(Color.BLACK);
     }
 }
