@@ -22,6 +22,7 @@ import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.BasicQuiz;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Weapon;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
 import com.jdabtieu.DungeonEscape.tile.Ground;
@@ -136,7 +137,7 @@ public class Stage2 extends Stage {
             e.printStackTrace();
         }
         Banner bb = new Banner("AMBUSH!");
-        Main.getContentPane().add(bb, 2, 0);
+        Main.getContentPane().add(bb, Layer.ENEMY, 0);
         bb.animate();
         Main.getContentPane().remove(bb);
         JLabel enemy;
@@ -146,7 +147,7 @@ public class Stage2 extends Stage {
             enemy = new JLabel();
         }
         enemy.setBounds(156, 90, 740, 320);
-        Main.getContentPane().add(enemy, 3, 0);
+        Main.getContentPane().add(enemy, Layer.ENEMY, 0);
         Point[] offsets = {new Point(115, 4), new Point(38, 60), new Point(40, 190),
                            new Point(172, 161), new Point(260, 63), new Point(304, 184),
                            new Point(375, 16), new Point(520, 72), new Point(483, 177)};
@@ -154,7 +155,7 @@ public class Stage2 extends Stage {
         for (int i = 0; i < offsets.length; i++) {
             healthBars[i] = new HealthBar(8);
             healthBars[i].setBounds(enemy.getX() + offsets[i].x, enemy.getY() + offsets[i].y, 80, 20);
-            Main.getContentPane().add(healthBars[i], 3, 0);
+            Main.getContentPane().add(healthBars[i], Layer.ENEMY, 0);
         }
         Main.getPlayer().weaponSelect(mon);
         pause();
@@ -246,7 +247,7 @@ public class Stage2 extends Stage {
         Main.getPlayer().pauseMovement();
         redraw();
         Banner bb = new Banner("BOSS FIGHT!");
-        Main.getContentPane().add(bb, 2, 0);
+        Main.getContentPane().add(bb, Layer.ENEMY, 0);
         bb.animate();
         Main.getContentPane().remove(bb);
         
@@ -257,11 +258,11 @@ public class Stage2 extends Stage {
             boss = new JLabel();
         }
         boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
-        Main.getContentPane().add(boss, 3, 0);
+        Main.getContentPane().add(boss, Layer.ENEMY, 0);
         
         HealthBar healthBar = new HealthBar(100);
         healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
-        Main.getContentPane().add(healthBar, 3, 0);
+        Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
         
         Main.getPlayer().weaponSelect(mon);
         pause();

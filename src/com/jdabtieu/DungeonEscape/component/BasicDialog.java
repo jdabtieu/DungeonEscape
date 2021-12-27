@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 
 /**
@@ -28,7 +29,7 @@ public class BasicDialog extends JPanel {
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         setVisible(false);
-        Main.getContentPane().add(this, 5, 0);
+        Main.getContentPane().add(this, Layer.POPUP, 0);
         
         JLabel txt = new JLabel(text);
         txt.setFont(new Font("Tahoma", Font.PLAIN, 12));

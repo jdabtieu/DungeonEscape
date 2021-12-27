@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 /**
  * BasicPopup is used to display a simple text-based popup in the popup layer.
@@ -29,7 +30,7 @@ public class BasicPopup extends JPanel {
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 75, 300, 150);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
-        Main.getContentPane().add(this, 5, 0);
+        Main.getContentPane().add(this, Layer.POPUP, 0);
         
         JButton btnClose = new JButton("X");
         btnClose.setBackground(Color.LIGHT_GRAY);

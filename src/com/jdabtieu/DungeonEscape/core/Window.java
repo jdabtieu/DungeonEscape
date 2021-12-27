@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 /**
- * Main window for the game. The content pane is layered, and components should use the layers specified by LAYER.java.
+ * Main window for the game. The content pane is layered, and components should use the layers specified by Layer.java.
  * 
  * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
  * @date 2022-01-01

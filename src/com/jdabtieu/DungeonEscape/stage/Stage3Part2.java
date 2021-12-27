@@ -18,7 +18,8 @@ import com.jdabtieu.DungeonEscape.component.BasicConfirm;
 import com.jdabtieu.DungeonEscape.component.BasicDialog;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
-import com.jdabtieu.DungeonEscape.component.Stage3_QuizShow;
+import com.jdabtieu.DungeonEscape.component.QuizShow;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Ground;
 import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
@@ -59,12 +60,6 @@ public class Stage3Part2 extends Stage {
         stage[94][64] = new Sensor(() -> initBoss());
         
         finishConstructor();
-        
-        // TODO debug
-        stage[100][29] = new Sensor(() -> {
-        Main.getPlayer().setLocation(1260, 1840);
-        endScene();
-        });
     }
     
     private void initGameShow() {
@@ -73,13 +68,13 @@ public class Stage3Part2 extends Stage {
         if (Main.getPlayer().keys < 1) {
             new BasicDialog("Sorry, but admission requires one key.").selection();
             return;
-        } else if (!new BasicConfirm("Do you want to use one key to enter the game show?").selection()) {
+        } else if (!new BasicConfirm("<html>Do you want to use one key<br>to enter the game show?</html>").selection()) {
             return;
         }
         Main.getPlayer().keys--;
         Main.getSD().repaint();
         Main.getPlayer().pauseMovement();
-        if (new Stage3_QuizShow("Guess the Phrase (80s Song Lyrics)", "never gonna give you up").selection()) {
+        if (new QuizShow("Guess the Phrase (80s Song Lyrics)", "never gonna give you up").selection()) {
             new BasicDialog("That's correct! You won 1200 coins.").selection();
             Main.getPlayer().coins += 1200;
             Main.getSD().repaint();
@@ -87,7 +82,7 @@ public class Stage3Part2 extends Stage {
             new BasicDialog("Sorry, that's not the answer.").selection();
         }
         
-        if (new Stage3_QuizShow("Finish the word (clues were in stage 2)", "vector").selection()) {
+        if (new QuizShow("Finish the word (clues were in stage 2)", "vector").selection()) {
             new BasicDialog("That's correct! You won 1200 coins.").selection();
             Main.getPlayer().coins += 1200;
             Main.getSD().repaint();
@@ -103,9 +98,9 @@ public class Stage3Part2 extends Stage {
         if (bossInit) return;
         bossInit = true;
         Main.getPlayer().pauseMovement();
-        changeTile(92, 62, Wall.class);
-        changeTile(92, 63, Wall.class);
-        changeTile(92, 64, Wall.class);
+        changeTile(96, 62, Wall.class);
+        changeTile(96, 63, Wall.class);
+        changeTile(96, 64, Wall.class);
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
@@ -114,7 +109,7 @@ public class Stage3Part2 extends Stage {
         Main.getPlayer().setLocation(1260, 1840);
         redraw();
         Banner bb = new Banner("BOSS FIGHT!");
-        Main.getContentPane().add(bb, 2, 0);
+        Main.getContentPane().add(bb, Layer.ENEMY, 0);
         bb.animate();
         Main.getContentPane().remove(bb);
         
@@ -125,7 +120,7 @@ public class Stage3Part2 extends Stage {
             boss = new JLabel();
         }
         boss.setBounds(200, 130, 160, 160);
-        Main.getContentPane().add(boss, 3, 0);
+        Main.getContentPane().add(boss, Layer.ENEMY, 0);
         
         HealthBar healthBar = new HealthBar(850);
         healthBar.setBounds(240, 100, 80, 20);
@@ -135,7 +130,7 @@ public class Stage3Part2 extends Stage {
         pause();
         
         fight(850, healthBar, () -> (int) (Math.random() + 1.7));
-        new BasicPopup("You defeated the boss! 5000 coins acquired!", Color.BLACK);
+        new BasicDialog("You defeated the boss! 5000 coins acquired!").selection();
         Main.getPlayer().coins += 5000;
         Main.getSD().repaint();
         healthBar.setVisible(false);
@@ -182,7 +177,7 @@ public class Stage3Part2 extends Stage {
             texts[4] = new Text("3 years, I think?", 100, -825);
             texts[5] = new Text("Well, time to catch up on what I missed...", 100, -1025);
         }
-        for (Text t : texts) Main.getContentPane().add(t, 7, 0);
+        for (Text t : texts) Main.getContentPane().add(t, Layer.STAGE3_END, 0);
         for (int i = 0; i < 2000; i++) {
             Main.safeSleep(10);
             for (Text t : texts) {
@@ -194,7 +189,7 @@ public class Stage3Part2 extends Stage {
         CreditsBG creditsbg = new CreditsBG();
         creditsbg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
         creditsbg.setBackground(Color.BLACK);
-        Main.getContentPane().add(creditsbg, 7, 0);
+        Main.getContentPane().add(creditsbg, Layer.STAGE3_END, 0);
         for (int i = 0; i < 128; i++) {
             Main.safeSleep(50);
             creditsbg.step(i);

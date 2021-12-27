@@ -13,6 +13,7 @@ import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.tile.Ground;
 import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
 import com.jdabtieu.DungeonEscape.tile.Text;
@@ -57,7 +58,7 @@ public class Stage3Part1 extends Stage {
             e.printStackTrace();
         }
         Banner bb = new Banner("AMBUSH!");
-        Main.getContentPane().add(bb, 2, 0);
+        Main.getContentPane().add(bb, Layer.ENEMY, 0);
         bb.animate();
         Main.getContentPane().remove(bb);
         JLabel enemy;
@@ -67,7 +68,7 @@ public class Stage3Part1 extends Stage {
             enemy = new JLabel();
         }
         enemy.setBounds(156, 90, 740, 320);
-        Main.getContentPane().add(enemy, 3, 0);
+        Main.getContentPane().add(enemy, Layer.ENEMY, 0);
         Point[] offsets = {new Point(115, 4), new Point(38, 60), new Point(40, 190),
                            new Point(172, 161), new Point(260, 63), new Point(304, 184),
                            new Point(375, 16), new Point(520, 72), new Point(483, 177)};
@@ -75,7 +76,7 @@ public class Stage3Part1 extends Stage {
         for (int i = 0; i < offsets.length; i++) {
             healthBars[i] = new HealthBar(11);
             healthBars[i].setBounds(enemy.getX() + offsets[i].x, enemy.getY() + offsets[i].y, 80, 20);
-            Main.getContentPane().add(healthBars[i], 3, 0);
+            Main.getContentPane().add(healthBars[i], Layer.ENEMY, 0);
         }
         Main.getPlayer().weaponSelect(mon);
         pause();

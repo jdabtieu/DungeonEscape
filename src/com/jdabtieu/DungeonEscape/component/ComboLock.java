@@ -14,6 +14,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 
 public class ComboLock extends JPanel {
@@ -28,7 +29,6 @@ public class ComboLock extends JPanel {
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 100, 300, 200);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
-        Main.getContentPane().add(this, 5, 0);
         
         JTextField input = new JTextField();
         ((AbstractDocument) input.getDocument()).setDocumentFilter(new DocumentFilter() {
@@ -92,6 +92,7 @@ public class ComboLock extends JPanel {
                 }
             }
         });
+        Main.getContentPane().add(this, Layer.POPUP, 0);
     }
     
     public boolean run() {

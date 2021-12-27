@@ -44,7 +44,7 @@ public class Player extends Tile {
         inv = new Inventory();
         pauseMovement = false;
         setVisible(false);
-        Main.getContentPane().add(inv, 3, 0);
+        Main.getContentPane().add(inv, Layer.PLAYER_INFO, 0);
     }
     
     public void setInventoryVisible(boolean aFlag) {
@@ -119,7 +119,7 @@ public class Player extends Tile {
             });
             contentPane.add(container);
         }
-        Main.getContentPane().add(contentPane, 5, 0);
+        Main.getContentPane().add(contentPane, Layer.POPUP, 0);
     }
 
     public int score() {

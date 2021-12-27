@@ -10,13 +10,14 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Text;
 
-public class Stage3_QuizShow extends JPanel {
+public class QuizShow extends JPanel {
     private String ans;
     private ArrayList<JTextField> letters;
-    public Stage3_QuizShow(String title, String ans) {
+    public QuizShow(String title, String ans) {
         setBounds(Window.WIDTH / 4, Window.HEIGHT / 2 - 100, Window.WIDTH / 2, 200);
         setLayout(null);
         setBackground(Color.GRAY);
@@ -45,7 +46,7 @@ public class Stage3_QuizShow extends JPanel {
                 notify();
             }
         });
-        Main.getContentPane().add(this, 5, 0);
+        Main.getContentPane().add(this, Layer.POPUP, 0);
     }
     
     public boolean selection() {

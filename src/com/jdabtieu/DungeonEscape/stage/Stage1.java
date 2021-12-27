@@ -15,6 +15,7 @@ import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.ComboLock;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Weapon;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
 import com.jdabtieu.DungeonEscape.tile.Ground;
@@ -107,9 +108,9 @@ public class Stage1 extends Stage {
         Main.getPlayer().pauseMovement();
         redraw();
         Banner bb = new Banner("BOSS FIGHT!");
-        add(bb);
+        Main.getContentPane().add(bb, Layer.ENEMY, 0);
         bb.animate();
-        remove(bb);
+        Main.getContentPane().remove(bb);
         
         JLabel boss;
         try {
@@ -118,11 +119,11 @@ public class Stage1 extends Stage {
             boss = new JLabel();
         }
         boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
-        Main.getContentPane().add(boss, 3, 0);
+        Main.getContentPane().add(boss, Layer.ENEMY, 0);
         
         HealthBar healthBar = new HealthBar(30);
         healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
-        Main.getContentPane().add(healthBar, 3, 0);
+        Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
         
         Main.getPlayer().weaponSelect(mon);
         pause();

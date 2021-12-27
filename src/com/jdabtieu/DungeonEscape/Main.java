@@ -10,6 +10,7 @@ import com.jdabtieu.DungeonEscape.component.StatusDisplay;
 import com.jdabtieu.DungeonEscape.core.Credits;
 import com.jdabtieu.DungeonEscape.core.GameOver;
 import com.jdabtieu.DungeonEscape.core.GameOverException;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.MainMenu;
 import com.jdabtieu.DungeonEscape.core.Player;
 import com.jdabtieu.DungeonEscape.core.Window;
@@ -84,11 +85,11 @@ public class Main {
                     // Initialize new game variables
                     gameOver = false;
                     currScene = new MainMenu();
-                    getContentPane().add(currScene, 1, 0);
+                    getContentPane().add(currScene, Layer.MAP, 0);
                     player = new Player();
                     sd = new StatusDisplay();
-                    getContentPane().add(sd, 3, 0);
-                    getContentPane().add(player, 2, 0);
+                    getContentPane().add(sd, Layer.PLAYER_INFO, 0);
+                    getContentPane().add(player, Layer.PLAYER, 0);
                 });
                 pause(); // unpaused by Start Game button in MainMenu
                 
@@ -112,13 +113,15 @@ public class Main {
                 swapWindow(Stage3Part2.class, 1);
                 
                 pause(); // unpaused by getting to the credits scene in stage 3
-                
+                System.out.println("E");
                 // Player won! Credits!!
-                currScene.setVisible(false);
-                getContentPane().remove(currScene);
-                currScene = new Credits();
-                getContentPane().add(currScene, 1, 0);
-                ((Credits) currScene).animate();
+                drawSafe(() -> {
+                    currScene.setVisible(false);
+                    getContentPane().remove(currScene);
+                    currScene = new Credits();
+                    getContentPane().add(currScene, Layer.MAP, 0);
+                    ((Credits) currScene).animate();
+                });
                 
                 throw new GameOverException();
             } catch (GameOverException e) {

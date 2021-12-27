@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 public class BasicQuiz extends JPanel {
     private Object mon;
@@ -23,7 +24,7 @@ public class BasicQuiz extends JPanel {
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         setVisible(false);
-        Main.getContentPane().add(this, 5, 0);
+        Main.getContentPane().add(this, Layer.POPUP, 0);
         
         this.ans = ans;
         

@@ -20,7 +20,6 @@ import javax.swing.KeyStroke;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
-import com.jdabtieu.DungeonEscape.core.DEBUG_FLAGS;
 import com.jdabtieu.DungeonEscape.core.EnemyAttackPattern;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
