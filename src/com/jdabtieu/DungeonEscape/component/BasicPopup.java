@@ -36,13 +36,13 @@ public class BasicPopup extends JPanel {
         btnClose.setBorder(null);
         btnClose.setFocusPainted(false);
         btnClose.setFont(new Font("Tahoma", Font.PLAIN, 10));
-        btnClose.setBounds(262, 11, 28, 23);
+        btnClose.setBounds(getWidth() - 40, 10, 28, 23);
         add(btnClose);
         
         JLabel txt = new JLabel(text);
         txt.setFont(new Font("Tahoma", Font.PLAIN, 12));
         txt.setHorizontalAlignment(SwingConstants.CENTER);
-        txt.setBounds(0, 11, 300, 128);
+        txt.setBounds(0, 10, getWidth(), getHeight() - 10);
         txt.setForeground(color);
         add(txt);
         

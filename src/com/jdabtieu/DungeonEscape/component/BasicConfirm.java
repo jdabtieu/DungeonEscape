@@ -37,13 +37,13 @@ public class BasicConfirm extends JPanel {
         JLabel txt = new JLabel(text);
         txt.setFont(new Font("Tahoma", Font.PLAIN, 12));
         txt.setHorizontalAlignment(SwingConstants.CENTER);
-        txt.setBounds(0, 11, 300, 75);
+        txt.setBounds(0, 11, getWidth(), getHeight() - 75);
         txt.setForeground(Color.BLACK);
         add(txt);
         
         JButton btnYes = new JButton("Yes");
         btnYes.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnYes.setBounds(30, 116, 80, 24);
+        btnYes.setBounds(30, getHeight() - 34, 80, 24);
         add(btnYes);
         btnYes.addActionListener(e -> {
             synchronized(this) {
@@ -54,7 +54,7 @@ public class BasicConfirm extends JPanel {
         
         JButton btnNo = new JButton("No");
         btnNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnNo.setBounds(getWidth() - 110, 116, 80, 24);
+        btnNo.setBounds(getWidth() - 110, getHeight() - 34, 80, 24);
         add(btnNo);
         btnNo.addActionListener(e -> {
             synchronized(this) {
