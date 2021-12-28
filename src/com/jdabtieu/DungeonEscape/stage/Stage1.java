@@ -81,11 +81,12 @@ public class Stage1 extends Stage {
             Main.getPlayer().keys++;
         }, Color.YELLOW);
         
-        stage[6][100] = new GroundWeapon(() -> {
-            Main.getPlayer().addWeapon(new Weapon("Wooden Axe", 3, 30, "wood_axe.png"));
-            changeTile(6, 100, Ground.class);
-            redraw();
-        });
+        stage[6][100] = new GroundWeapon(new Weapon("Wooden Axe", 3, 30, "wood_axe.png")) {
+            public void trigger() {
+                super.trigger();
+                changeTile(6, 100, Ground.class);
+            }
+        };
 
         finishConstructor();
     }
@@ -136,13 +137,7 @@ public class Stage1 extends Stage {
         changeTile(7, 149, Coins.class, 1000);
         changeTile(7, 150, Coins.class, 1000);
         changeTile(8, 149, Coins.class, 1000);
-        changeTile(9, 152, GroundWeapon.class, new Runnable() {
-            public void run() {
-                Main.getPlayer().addWeapon(new Weapon("Cubic Scales", 5, 30, "cubic_scales.png"));
-                changeTile(9, 152, Ground.class);
-                redraw();
-            }
-        });
+        changeTile(9, 152, GroundWeapon.class, new Weapon("Cubic Scales", 5, 30, "cubic_scales.png"));
         
         for (int i = 164; i < 192; i++) {
             changeTile(4, i, Ground.class);

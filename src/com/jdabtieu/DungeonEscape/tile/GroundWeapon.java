@@ -9,13 +9,21 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class GroundWeapon extends Sensor {
-
-    public GroundWeapon(Runnable action) {
-        super(action);
+import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.component.Weapon;
+/**
+ * A ground weapon. Upon running into this tile, the player will pick up the associated weapon.
+ *
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
+public class GroundWeapon extends Ground implements Triggerable {
+    Weapon wp;
+    public GroundWeapon(Weapon wp) {
+        super();
         setLayout(null);
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        setBackground(Ground.COLOR);
+        this.wp = wp;
         try {
             JLabel icon = new JLabel(new ImageIcon(ImageIO.read(new File("assets/weapon.png"))));
             icon.setBounds(0, 0, 20, 20);
@@ -24,5 +32,12 @@ public class GroundWeapon extends Sensor {
             e.printStackTrace();
         }
     }
-
+    
+    public void trigger() {
+        if (wp == null) return;
+        removeAll();
+        setBorder(null);
+        Main.getPlayer().addWeapon(wp);
+        wp = null;
+    }
 }

@@ -98,7 +98,6 @@ public class Stage2 extends Stage {
         stage[18][42] = new Sensor(() -> initBoss());
         stage[19][42] = new Sensor(() -> initBoss());
         stage[20][42] = new Sensor(() -> initBoss());
-        
         finishConstructor();
     }
     
@@ -278,13 +277,7 @@ public class Stage2 extends Stage {
         changeTile(22, 63, Coins.class, 1000);
         changeTile(23, 64, Coins.class, 1000);
         changeTile(21, 65, Coins.class, 1000);
-        changeTile(24, 63, GroundWeapon.class, new Runnable() {
-            public void run() {
-                Main.getPlayer().addWeapon(new Weapon("Shiny Axe", 20, 40, "shiny_axe.png"));
-                changeTile(24, 63, Ground.class);
-                redraw();
-            }
-        });
+        changeTile(24, 63, GroundWeapon.class, new Weapon("Shiny Axe", 20, 40, "shiny_axe.png"));
         
         for (int i = 2; i < 16; i++) {
             changeTile(i, 62, Ground.class);
