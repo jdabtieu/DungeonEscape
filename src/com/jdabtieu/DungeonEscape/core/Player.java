@@ -88,7 +88,7 @@ public class Player extends Tile {
         
         JLabel title = new JLabel(pmt);
         title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setFont(Fonts.SUBTITLE);
+        title.setFont(Fonts.WEAPON_SELECT);
         title.setBounds(0, 0, 180, 60);
         contentPane.add(title);
         
@@ -139,6 +139,7 @@ public class Player extends Tile {
         if (health + dh > 0) {
             health += dh;
             repaintInventory();
+            Main.getSD().repaint();
             return;
         }
         health = 0;
@@ -149,13 +150,6 @@ public class Player extends Tile {
         weapons.add(wp);
         if (weapons.size() > 3) {
             weaponSelect("<html>You found a new weapon,<br>but you can only hold 3.<br>Choose one to discard.</html>");
-            try {
-                synchronized(this) {
-                    wait();                    
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             weapons.remove(activeWeapon);
             activeWeapon = null;
         } else {
@@ -180,6 +174,7 @@ public class Player extends Tile {
 
     public void setHealth(int health) {
         this.health = health;
+        Main.getSD().repaint();
     }
     
     public void repaintInventory() {
