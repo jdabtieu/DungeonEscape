@@ -116,7 +116,7 @@ public class Stage extends JPanel {
                 } else if ("#".contains(rm[i].substring(j, j+1))) {
                     stage[i][j] = new Spike();
                 } else if ("C".contains(rm[i].substring(j, j+1))) {
-                    stage[i][j] = new Coins();
+                    stage[i][j] = new Coins(100);
                 } else if ("H".contains(rm[i].substring(j, j+1))) {
                     stage[i][j] = new HealthPot();
                 } else {

@@ -18,7 +18,15 @@ import com.jdabtieu.DungeonEscape.component.Weapon;
  * @date 2022-01-01
  */
 public class GroundWeapon extends Ground implements Triggerable {
+    /**
+     * The weapon associated with this tile
+     */
     Weapon wp;
+    
+    /**
+     * Creates a GroundWeapon tile
+     * @param wp    the weapon to be picked up when the player runs into this tile
+     */
     public GroundWeapon(Weapon wp) {
         super();
         setLayout(null);
@@ -33,6 +41,7 @@ public class GroundWeapon extends Ground implements Triggerable {
         }
     }
     
+    @Override
     public void trigger() {
         if (wp == null) return;
         removeAll();
