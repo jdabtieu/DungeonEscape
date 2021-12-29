@@ -83,18 +83,13 @@ public class Stage1 extends Stage {
             Main.getPlayer().keys++;
         }, Color.YELLOW);
         
-        stage[6][100] = new GroundWeapon(new Weapon("Wooden Axe", 3, 30, "wood_axe.png")) {
-            public void trigger() {
-                super.trigger();
-                changeTile(6, 100, Ground.class);
-            }
-        };
+        stage[6][100] = new GroundWeapon(new Weapon("Wooden Axe", 3, 30, "wood_axe.png"));
 
         finishConstructor();
     }
     
     private void initBoss() {
-        if (bossInit || stage[6][100] instanceof GroundWeapon) return;
+        if (bossInit || Main.getPlayer().getWeapons().isEmpty()) return;
         bossInit = true;
         bossDone = false;
         changeTile(3, 124, Wall.class);

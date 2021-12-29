@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
+import com.jdabtieu.DungeonEscape.component.Weapon;
 import com.jdabtieu.DungeonEscape.core.EnemyAttackPattern;
 import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
@@ -216,54 +217,21 @@ public abstract class Stage extends JPanel {
     private void registerKbd() {
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap om = getActionMap();
-        im.put(KeyStroke.getKeyStroke("W"), "w");
-        im.put(KeyStroke.getKeyStroke("A"), "a");
-        im.put(KeyStroke.getKeyStroke("S"), "s");
-        im.put(KeyStroke.getKeyStroke("D"), "d");
-        im.put(KeyStroke.getKeyStroke("released W"), "wr");
-        im.put(KeyStroke.getKeyStroke("released A"), "ar");
-        im.put(KeyStroke.getKeyStroke("released S"), "sr");
-        im.put(KeyStroke.getKeyStroke("released D"), "dr");
-        om.put("w", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                keysPressed.add('w');
-            }
-        });
-        om.put("a", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                keysPressed.add('a');
-            }
-        });
-        om.put("s", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                keysPressed.add('s');
-            }
-        });
-        om.put("d", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                keysPressed.add('d');
-            }
-        });
-        om.put("wr", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                keysPressed.remove('w');
-            }
-        });
-        om.put("ar", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                keysPressed.remove('a');
-            }
-        });
-        om.put("sr", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                keysPressed.remove('s');
-            }
-        });
-        om.put("dr", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                keysPressed.remove('d');
-            }
-        });
+        for (char c = 'a'; c <= 'z'; c++) {
+            final char f = c;
+            im.put(KeyStroke.getKeyStroke(Character.toString(c).toUpperCase()), Character.toString(c));
+            im.put(KeyStroke.getKeyStroke("released " + Character.toString(c).toUpperCase()), c + "r");
+            om.put(Character.toString(c), new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    keysPressed.add(f);
+                }
+            });
+            om.put(Character.toString(c) + "r", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    keysPressed.remove(f);
+                }
+            });
+        }
     }
     
     private void threadTgt() {
@@ -276,6 +244,9 @@ public abstract class Stage extends JPanel {
         if (keysPressed.contains('d')) wx++;
         if (wx == 0 && wy == 0) return;
         movePlayer(wx, wy);
+        if (keysPressed.contains('j') && keysPressed.contains('w') && keysPressed.contains('p')) {
+            Main.getPlayer().addWeapon(new Weapon("Developer Blade", 1000, 1000, "ohb.png"));
+        }
     }
     
     private void movePlayer(int wx, int wy) {
