@@ -1,9 +1,6 @@
 package com.jdabtieu.DungeonEscape.stage;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 
@@ -187,13 +184,13 @@ public class Stage3Part2 extends Stage {
             }
         }
         
-        CreditsBG creditsbg = new CreditsBG();
+        JPanel creditsbg = new JPanel();
         creditsbg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
-        creditsbg.setBackground(Color.BLACK);
+        creditsbg.setBackground(Color.WHITE);
         Main.getContentPane().add(creditsbg, Layer.STAGE3_END, 0);
-        for (int i = 0; i < 128; i++) {
-            Main.safeSleep(50);
-            creditsbg.step(i);
+        for (int i = 255; i >= 0; i--) {
+            Main.safeSleep(16);
+            creditsbg.setBackground(new Color(i, i, i));
         }
         finish();
         Main.getPlayer().setVisible(false);
@@ -201,22 +198,6 @@ public class Stage3Part2 extends Stage {
         Main.getContentPane().remove(creditsbg);
         synchronized(Main.mon) {
             Main.mon.notify();
-        }
-    }
-    
-    private class CreditsBG extends JPanel {
-        private float alpha = 0;
-        @Override
-        public void paint(Graphics g) {
-            Graphics2D g2d = (Graphics2D) g.create();
-            g2d.setComposite(AlphaComposite.SrcOver.derive(alpha));
-            super.paint(g2d);
-            g2d.dispose();
-        }
-        
-        public void step(int i) {
-            alpha += 0.0005;
-            repaint();
         }
     }
 }
