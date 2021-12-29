@@ -7,6 +7,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
@@ -52,6 +53,7 @@ public class Music {
                 clip.addLineListener(audioListener);
             }
             clip.open(ais);
+            ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-15.0f);
             clip.start();
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             clip = null;
