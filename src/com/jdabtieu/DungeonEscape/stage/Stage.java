@@ -15,12 +15,16 @@ import java.util.HashSet;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.core.EnemyAttackPattern;
+import com.jdabtieu.DungeonEscape.core.Fonts;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
 import com.jdabtieu.DungeonEscape.tile.DarkGround;
@@ -32,10 +36,11 @@ import com.jdabtieu.DungeonEscape.tile.Tile;
 import com.jdabtieu.DungeonEscape.tile.Triggerable;
 import com.jdabtieu.DungeonEscape.tile.Wall;
 
-public class Stage extends JPanel {
+public abstract class Stage extends JPanel {
     protected static Tile[][] stage;
     protected static ArrayList<Text> texts;
     private HashSet<Character> keysPressed;
+    private JLabel critIndicator;
     private static final int KBD_POLL_RATE = 50;
     private static final int KBD_POLL_DELAY = 1000 / KBD_POLL_RATE;
     private Thread movement;
@@ -52,6 +57,15 @@ public class Stage extends JPanel {
         stage = new Tile[0][0];
         texts = new ArrayList<>();
         keysPressed = new HashSet<>();
+        
+        critIndicator = new JLabel("Critical Hit!");
+        critIndicator.setFont(Fonts.TITLE);
+        critIndicator.setForeground(Color.RED);
+        critIndicator.setVisible(false);
+        critIndicator.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        critIndicator.setBounds(Window.WIDTH / 2 - 120, Window.HEIGHT / 2 - 10, 240, 20);
+        Main.getContentPane().add(critIndicator, Layer.POPUP, 0);
+        
         registerKbd();
         movement = new Thread(() -> {
 			long time = System.currentTimeMillis();
@@ -85,12 +99,13 @@ public class Stage extends JPanel {
     
     protected void fight(int enemyHealth, HealthBar enemyHealthBar, EnemyAttackPattern ap) {
         while (enemyHealth > 0 && Main.getPlayer().getHealth() > 0) { // simulate attacks
-            enemyHealth -= Main.getPlayer().getActiveWeapon().attack();
+            enemyHealth -= Main.getPlayer().getActiveWeapon().attack(critIndicator);
             Main.getPlayer().changeHealth(-ap.attack());
             enemyHealthBar.setHealth(enemyHealth);
             try {
                 Thread.sleep(800);
             } catch (InterruptedException e) {}
+            critIndicator.setVisible(false);
         }
     }
     

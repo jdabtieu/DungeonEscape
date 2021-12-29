@@ -100,9 +100,10 @@ public class Weapon extends JLabel implements Cloneable {
      * hit, which would deal between 220-240% of the weapon's base damage. If the weapon has no
      * durability remaining, it deals 1 (fist) damage.
      * 
+     * @param critIndicator  a JLabel that should be activated when the weapon deals a critical hit
      * @return  how much damage should be dealt
      */
-    public int attack() {
+    public int attack(JLabel critIndicator) {
         // no durability! fist attack
         if (durability == 0) {
             return 1;
@@ -110,7 +111,7 @@ public class Weapon extends JLabel implements Cloneable {
         
         durability--;
         if (Math.random() > 0.7) {
-            System.err.println("INFO: Critical hit!"); // TODO
+            critIndicator.setVisible(true);
             // 220-240% of weapon's damage
             return (int) (damage * (Math.random() / 5 + 2.2));
         } else {
