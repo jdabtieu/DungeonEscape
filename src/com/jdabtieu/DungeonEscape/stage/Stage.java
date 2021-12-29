@@ -112,7 +112,7 @@ public abstract class Stage extends JPanel {
     protected void fillStage(String fname) {
         String[] rm;
         try {
-            rm = new String(Files.readAllBytes(Paths.get("assets/" + fname + ".txt")), StandardCharsets.UTF_8).split("\n");
+            rm = new String(Files.readAllBytes(Paths.get("assets/stage/" + fname + ".txt")), StandardCharsets.UTF_8).split("\n");
         } catch (IOException e) {
             System.err.println("FATAL: Stage failed to load.");
             System.exit(-1);

@@ -28,7 +28,7 @@ public class Music {
         AudioInputStream ais;
         try {
             // Loading the audio file from the JAR
-            is = new URL("file:assets/" + relPath);
+            is = new URL("file:assets/music/" + relPath);
             ais = AudioSystem.getAudioInputStream(is);
             clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, ais.getFormat()));
             if (repeat) {
@@ -38,7 +38,7 @@ public class Music {
             clip.start();
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             clip = null;
-            System.err.println("[WARNING] Audio failed to start.");
+            System.err.println("WARN: Audio failed to start.");
         }
     }
     
