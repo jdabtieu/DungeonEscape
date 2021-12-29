@@ -1,6 +1,7 @@
 package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -24,5 +25,17 @@ public class MenuButton extends JButton {
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         setFont(Fonts.TITLE);
         setFocusPainted(false);
+        setContentAreaFilled(false);
+    }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        if (getModel().isPressed() || getModel().isRollover()) {
+            g.setColor(Color.GRAY.brighter());
+        } else {
+            g.setColor(Color.GRAY);
+        }
+        g.fillRect(0, 0, getWidth(), getHeight());
+        super.paintComponent(g);
     }
 }

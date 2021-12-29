@@ -23,11 +23,19 @@ public class GameOver extends JPanel {
     public GameOver() {
         super();
         setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
+        setBackground(Color.BLACK);
         setLayout(null);
         
         MenuButton btnStart = new MenuButton("Back to Main Menu");
         btnStart.setBounds((Window.WIDTH - 400) / 2, 450, 400, 40);
         add(btnStart);
+        
+        JLabel title = new JLabel("Game Over!");
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setFont(Fonts.LARGE);
+        title.setForeground(Color.RED);
+        title.setBounds(0, 144, 960, 56);
+        add(title);
         
         JLabel lblDead = new JLabel("You died!");
         lblDead.setHorizontalAlignment(SwingConstants.CENTER);
@@ -42,17 +50,6 @@ public class GameOver extends JPanel {
         lblScore.setForeground(Color.RED);
         lblScore.setBounds(0, 300, Window.WIDTH, 20);
         add(lblScore);
-        
-        try {
-            BufferedImage backgroundImg = ImageIO.read(new File("assets/background.png"));
-            JLabel labelBackgroundImg = new JLabel(new ImageIcon(backgroundImg));
-            labelBackgroundImg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
-            add(labelBackgroundImg);
-            
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         
         btnStart.addActionListener(e -> {
             Main.gameOver = true;
