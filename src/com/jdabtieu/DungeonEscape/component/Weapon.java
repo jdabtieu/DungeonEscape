@@ -1,13 +1,7 @@
 package com.jdabtieu.DungeonEscape.component;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Toolkit;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -51,19 +45,7 @@ public class Weapon extends JLabel implements Cloneable {
         this.durability = durability;
         this.name = name;
         this.fileName = fileName;
-        try {
-            BufferedImage titleText = ImageIO.read(new File("assets/weapon/" + fileName));
-            setIcon(new ImageIcon(titleText));
-        } catch (IOException e) {
-            e.printStackTrace();
-            BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g = (Graphics2D) img.getGraphics();
-            g.setStroke(new BasicStroke(4));
-            g.setColor(Color.RED);
-            g.drawLine(0, 0, 39, 39);
-            g.drawLine(0, 39, 39, 0);
-            setIcon(new ImageIcon(img));
-        }
+        setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/weapon/" + fileName)));
     }
     
     /**

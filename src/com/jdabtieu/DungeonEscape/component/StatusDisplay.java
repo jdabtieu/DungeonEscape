@@ -1,11 +1,8 @@
 package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Toolkit;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -45,30 +42,19 @@ public class StatusDisplay extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black, 2));
         setBackground(Color.GRAY);
         setVisible(false);
-        try {
-            BufferedImage titleText = ImageIO.read(new File("assets/coins.png"));
-            JLabel labelTitleText = new JLabel(new ImageIcon(titleText));
-            labelTitleText.setBounds(10, 40, 32, 32);
-            add(labelTitleText);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } 
-        try {
-            BufferedImage titleText = ImageIO.read(new File("assets/health.png"));
-            JLabel labelTitleText = new JLabel(new ImageIcon(titleText));
-            labelTitleText.setBounds(10, 0, 32, 32);
-            add(labelTitleText);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            BufferedImage titleText = ImageIO.read(new File("assets/keys.png"));
-            JLabel labelTitleText = new JLabel(new ImageIcon(titleText));
-            labelTitleText.setBounds(10, 80, 32, 32);
-            add(labelTitleText);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } 
+        
+        JLabel imgCoins = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/coins.png")));
+        imgCoins.setBounds(10, 40, 32, 32);
+        add(imgCoins);
+        
+        JLabel imgHealth = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/health.png")));
+        imgHealth.setBounds(10, 0, 32, 32);
+        add(imgHealth);
+
+        JLabel imgKeys = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/keys.png")));
+        imgKeys.setBounds(10, 80, 32, 32);
+        add(imgKeys);
+        
         healthBar = new HealthBar(100);
         healthBar.setBounds(50, 6, 100, 20);
         add(healthBar);

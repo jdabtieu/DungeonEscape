@@ -1,10 +1,8 @@
 package com.jdabtieu.DungeonEscape.core;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.awt.Toolkit;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,23 +29,13 @@ public class MainMenu extends JPanel {
         btnQuit.setBounds((Window.WIDTH - 400) / 2, 410, 400, 40);
         add(btnQuit);
         
-        try {
-            BufferedImage titleText = ImageIO.read(new File("assets/titleText.png"));
-            JLabel labelTitleText = new JLabel(new ImageIcon(titleText));
-            labelTitleText.setBounds((Window.WIDTH - 834) / 2, 140, 834, 65);
-            add(labelTitleText);  
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        JLabel labelTitleText = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/titleText.png")));
+        labelTitleText.setBounds((Window.WIDTH - 834) / 2, 140, 834, 65);
+        add(labelTitleText);
         
-        try {
-            BufferedImage backgroundImg = ImageIO.read(new File("assets/background.png"));
-            JLabel labelBackgroundImg = new JLabel(new ImageIcon(backgroundImg));
-            labelBackgroundImg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
-            add(labelBackgroundImg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        JLabel labelBackgroundImg = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/background.png")));
+        labelBackgroundImg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
+        add(labelBackgroundImg);
         
         btnStart.addActionListener(e -> {
             synchronized(Main.mon) {
