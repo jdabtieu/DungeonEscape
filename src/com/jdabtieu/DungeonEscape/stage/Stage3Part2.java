@@ -19,6 +19,7 @@ import com.jdabtieu.DungeonEscape.component.BasicDialog;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.QuizShow;
 import com.jdabtieu.DungeonEscape.core.Layer;
+import com.jdabtieu.DungeonEscape.core.Music;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Ground;
 import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
@@ -156,6 +157,8 @@ public class Stage3Part2 extends Stage {
             }
         }
         redraw();
+        Music.stopAudio();
+        Music.initAudio("win.wav", false);
         while (Main.getPlayer().y > 360) {
             Main.getPlayer().y -= 1;
             redraw();

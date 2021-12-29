@@ -16,6 +16,7 @@ import com.jdabtieu.DungeonEscape.component.ComboLock;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Weapon;
 import com.jdabtieu.DungeonEscape.core.Layer;
+import com.jdabtieu.DungeonEscape.core.Music;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
 import com.jdabtieu.DungeonEscape.tile.Ground;
@@ -35,6 +36,7 @@ public class Stage1 extends Stage {
      */
     public Stage1() {
         super();
+        Music.initAudio("mellohi.wav", true);
         bossInit = false;
         comboLockEnabled = false;
         Main.getPlayer().setLocation(1200, 500);

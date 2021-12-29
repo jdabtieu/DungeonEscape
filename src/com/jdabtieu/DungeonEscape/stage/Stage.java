@@ -63,7 +63,7 @@ public abstract class Stage extends JPanel {
         critIndicator.setForeground(Color.RED);
         critIndicator.setVisible(false);
         critIndicator.setHorizontalAlignment(SwingConstants.HORIZONTAL);
-        critIndicator.setBounds(Window.WIDTH / 2 - 120, Window.HEIGHT / 2 - 10, 240, 20);
+        critIndicator.setBounds(Window.WIDTH / 2 - 120, Window.HEIGHT / 2 - 30, 240, 20);
         Main.getContentPane().add(critIndicator, Layer.POPUP, 0);
         
         registerKbd();

@@ -109,11 +109,11 @@ public class Main {
                 swapWindow(Stage3Part1.class, 1);
                 
                 pause(); // unpaused by finishing the stage 3 maze
-                
+
                 swapWindow(Stage3Part2.class, 1);
                 
                 pause(); // unpaused by getting to the credits scene in stage 3
-                
+               
                 // Player won! Credits!!
                 currScene.setVisible(false);
                 getContentPane().remove(currScene);
