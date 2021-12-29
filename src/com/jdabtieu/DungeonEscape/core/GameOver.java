@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.core;
 
 import java.awt.Color;
-import java.io.IOException;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -9,12 +8,15 @@ import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.MenuButton;
-
+/**
+ * This class is responsible for rendering the Game Over screen.
+ * 
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class GameOver extends JPanel {
-
     /**
-     * Create the frame.
-     * @throws IOException 
+     * Create the screen
      */
     public GameOver() {
         super();

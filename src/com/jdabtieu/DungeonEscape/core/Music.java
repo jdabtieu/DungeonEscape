@@ -11,8 +11,17 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
+/**
+ * This class is responsible for playing music throughout the game.
+ * 
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class Music {
+    /**
+     * These objects control the background music used in initAudio() and
+     * stopAudio()
+     */
     private static Clip clip;
     private static final LineListener audioListener = e -> {
         if (e.getType() == LineEvent.Type.STOP) {
@@ -21,8 +30,16 @@ public class Music {
         }
     };
     
+    /**
+     * Prevent instantiation of this class
+     */
     private Music() {}
     
+    /**
+     * Attempts to start an audio track. A warning is printed if audio cannot be started.
+     * @param relPath   a relative path to the file to be played
+     * @param repeat    whether the music should loop forever
+     */
     public static void initAudio(final String relPath, final boolean repeat) {
         URL is;
         AudioInputStream ais;
@@ -42,8 +59,11 @@ public class Music {
         }
     }
     
+    /**
+     * Stops the current playing track, if anything is playing
+     */
     public static void stopAudio() {
-        if (clip == null) { // Audio failed to start; that's fine
+        if (clip == null) { // Nothing is playing; that's fine
             return;
         }
         clip.removeLineListener(audioListener);

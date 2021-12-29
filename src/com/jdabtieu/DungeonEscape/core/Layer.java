@@ -13,11 +13,38 @@ package com.jdabtieu.DungeonEscape.core;
  *
  */
 public class Layer {
+    /**
+     * The layer to be used for any backgrounds or maps
+     */
     public static final int MAP = 1;
+    
+    /**
+     * The layer to be used for the player
+     */
     public static final int PLAYER = 2;
+    
+    /**
+     * The layer to be used for anything related to enemies
+     */
     public static final int ENEMY = 3;
+    
+    /**
+     * The layer to be used for anything related to the player
+     */
     public static final int PLAYER_INFO = 4;
+    
+    /**
+     * The layer to be used for all popups
+     */
     public static final int POPUP = 5;
+    
+    /**
+     * The layer to be used specially for the stage 3 ending
+     */
     public static final int STAGE3_END = 7;
+    
+    /**
+     * Prevent instantiation of this class
+     */
     private Layer() {}
 }
