@@ -12,6 +12,7 @@ import com.jdabtieu.DungeonEscape.core.GameOver;
 import com.jdabtieu.DungeonEscape.core.GameOverException;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.MainMenu;
+import com.jdabtieu.DungeonEscape.core.Music;
 import com.jdabtieu.DungeonEscape.core.Player;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.stage.Stage;
@@ -128,6 +129,7 @@ public class Main {
                     getContentPane().removeAll();
                     me.repaint();
                 });
+                Music.stopAudio();
             }
         }
     }

@@ -50,7 +50,7 @@ public class Credits extends JPanel {
         for (int i = 0; i < creds.length; i++) {
             lines[i] = new Text(creds[i], 100, Window.HEIGHT + 50 * i);
             lines[i].setForeground(Color.white);
-            lines[i].setFont(Fonts.SUBTITLE);
+            lines[i].setFont(Fonts.TITLE);
             add(lines[i]);
         }
         lines[0].setFont(Fonts.LARGE);
@@ -70,7 +70,6 @@ public class Credits extends JPanel {
                 t.setLocation(100, t.getY() - 1);
             }
         }
-        Music.stopAudio();
         Main.safeSleep(1000);
     }
 }
