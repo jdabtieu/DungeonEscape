@@ -28,7 +28,16 @@ public class Player extends Tile {
     private final ArrayList<Weapon> weapons;
     private Weapon activeWeapon;
     private boolean interviewComplete;
+    private static int highScore = 0;
     
+    public static int getHighScore() {
+        return highScore;
+    }
+
+    public void updateHighScore() {
+        highScore = Math.max(score(), highScore);
+    }
+
     public Player() {
         super();
         setBackground(Color.green);

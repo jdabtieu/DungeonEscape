@@ -22,10 +22,12 @@ public class Credits extends JPanel {
     }
     
     public void animate() {
+        Main.getPlayer().updateHighScore();
         final String[] creds = {
                 "Congratulations! You escaped the Dungeon!",
                 "",
                 "Final Score: " + Main.getPlayer().score(),
+                "High Score: " + Player.getHighScore(),
                 "",
                 "",
                 "",
@@ -55,8 +57,8 @@ public class Credits extends JPanel {
         }
         lines[0].setFont(Fonts.LARGE);
         lines[0].setBounds(100, Window.HEIGHT, 1000, 32);
-        lines[6].setFont(Fonts.LARGE);
-        lines[6].setBounds(100, Window.HEIGHT + 300, 1000, 32);
+        lines[7].setFont(Fonts.LARGE);
+        lines[7].setBounds(100, Window.HEIGHT + 300, 1000, 32);
         Music.initAudio("win.wav", false);
         final int totalTime = 38000;
         final int lineTime = totalTime / (Window.HEIGHT + 50 * creds.length);
