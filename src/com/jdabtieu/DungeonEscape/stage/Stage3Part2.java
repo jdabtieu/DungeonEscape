@@ -1,10 +1,8 @@
 package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Toolkit;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,13 +21,25 @@ import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
 import com.jdabtieu.DungeonEscape.tile.Sensor;
 import com.jdabtieu.DungeonEscape.tile.Text;
 import com.jdabtieu.DungeonEscape.tile.Wall;
-
+/**
+ * Code for stage 3 part 2
+ *
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class Stage3Part2 extends Stage {
-    private boolean bossInit;
-    private boolean activeGameShow;
     /**
-     * Create the frame.
-     * @throws IOException 
+     * Whether the boss fight has been initiated
+     */
+    private boolean bossInit;
+    
+    /**
+     * Whether the game show is active
+     */
+    private boolean activeGameShow;
+    
+    /**
+     * Create the stage 
      */
     public Stage3Part2() {
         super();
@@ -40,13 +50,11 @@ public class Stage3Part2 extends Stage {
         texts.add(new Text(">>> You completed the maze!", 40, 2240));
         texts.add(new Text(">>> Unfortunately, the hallway collapsed, and you fell into this room", 40, 2260));
         texts.add(new Text("Game show this way --->", 1480, 2090));
-        try {
-            Text txt = new Text("", 520, 2070);
-            txt.setIcon(new ImageIcon(ImageIO.read(new File("assets/fountain.png"))));
+        {
+            final Text txt = new Text("", 520, 2070);
+            txt.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/fountain.png")));
             txt.setBounds(520, 2070, 200, 180);
             texts.add(txt);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         stage[104][102] = new Sensor(() -> initGameShow());
         stage[105][102] = new Sensor(() -> initGameShow());
@@ -59,6 +67,9 @@ public class Stage3Part2 extends Stage {
         finishConstructor();
     }
     
+    /**
+     * Code for the game show
+     */
     private void initGameShow() {
         if (!activeGameShow) return;
         activeGameShow = false;
@@ -88,41 +99,32 @@ public class Stage3Part2 extends Stage {
         Main.getPlayer().unpauseMovement();
     }
     
+    /**
+     * Code for the boss fight
+     */
     private void initBoss() {
         if (bossInit) return;
+        final JLabel boss = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/boss3.png")));
+        final HealthBar healthBar = new HealthBar(850);
+        
         bossInit = true;
-        Main.getPlayer().pauseMovement();
         changeTile(96, 62, Wall.class);
         changeTile(96, 63, Wall.class);
         changeTile(96, 64, Wall.class);
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Main.safeSleep(200);
         Main.getPlayer().setPosition(1260, 1840);
+        Main.getPlayer().pauseMovement();
         redraw();
-        Banner bb = new Banner("BOSS FIGHT!");
-        Main.getContentPane().add(bb, Layer.ENEMY, 0);
-        bb.animate();
-        Main.getContentPane().remove(bb);
+        new Banner("BOSS FIGHT!").animate();
         
-        JLabel boss;
-        try {
-            boss = new JLabel(new ImageIcon(ImageIO.read(new File("assets/boss3.png"))));
-        } catch (IOException e) {
-            boss = new JLabel();
-        }
         boss.setBounds(200, 130, 160, 160);
         Main.getContentPane().add(boss, Layer.ENEMY, 0);
-        
-        HealthBar healthBar = new HealthBar(850);
         healthBar.setBounds(240, 100, 80, 20);
         Main.getContentPane().add(healthBar, 3, 0);
         
         Main.getPlayer().weaponSelect();
-        
         fight(850, healthBar, () -> (int) (Math.random() + 1.7));
+        
         new BasicDialog("You defeated the boss! 5000 coins acquired!").selection();
         Main.getPlayer().addCoins(5000);
         healthBar.setVisible(false);
@@ -132,7 +134,13 @@ public class Stage3Part2 extends Stage {
         endScene();
     }
     
+    /**
+     * The ending scene after beating the boss
+     */
     private void endScene() {
+        final Text[] texts = new Text[6];
+        final JPanel creditsbg = new JPanel();
+        
         for (int i = 0; i < 33; i++) {
             for (int j = 0; j < stage[i].length; j++) {
                 stage[i][j].setBackground(Color.WHITE);
@@ -159,7 +167,6 @@ public class Stage3Part2 extends Stage {
         }
         Main.getPlayer().setSDVisible(false);
         Main.getPlayer().setInventoryVisible(false);
-        final Text[] texts = new Text[6];
         texts[0] = new Text("Wow, this is really bright!", 100, -25);
         texts[1] = new Text("Is this the outside world?", 100, -225);
         texts[2] = new Text("I can't believe I'm finally out!", 100, -425);
@@ -171,16 +178,15 @@ public class Stage3Part2 extends Stage {
             texts[4] = new Text("3 years, I think?", 100, -825);
             texts[5] = new Text("Well, time to catch up on what I missed...", 100, -1025);
         }
-        for (Text t : texts) Main.getContentPane().add(t, Layer.STAGE3_END, 0);
+        for (final Text t : texts) Main.getContentPane().add(t, Layer.STAGE3_END, 0);
         for (int i = 0; i < 2000; i++) {
             Main.safeSleep(10);
-            for (Text t : texts) {
+            for (final Text t : texts) {
                 t.setLocation(100, t.getY() + 1);
                 t.repaint();
             }
         }
         
-        JPanel creditsbg = new JPanel();
         creditsbg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
         creditsbg.setBackground(Color.WHITE);
         Main.getContentPane().add(creditsbg, Layer.STAGE3_END, 0);
@@ -190,7 +196,7 @@ public class Stage3Part2 extends Stage {
         }
         finish();
         Main.getPlayer().setVisible(false);
-        for (Text t : texts) Main.getContentPane().remove(t);
+        for (final Text t : texts) Main.getContentPane().remove(t);
         Main.getContentPane().remove(creditsbg);
         synchronized(Main.mon) {
             Main.mon.notify();

@@ -3,11 +3,10 @@ package com.jdabtieu.DungeonEscape.stage;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.Arrays;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -31,16 +30,40 @@ import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
 import com.jdabtieu.DungeonEscape.tile.Sensor;
 import com.jdabtieu.DungeonEscape.tile.Text;
 import com.jdabtieu.DungeonEscape.tile.Wall;
-
+/**
+ * Code for stage 2
+ *
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class Stage2 extends Stage {
-    private boolean bossInit;
-    private boolean interviewInit;
-    private boolean ambushInit;
-    private boolean bossDone;
-    private boolean activeVending;
     /**
-     * Create the frame.
-     * @throws IOException 
+     * Whether the boss fight has been initiated
+     */
+    private boolean bossInit;
+    
+    /**
+     * WHether the interview has been initiated
+     */
+    private boolean interviewInit;
+    
+    /**
+     * Whether the ambush has been initiated
+     */
+    private boolean ambushInit;
+    
+    /**
+     * Whether the boss fight is done
+     */
+    private boolean bossDone;
+    
+    /**
+     * Whether the boss fight is active
+     */
+    private boolean activeVending;
+    
+    /**
+     * Create the stage
      */
     public Stage2() {
         super();
@@ -59,20 +82,19 @@ public class Stage2 extends Stage {
         texts.add(new Text("T", 740, 900));
         texts.add(new Text("O", 740, 530));
         {
-            Text txt = new Text("Interview Room", 500, 1180);
+            final Text txt = new Text("Interview Room", 500, 1180);
+            final Text interviewRoom = new Text("", 470, 1264);
+            final Text interviewer = new Text("", 642, 1288);
             txt.setHorizontalAlignment(SwingConstants.CENTER);
             txt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             txt.setBounds(500, 1180, 148, 40);
             txt.setFont(Fonts.TITLE);
             texts.add(txt);
-        }
-        try {
-            Text txt = new Text("", 470, 1264);
-            txt.setIcon(new ImageIcon(ImageIO.read(new File("assets/interviewRoom.png"))));
-            txt.setBounds(470, 1264, 220, 80);
-            texts.add(txt);
             
-            Text interviewer = new Text("", 642, 1288);
+            interviewRoom.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/interviewRoom.png")));
+            interviewRoom.setBounds(470, 1264, 220, 80);
+            texts.add(interviewRoom);
+            
             BufferedImage i = new BufferedImage(20, 20, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = (Graphics2D) i.getGraphics();
             g.setColor(Color.RED);
@@ -80,8 +102,6 @@ public class Stage2 extends Stage {
             interviewer.setIcon(new ImageIcon(i));
             interviewer.setBounds(642, 1288, 20, 20);
             texts.add(interviewer);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         stage[69][36] = new Sensor(() -> initInterview());
         stage[69][35] = new Sensor(() -> initInterview());
@@ -101,15 +121,19 @@ public class Stage2 extends Stage {
         finishConstructor();
     }
     
+    /**
+     * Code for the vending machine
+     */
     private void vendingMachine() {
         if (!activeVending) return;
         activeVending = false;
         Main.getPlayer().pauseMovement();
-        Weapon wp = new Weapon("One Hit Blade", 2000, 1, "ohb.png");
-        if (new BasicConfirm("<html>For 3300 coins, Vending Machine offers:<br>" + wp + "<br>Would you like to purchase it?</html>").selection()) {
+        if (new BasicConfirm("<html>For 3300 coins, Vending Machine offers:<br>" + 
+                             new Weapon("One Hit Blade", 2000, 1, "ohb.png") +
+                             "<br>Would you like to purchase it?</html>").selection()) {
             try {
                 Main.getPlayer().useCoins(3300);
-                Main.getPlayer().addWeapon(wp);
+                Main.getPlayer().addWeapon(new Weapon("One Hit Blade", 2000, 1, "ohb.png"));
                 changeTile(20, 10, Ground.class);
                 changeTile(17, 10, Ground.class);
                 redraw();
@@ -122,6 +146,12 @@ public class Stage2 extends Stage {
     
     private void initAmbush() {
         if (ambushInit) return;
+        final JLabel enemy = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/ambush.png")));
+        final Point[] offsets = {new Point(115, 4), new Point(38, 60), new Point(40, 190),
+                new Point(172, 161), new Point(260, 63), new Point(304, 184),
+                new Point(375, 16), new Point(520, 72), new Point(483, 177)};
+        final HealthBar[] healthBars = new HealthBar[offsets.length];
+
         ambushInit = true;
         Main.getPlayer().setPosition(336, 1000);
         Main.getPlayer().pauseMovement();
@@ -129,27 +159,11 @@ public class Stage2 extends Stage {
         changeTile(53, 17, Ground.class);
         changeTile(53, 18, Ground.class);
         redraw();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Banner bb = new Banner("AMBUSH!");
-        Main.getContentPane().add(bb, Layer.ENEMY, 0);
-        bb.animate();
-        Main.getContentPane().remove(bb);
-        JLabel enemy;
-        try {
-            enemy = new JLabel(new ImageIcon(ImageIO.read(new File("assets/ambush.png"))));
-        } catch (IOException e) {
-            enemy = new JLabel();
-        }
+        Main.safeSleep(200);
+        new Banner("AMBUSH!").animate();
+        
         enemy.setBounds(156, 90, 740, 320);
         Main.getContentPane().add(enemy, Layer.ENEMY, 0);
-        Point[] offsets = {new Point(115, 4), new Point(38, 60), new Point(40, 190),
-                           new Point(172, 161), new Point(260, 63), new Point(304, 184),
-                           new Point(375, 16), new Point(520, 72), new Point(483, 177)};
-        HealthBar[] healthBars = new HealthBar[offsets.length];
         for (int i = 0; i < offsets.length; i++) {
             healthBars[i] = new HealthBar(8);
             healthBars[i].setBounds(enemy.getX() + offsets[i].x, enemy.getY() + offsets[i].y, 80, 20);
@@ -157,34 +171,27 @@ public class Stage2 extends Stage {
         }
         Main.getPlayer().weaponSelect();
         
-        for (int i = 0; i < offsets.length; i++) {
-            fight(8, healthBars[i], () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 5 + 1));
+        for (final HealthBar bar : healthBars) {
+            fight(8, bar, () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 5 + 1));
         }
         Main.getPlayer().unpauseMovement();
         new BasicPopup("You defeated the enemies!", Color.BLACK);
         
-        for (int i = 0; i < offsets.length; i++) {
-            healthBars[i].setVisible(false);
-            Main.getContentPane().remove(healthBars[i]);
+        for (final HealthBar bar : healthBars) {
+            bar.setVisible(false);
+            Main.getContentPane().remove(bar);
         }
         enemy.setVisible(false);
         Main.getContentPane().remove(enemy);
         redraw();
     }
     
+    /**
+     * Code for the interview
+     */
     private void initInterview() {
         if (interviewInit) return;
-        interviewInit = true;
-        if (!new BasicConfirm("<html>The Dungeon Mester would like to<br>invite you to create new levels.<br>Accept the offer?</html>").selection()) {
-            interviewInit = false;
-            Main.getPlayer().setPosition(712, 1408);
-            return;
-        }
-        Main.getPlayer().pauseMovement();
-        Main.getPlayer().setPosition(496, 1288);
-        redraw();
-        new BasicDialog("<html>So, you want to help add more levels, eh?<br>You're going to have to pass the test first.</html>").selection();
-        BasicQuiz[] quiz = {
+        final BasicQuiz[] quiz = {
             new BasicQuiz("For a complex project with over 35 classes, how will you use to manage them?", 2,
                           "a) Online collaborative IDE, such as Replit",
                           "b) Local IDE, such as Eclipse",
@@ -209,11 +216,18 @@ public class Stage2 extends Stage {
                     "c) wait + notify",
                     "d) pause + resume"),
         };
-        int score = 0;
-        for (BasicQuiz q : quiz) {
-            if (q.selection()) score++;
+        interviewInit = true;
+        if (!new BasicConfirm("<html>The Dungeon Mester would like to<br>invite you to create new levels.<br>Accept the offer?</html>").selection()) {
+            interviewInit = false;
+            Main.getPlayer().setPosition(712, 1408);
+            return;
         }
-        if (score < 4) {
+        Main.getPlayer().pauseMovement();
+        Main.getPlayer().setPosition(496, 1288);
+        redraw();
+        new BasicDialog("<html>So, you want to help add more levels, eh?<br>You're going to have to pass the test first.</html>").selection();
+        
+        if (Arrays.stream(quiz).mapToInt(q -> q.selection() ? 1 : 0).sum() < 4) {
             new BasicDialog("<html>You didn't pass the interview.</html>").selection();
         } else {
             new BasicDialog("<html>Congratulations, you got the job!</html>").selection();
@@ -227,48 +241,40 @@ public class Stage2 extends Stage {
         Main.getPlayer().unpauseMovement();
     }
     
+    /**
+     * Code for the boss fight
+     */
     private void initBoss() {
         if (bossInit) return;
+        final JLabel boss = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/boss2.png")));
+        final HealthBar healthBar = new HealthBar(100);
+        
         bossInit = true;
         bossDone = false;
         changeTile(18, 40, Wall.class);
         changeTile(19, 40, Wall.class);
         changeTile(20, 40, Wall.class);
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Main.safeSleep(200);
         Main.getPlayer().setPosition(930, 500);
         Main.getPlayer().pauseMovement();
         redraw();
-        Banner bb = new Banner("BOSS FIGHT!");
-        Main.getContentPane().add(bb, Layer.ENEMY, 0);
-        bb.animate();
-        Main.getContentPane().remove(bb);
+        new Banner("BOSS FIGHT!").animate();
         
-        JLabel boss;
-        try {
-            boss = new JLabel(new ImageIcon(ImageIO.read(new File("assets/boss2.png"))));
-        } catch (IOException e) {
-            boss = new JLabel();
-        }
         boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
         Main.getContentPane().add(boss, Layer.ENEMY, 0);
-        
-        HealthBar healthBar = new HealthBar(100);
         healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
         Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
         
         Main.getPlayer().weaponSelect();
-        
         fight(100, healthBar, () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 8 + 1));
+        
+        Main.getPlayer().unpauseMovement();
         new BasicPopup("You defeated the boss!", Color.BLACK);
         healthBar.setVisible(false);
         Main.getContentPane().remove(healthBar);
         boss.setVisible(false);
         Main.getContentPane().remove(boss);
-        Main.getPlayer().unpauseMovement();
+        
         changeTile(22, 65, Coins.class, 1000);
         changeTile(24, 67, Coins.class, 1000);
         changeTile(22, 63, Coins.class, 1000);

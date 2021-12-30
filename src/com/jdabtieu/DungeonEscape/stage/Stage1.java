@@ -2,10 +2,8 @@ package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Toolkit;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -26,13 +24,30 @@ import com.jdabtieu.DungeonEscape.tile.Sensor;
 import com.jdabtieu.DungeonEscape.tile.Text;
 import com.jdabtieu.DungeonEscape.tile.Wall;
 
+/**
+ * Code for stage 1
+ *
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class Stage1 extends Stage {
-    private boolean bossInit;
-    private boolean comboLockEnabled;
-    private boolean bossDone;
     /**
-     * Create the frame.
-     * @throws IOException 
+     * Whether the boss fight has been initiated
+     */
+    private boolean bossInit;
+    
+    /**
+     * Whether the combo lock is enabled
+     */
+    private boolean comboLockEnabled;
+    
+    /**
+     * Whether the boss fight is done
+     */
+    private boolean bossDone;
+    
+    /**
+     * Create the stage 
      */
     public Stage1() {
         super();
@@ -88,49 +103,41 @@ public class Stage1 extends Stage {
         finishConstructor();
     }
     
+    /**
+     * Code for the boss fight
+     */
     private void initBoss() {
         if (bossInit || Main.getPlayer().getWeapons().isEmpty()) return;
+        final JLabel boss = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/boss1.png")));
+        final HealthBar healthBar = new HealthBar(30);
+        
         bossInit = true;
         bossDone = false;
         changeTile(3, 124, Wall.class);
         changeTile(4, 124, Wall.class);
         changeTile(5, 124, Wall.class);
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Main.safeSleep(200);
         Main.getPlayer().setHealth(100);
         Main.getPlayer().setPosition(2760, 184);
         Main.getPlayer().pauseMovement();
         redraw();
-        Banner bb = new Banner("BOSS FIGHT!");
-        Main.getContentPane().add(bb, Layer.ENEMY, 0);
-        bb.animate();
-        Main.getContentPane().remove(bb);
+        new Banner("BOSS FIGHT!").animate();
         
-        JLabel boss;
-        try {
-            boss = new JLabel(new ImageIcon(ImageIO.read(new File("assets/boss1.png"))));
-        } catch (IOException e) {
-            boss = new JLabel();
-        }
         boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
         Main.getContentPane().add(boss, Layer.ENEMY, 0);
-        
-        HealthBar healthBar = new HealthBar(30);
         healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
         Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
         
         Main.getPlayer().weaponSelect();
-        
         fight(30, healthBar, () -> (int) (Math.random() + 0.3) * (int) (Math.random() * 5 + 1));
+        
         Main.getPlayer().unpauseMovement();
         new BasicPopup("You defeated the boss!", Color.BLACK);
         healthBar.setVisible(false);
         Main.getContentPane().remove(healthBar);
         boss.setVisible(false);
         Main.getContentPane().remove(boss);
+        
         changeTile(7, 149, Coins.class, 1000);
         changeTile(7, 150, Coins.class, 1000);
         changeTile(8, 149, Coins.class, 1000);

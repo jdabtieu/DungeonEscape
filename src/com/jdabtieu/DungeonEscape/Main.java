@@ -64,6 +64,10 @@ public class Main {
      */
     private static Player player;
     
+    /**
+     * Main method
+     * @param args  not used
+     */
     public static void main(String[] args) {
         // Populate main thread and create window
         mainThread = Thread.currentThread();

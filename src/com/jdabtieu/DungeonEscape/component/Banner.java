@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Fonts;
+import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
 /**
  * Boss alert banner to be displayed when entering a boss battle room.
@@ -41,7 +42,7 @@ public class Banner extends JPanel {
      * and then hides the banner.
      */
     public void animate() {
-        setVisible(true);
+        Main.getContentPane().add(this, Layer.ENEMY, 0);
         Main.safeSleep(300);
         
         for (int i = -200; i <= Window.WIDTH; i++) {
@@ -52,6 +53,7 @@ public class Banner extends JPanel {
         
         Main.safeSleep(300);
         setVisible(false);
+        Main.getContentPane().remove(this);
     }
 
 }

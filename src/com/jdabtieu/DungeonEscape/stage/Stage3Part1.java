@@ -2,10 +2,8 @@ package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Toolkit;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -17,12 +15,20 @@ import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.tile.Ground;
 import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
 import com.jdabtieu.DungeonEscape.tile.Text;
-
+/**
+ * Code for stage 3 part 1
+ *
+ * @author Jonathan Wu (jonathan.wu3@student.tdsb.on.ca)
+ * @date 2022-01-01
+ */
 public class Stage3Part1 extends Stage {
-    private boolean ambushInit;
     /**
-     * Create the frame.
-     * @throws IOException 
+     * Whether the ambush has been initiated
+     */
+    private boolean ambushInit;
+    
+    /**
+     * Create the stage 
      */
     public Stage3Part1() {
         super();
@@ -43,58 +49,57 @@ public class Stage3Part1 extends Stage {
         finishConstructor();
     }
     
+    /**
+     * Code for the ambush
+     */
     private void initAmbush() {
         if (ambushInit) return;
+        final JLabel enemy = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/ambush.png")));
+        final Point[] offsets = {new Point(115, 4), new Point(38, 60), new Point(40, 190),
+                new Point(172, 161), new Point(260, 63), new Point(304, 184),
+                new Point(375, 16), new Point(520, 72), new Point(483, 177)};
+        final HealthBar[] healthBars = new HealthBar[offsets.length];
+
         ambushInit = true;
-        Main.getPlayer().setPosition(340, 1340);
-        Main.getPlayer().pauseMovement();
         changeTile(69, 16, Ground.class);
         changeTile(69, 17, Ground.class);
         changeTile(69, 18, Ground.class);
+        Main.safeSleep(200);
+        Main.getPlayer().setPosition(340, 1340);
+        Main.getPlayer().pauseMovement();
         redraw();
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Banner bb = new Banner("AMBUSH!");
-        Main.getContentPane().add(bb, Layer.ENEMY, 0);
-        bb.animate();
-        Main.getContentPane().remove(bb);
-        JLabel enemy;
-        try {
-            enemy = new JLabel(new ImageIcon(ImageIO.read(new File("assets/ambush.png"))));
-        } catch (IOException e) {
-            enemy = new JLabel();
-        }
+        new Banner("AMBUSH!").animate();
+        
         enemy.setBounds(156, 90, 740, 320);
         Main.getContentPane().add(enemy, Layer.ENEMY, 0);
-        Point[] offsets = {new Point(115, 4), new Point(38, 60), new Point(40, 190),
-                           new Point(172, 161), new Point(260, 63), new Point(304, 184),
-                           new Point(375, 16), new Point(520, 72), new Point(483, 177)};
-        HealthBar[] healthBars = new HealthBar[offsets.length];
+        
         for (int i = 0; i < offsets.length; i++) {
             healthBars[i] = new HealthBar(11);
             healthBars[i].setBounds(enemy.getX() + offsets[i].x, enemy.getY() + offsets[i].y, 80, 20);
             Main.getContentPane().add(healthBars[i], Layer.ENEMY, 0);
         }
+        
         Main.getPlayer().weaponSelect();
         
-        for (int i = 0; i < offsets.length; i++) {
-            fight(11, healthBars[i], () -> (int) (Math.random() + 0.5) * (int) (Math.random() * 5 + 1));
+        for (final HealthBar bar : healthBars) {
+            fight(11, bar, () -> (int) (Math.random() + 0.5) * (int) (Math.random() * 5 + 1));
         }
+        
         Main.getPlayer().unpauseMovement();
         new BasicPopup("You defeated the enemies!", Color.BLACK);
         
-        for (int i = 0; i < offsets.length; i++) {
-            healthBars[i].setVisible(false);
-            Main.getContentPane().remove(healthBars[i]);
+        for (final HealthBar bar : healthBars) {
+            bar.setVisible(false);
+            Main.getContentPane().remove(bar);
         }
         enemy.setVisible(false);
         Main.getContentPane().remove(enemy);
         redraw();
     }
     
+    /**
+     * End of part 1: player drops into part 2
+     */
     private void initDrop() {
         finish();
         synchronized(Main.mon) {
