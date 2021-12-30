@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -39,17 +38,43 @@ import com.jdabtieu.DungeonEscape.tile.Triggerable;
 import com.jdabtieu.DungeonEscape.tile.Wall;
 
 public abstract class Stage extends JPanel {
-    protected static Tile[][] stage;
-    protected static ArrayList<Text> texts;
-    private HashSet<Character> keysPressed;
-    private JLabel critIndicator;
+    /**
+     * A 2-D array storing the map
+     */
+    protected Tile[][] stage;
+    
+    /**
+     * This stores all the text to be displayed on the map
+     */
+    protected final ArrayList<Text> texts;
+    
+    /**
+     * A Set containing the keys the player is currently pressing
+     */
+    private final HashSet<Character> keysPressed;
+    
+    /**
+     * A critical hit indicator
+     */
+    private final JLabel critIndicator;
+    
+    /**
+     * The keyboard poll rate. Movement will be polled this many times per second.
+     */
     private static final int KBD_POLL_RATE = 50;
+    
+    /**
+     * The delay for polling the keyboard at the specified poll rate
+     */
     private static final int KBD_POLL_DELAY = 1000 / KBD_POLL_RATE;
-    private Thread movement;
+    
+    /**
+     * A reference to the thread controlling player movement
+     */
+    private final Thread movement;
 
     /**
-     * Create the frame.
-     * @throws IOException 
+     * Create the stage
      */
     public Stage() {
         super();
@@ -71,8 +96,9 @@ public abstract class Stage extends JPanel {
         registerKbd();
         movement = new Thread(() -> {
 			long time = System.currentTimeMillis();
+			long delayTime;
             while (true) {
-                long delayTime = KBD_POLL_DELAY + time - System.currentTimeMillis();
+                delayTime = KBD_POLL_DELAY + time - System.currentTimeMillis();
                 try {
                     Thread.sleep(delayTime);
                 } catch (InterruptedException e) {
@@ -88,6 +114,10 @@ public abstract class Stage extends JPanel {
         movement.start();
     }
     
+    /**
+     * All subclasses must call this method as the last call of their constructor. This
+     * makes all the tiles visible and re-renders the map.
+     */
     protected void finishConstructor() {
         redraw();
         texts.stream().forEach(e -> add(e));
@@ -95,11 +125,21 @@ public abstract class Stage extends JPanel {
         setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
     }
     
+    /**
+     * Finish this stage. This call stops the movement listener thread.
+     */
     public void finish() {
         movement.interrupt();
     }
     
-    protected void fight(int enemyHealth, HealthBar enemyHealthBar, AttackPattern ap) {
+    /**
+     * Fight an enemy. The enemy is defeated if it falls to zero health. The player loses if they
+     * fall to zero health.
+     * @param enemyHealth       the amount of health the enemy has
+     * @param enemyHealthBar    the enemy's health bar
+     * @param ap                the enemy's attack pattern
+     */
+    protected void fight(int enemyHealth, final HealthBar enemyHealthBar, final AttackPattern ap) {
         while (enemyHealth > 0 && Main.getPlayer().getHealth() > 0) { // simulate attacks
             enemyHealth -= Main.getPlayer().getActiveWeapon().attack(critIndicator);
             Main.getPlayer().changeHealth(-ap.attack());
@@ -111,8 +151,14 @@ public abstract class Stage extends JPanel {
         }
     }
     
-    protected void fillStage(String fname) {
-        String[] rm;
+    /**
+     * Utility method to be used in constructors. Given a filename, this method attempts to fill
+     * the map using the tiles specified in the stage file. Dynamic tiles, such as sensors, cannot
+     * be filled in automatically.
+     * @param fname the filename of the stage, without the full path or extension
+     */
+    protected void fillStage(final String fname) {
+        final String[] rm;
         try {
             rm = new String(Files.readAllBytes(Paths.get("assets/stage/" + fname + ".txt")), StandardCharsets.UTF_8).split("\n");
         } catch (IOException e) {
@@ -144,6 +190,10 @@ public abstract class Stage extends JPanel {
         }
     }
     
+    /**
+     * Redraws the stage so that the player is perpetually centered.
+     * This is different from repaint(), which will only repaint the panel.
+     */
     protected void redraw() {
         SwingUtilities.invokeLater(() -> {
             setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
@@ -155,7 +205,7 @@ public abstract class Stage extends JPanel {
                                           20);
                 }
             }
-            for (Text lab : texts) {
+            for (final Text lab : texts) {
                 lab.setBounds(lab.getXFixed() - Main.getPlayer().xPos() + (Window.WIDTH - 20) / 2,
                               lab.getYFixed() - Main.getPlayer().yPos() + (Window.HEIGHT - 20) / 2,
                               lab.getWidth(),
@@ -167,25 +217,32 @@ public abstract class Stage extends JPanel {
         });
     }
     
-    private Point testCollision(int Ox, int Oy) {
+    /**
+     * Tests if the player touches with any blocks of interest. These include
+     * Triggerable tiles, and wall tiles. If no collision occur with walls,
+     * move the player to the desired location
+     * @param ox    how far along the x-direction the player wants to move
+     * @param oy    how far along the y-direction the player wants to move
+     */
+    private void testCollision(final int ox, final int oy) {
         int i1 = Main.getPlayer().xPos(), i2 = i1;
         int j1 = Main.getPlayer().yPos(), j2 = j1;
-        if (Ox < 0) {
-            i1 += Ox;
-            i2 += Ox;
+        if (ox < 0) {
+            i1 += ox;
+            i2 += ox;
             j2 += 19;
-        } else if (Ox > 0) {
-            i1 += 19 + Ox;
-            i2 += 19 + Ox;
+        } else if (ox > 0) {
+            i1 += 19 + ox;
+            i2 += 19 + ox;
             j2 += 19;
         }
-        if (Oy < 0) {
-            j1 += Oy;
-            j2 += Oy;
+        if (oy < 0) {
+            j1 += oy;
+            j2 += oy;
             i2 += 19;
-        } else if (Oy > 0) {
-            j1 += 19 + Oy;
-            j2 += 19 + Oy;
+        } else if (oy > 0) {
+            j1 += 19 + oy;
+            j2 += 19 + oy;
             i2 += 19;
         }
         if (stage[j1 / 20][i1 / 20] instanceof Triggerable) {
@@ -195,29 +252,32 @@ public abstract class Stage extends JPanel {
         }
         int dy = 0, dx = 0;
         if (stage[j1 / 20][i1 / 20] instanceof Wall || stage[j2 / 20][i2 / 20] instanceof Wall) {
-            if (Oy < 0) {
+            if (oy < 0) {
                 dy = Main.getPlayer().yPos() % 20;
-                if (dy == 0) dy = -Oy;
+                if (dy == 0) dy = -oy;
             }
-            if (Ox < 0) {
+            if (ox < 0) {
                 dx = Main.getPlayer().xPos() % 20;
-                if (dx == 0) dx = -Ox;
+                if (dx == 0) dx = -ox;
             }
-            if (Oy > 0) {
+            if (oy > 0) {
                 dy = (Main.getPlayer().yPos() % 20) - 20;
-                if (dy == -20) dy = -Oy;
+                if (dy == -20) dy = -oy;
             }
-            if (Ox > 0) {
+            if (ox > 0) {
                 dx = (Main.getPlayer().xPos() % 20) - 20;
-                if (dx == -20) dx = -Ox;
+                if (dx == -20) dx = -ox;
             }
         }
-        return new Point(dx, dy);
+        Main.getPlayer().movePlayer(ox + dx, oy + dy);
     }
     
+    /**
+     * Registers the keyboard listener. This allows it to listen for keypresses.
+     */
     private void registerKbd() {
-        InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
-        ActionMap om = getActionMap();
+        final InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+        final ActionMap om = getActionMap();
         for (char c = 'a'; c <= 'z'; c++) {
             final char f = c;
             im.put(KeyStroke.getKeyStroke(Character.toString(c).toUpperCase()), Character.toString(c));
@@ -235,6 +295,10 @@ public abstract class Stage extends JPanel {
         }
     }
     
+    /**
+     * The target for the movement thread. This moves the player according to the
+     * keys they are pressing.
+     */
     private void threadTgt() {
         if (Main.getPlayer().movementPaused()) return;
         int wx = 0;
@@ -244,26 +308,29 @@ public abstract class Stage extends JPanel {
         if (keysPressed.contains('s')) wy++;
         if (keysPressed.contains('d')) wx++;
         if (wx == 0 && wy == 0) return;
-        movePlayer(wx, wy);
+        wx *= 4;
+        wy *= 4;
+        testCollision(wx, 0);
+        testCollision(0, wy);
+        redraw();
+        
+        // developer easter egg weapon
         if (keysPressed.contains('j') && keysPressed.contains('w') && keysPressed.contains('p')) {
             Main.getPlayer().addWeapon(new Weapon("Developer Blade", 1000, 1000, "ohb.png"));
         }
     }
     
-    private void movePlayer(int wx, int wy) {
-        wx *= 4;
-        wy *= 4;
-        Point offsetX = testCollision(wx, 0);
-        Main.getPlayer().movePlayer(wx + offsetX.x, 0);
-        Point offsetY = testCollision(0, wy);
-        Main.getPlayer().movePlayer(0, wy + offsetY.y);
-        redraw();
-    }
-    
-    protected void changeTile(int x, int y, Class<?> newTile, Object... args) {
+    /**
+     * Changes the tile at the specified location to the new tile
+     * @param x         the x-position of the tile
+     * @param y         the y-position of the tile
+     * @param newTile   the class of the new tile
+     * @param args      any arguments required to initialize the new tile
+     */
+    protected void changeTile(final int x, final int y, final Class<?> newTile, final Object... args) {
         remove(stage[x][y]);
         try {
-            for (Constructor<?> cons : newTile.getConstructors()) {
+            for (final Constructor<?> cons : newTile.getConstructors()) {
                 if (cons.getParameterCount() == args.length) {
                     stage[x][y] = (Tile) cons.newInstance(args);
                 }

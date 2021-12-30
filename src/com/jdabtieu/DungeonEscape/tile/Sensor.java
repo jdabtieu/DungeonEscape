@@ -11,13 +11,13 @@ public class Sensor extends Ground implements Triggerable {
     /**
      * The action to be performed
      */
-    private Runnable action;
+    private final Runnable action;
     
     /**
      * Creates a sensor tile with the given action
      * @param action    the action to be performed
      */
-    public Sensor(Runnable action) {
+    public Sensor(final Runnable action) {
         super();
         setBackground(new Color(0, 160, 255));
         this.action = action;

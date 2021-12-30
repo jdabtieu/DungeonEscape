@@ -13,12 +13,12 @@ public class Text extends JLabel {
     /**
      * The text's x position
      */
-    private int x;
+    private final int x;
     
     /**
      * The text's y position
      */
-    private int y;
+    private final int y;
     
     /**
      * Creates a Text object at the specified location
@@ -26,7 +26,7 @@ public class Text extends JLabel {
      * @param x     x-coordinate of the text
      * @param y     y-coordinate of the text
      */
-    public Text(String text, int x, int y) {
+    public Text(String text, final int x, final int y) {
         super(text);
         this.x = x;
         this.y = y;

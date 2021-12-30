@@ -20,6 +20,7 @@ public class Coins extends Ground implements Triggerable {
      * @param value the value of this tile
      */
     public Coins(int value) {
+        super();
         this.value = value;
         setBackground(Color.yellow);
     }
