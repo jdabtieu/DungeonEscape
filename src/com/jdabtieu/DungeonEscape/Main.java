@@ -1,10 +1,10 @@
 package com.jdabtieu.DungeonEscape;
 
 import java.awt.Container;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import com.jdabtieu.DungeonEscape.core.Credits;
 import com.jdabtieu.DungeonEscape.core.GameOver;
@@ -32,7 +32,7 @@ public class Main {
      * Monitor object used to pause the main thread while the game is running.
      * This object should be public to allow easy access.
      */
-    public static Object mon = new Object();
+    public static final Object mon = new Object();
     
     /**
      * Determines whether to end the game when a pause is interrupted. This is set by the
@@ -67,7 +67,7 @@ public class Main {
     public static void main(String[] args) {
         // Populate main thread and create window
         mainThread = Thread.currentThread();
-        drawSafe(() -> {
+        SwingUtilities.invokeLater(() -> {
             me = new Window();
             me.setFocusable(true);
             me.setVisible(true);
@@ -76,7 +76,7 @@ public class Main {
         // Main game loop
         while (true) {
             try {
-                drawSafe(() -> {
+                SwingUtilities.invokeLater(() -> {
                     // Initialize new game variables
                     gameOver = false;
                     currScene = new MainMenu();
@@ -116,7 +116,7 @@ public class Main {
                 throw new GameOverException();
             } catch (GameOverException e) {
                 // Clear the screen if the game is over
-                drawSafe(() -> {
+                SwingUtilities.invokeLater(() -> {
                     getContentPane().removeAll();
                     me.repaint();
                 });
@@ -169,7 +169,7 @@ public class Main {
      * @param layer     the layer it should be displayed at
      */
     private static void swapWindow(Class<?> newWindow, int layer) {
-        drawSafe(() -> {
+        SwingUtilities.invokeLater(() -> {
             currScene.setVisible(false);
             getContentPane().remove(currScene);
             
@@ -201,16 +201,6 @@ public class Main {
                 }
             }
         }
-    }
-    
-    /**
-     * Runs code as specified by dr in the AWT Event Thread
-     * @param dr    the code to be run
-     */
-    public static void drawSafe(Runnable dr) {
-        EventQueue.invokeLater(() -> {
-            dr.run();
-        });
     }
     
     /**

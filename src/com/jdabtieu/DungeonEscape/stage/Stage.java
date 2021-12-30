@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
@@ -144,7 +145,7 @@ public abstract class Stage extends JPanel {
     }
     
     protected void redraw() {
-        Main.drawSafe(() -> {
+        SwingUtilities.invokeLater(() -> {
             setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
             for (int i = 0; i < stage.length; i++) {
                 for (int j = 0; j < stage[i].length; j++) {
