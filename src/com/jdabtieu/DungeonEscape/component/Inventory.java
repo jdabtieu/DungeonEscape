@@ -25,6 +25,7 @@ public class Inventory extends JPanel {
         setBounds(Window.WIDTH / 2 - 60, Window.HEIGHT - 100, 120, 40);
         setLayout(null);
         setOpaque(false);
+        setVisible(false);
         repaint();
     }
     

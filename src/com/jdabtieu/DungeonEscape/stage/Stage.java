@@ -26,6 +26,7 @@ import com.jdabtieu.DungeonEscape.component.Weapon;
 import com.jdabtieu.DungeonEscape.core.AttackPattern;
 import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
+import com.jdabtieu.DungeonEscape.core.Player;
 import com.jdabtieu.DungeonEscape.core.Window;
 import com.jdabtieu.DungeonEscape.tile.Coins;
 import com.jdabtieu.DungeonEscape.tile.DarkGround;
@@ -110,7 +111,7 @@ public abstract class Stage extends JPanel {
 				time = System.currentTimeMillis();
 				threadTgt();
             }
-        });
+        }, "Movement-Thread");
         movement.start();
     }
     
@@ -225,8 +226,9 @@ public abstract class Stage extends JPanel {
      * @param oy    how far along the y-direction the player wants to move
      */
     private void testCollision(final int ox, final int oy) {
-        int i1 = Main.getPlayer().xPos(), i2 = i1;
-        int j1 = Main.getPlayer().yPos(), j2 = j1;
+        final Player p = Main.getPlayer();
+        int i1 = p.xPos(), i2 = i1;
+        int j1 = p.yPos(), j2 = j1;
         if (ox < 0) {
             i1 += ox;
             i2 += ox;
@@ -253,23 +255,23 @@ public abstract class Stage extends JPanel {
         int dy = 0, dx = 0;
         if (stage[j1 / 20][i1 / 20] instanceof Wall || stage[j2 / 20][i2 / 20] instanceof Wall) {
             if (oy < 0) {
-                dy = Main.getPlayer().yPos() % 20;
+                dy = p.yPos() % 20;
                 if (dy == 0) dy = -oy;
             }
             if (ox < 0) {
-                dx = Main.getPlayer().xPos() % 20;
+                dx = p.xPos() % 20;
                 if (dx == 0) dx = -ox;
             }
             if (oy > 0) {
-                dy = (Main.getPlayer().yPos() % 20) - 20;
+                dy = (p.yPos() % 20) - 20;
                 if (dy == -20) dy = -oy;
             }
             if (ox > 0) {
-                dx = (Main.getPlayer().xPos() % 20) - 20;
+                dx = (p.xPos() % 20) - 20;
                 if (dx == -20) dx = -ox;
             }
         }
-        Main.getPlayer().movePlayer(ox + dx, oy + dy);
+        p.movePlayer(ox + dx, oy + dy);
     }
     
     /**
