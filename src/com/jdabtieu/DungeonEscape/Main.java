@@ -6,7 +6,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.jdabtieu.DungeonEscape.component.StatusDisplay;
 import com.jdabtieu.DungeonEscape.core.Credits;
 import com.jdabtieu.DungeonEscape.core.GameOver;
 import com.jdabtieu.DungeonEscape.core.GameOverException;
@@ -55,11 +54,6 @@ public class Main {
     private static JFrame me = null;
     
     /**
-     * Stores a reference to the status display. Use getSD() to access it.
-     */
-    private static StatusDisplay sd = null;
-    
-    /**
      * Stores a reference to the currently displayed scene (i.e. a stage/main menu). This
      * should always be in the display layer 1, so that items can be layered on top.
      */
@@ -88,15 +82,12 @@ public class Main {
                     currScene = new MainMenu();
                     getContentPane().add(currScene, Layer.MAP, 0);
                     player = new Player();
-                    sd = new StatusDisplay();
-                    getContentPane().add(sd, Layer.PLAYER_INFO, 0);
                     getContentPane().add(player, Layer.PLAYER, 0);
                 });
                 pause(); // unpaused by Start Game button in MainMenu
                 
                 // Stage 1, make player and status display visible
                 swapWindow(Stage1.class, 1);
-                sd.setVisible(true);
                 player.setVisible(true);
                
                 pause(); // unpaused by beating Stage 1 boss
@@ -151,14 +142,6 @@ public class Main {
     }
     
     /**
-     * Gets a reference to the status display
-     * @return  the status display
-     */
-    public static StatusDisplay getSD() {
-        return sd;
-    }
-    
-    /**
      * Gets a reference to the player
      * @return  the player
      */
@@ -171,9 +154,7 @@ public class Main {
      */
     public static void triggerLoss() {
         player.setVisible(false);
-        sd.setVisible(false);
         getContentPane().remove(player);
-        getContentPane().remove(sd);
         
         // Stop keyboard listener
         if (currScene instanceof Stage) {

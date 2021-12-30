@@ -74,9 +74,11 @@ public class StatusDisplay extends JPanel {
     @Override
     public void repaint() {
         Player p = Main.getPlayer();
-        if (healthBar != null) healthBar.setValue(p.getHealth());
-        if (coins != null) coins.setText(Integer.toString(p.coins));
-        if (keys != null) keys.setText(Integer.toString(p.keys));
+        if (p != null) {
+            if (healthBar != null) healthBar.setValue(p.getHealth());
+            if (coins != null) coins.setText(Integer.toString(p.getCoins()));
+            if (keys != null) keys.setText(Integer.toString(p.getKeys()));
+        }
         super.repaint();
     }
 }

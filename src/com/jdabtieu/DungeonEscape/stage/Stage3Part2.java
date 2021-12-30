@@ -33,7 +33,7 @@ public class Stage3Part2 extends Stage {
      */
     public Stage3Part2() {
         super();
-        Main.getPlayer().setLocation(360, 2240);
+        Main.getPlayer().setPosition(360, 2240);
         bossInit = false;
         activeGameShow = false;
         fillStage("stage3_2");
@@ -62,27 +62,24 @@ public class Stage3Part2 extends Stage {
     private void initGameShow() {
         if (!activeGameShow) return;
         activeGameShow = false;
-        if (Main.getPlayer().keys < 1) {
+        if (Main.getPlayer().getKeys() < 1) {
             new BasicDialog("Sorry, but admission requires one key.").selection();
             return;
         } else if (!new BasicConfirm("<html>Do you want to use one key<br>to enter the game show?</html>").selection()) {
             return;
         }
-        Main.getPlayer().keys--;
-        Main.getSD().repaint();
+        Main.getPlayer().useKey();
         Main.getPlayer().pauseMovement();
         if (new QuizShow("Guess the Phrase (80s Song Lyrics)", "never gonna give you up").selection()) {
             new BasicDialog("That's correct! You won 1200 coins.").selection();
-            Main.getPlayer().coins += 1200;
-            Main.getSD().repaint();
+            Main.getPlayer().addCoins(1200);
         } else {
             new BasicDialog("Sorry, that's not the answer.").selection();
         }
         
         if (new QuizShow("Finish the word (clues were in stage 2)", "vector").selection()) {
             new BasicDialog("That's correct! You won 1200 coins.").selection();
-            Main.getPlayer().coins += 1200;
-            Main.getSD().repaint();
+            Main.getPlayer().addCoins(1200);
         } else {
             new BasicConfirm("Sorry, that's not the answer.").selection();
         }
@@ -103,7 +100,7 @@ public class Stage3Part2 extends Stage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Main.getPlayer().setLocation(1260, 1840);
+        Main.getPlayer().setPosition(1260, 1840);
         redraw();
         Banner bb = new Banner("BOSS FIGHT!");
         Main.getContentPane().add(bb, Layer.ENEMY, 0);
@@ -127,8 +124,7 @@ public class Stage3Part2 extends Stage {
         
         fight(850, healthBar, () -> (int) (Math.random() + 1.7));
         new BasicDialog("You defeated the boss! 5000 coins acquired!").selection();
-        Main.getPlayer().coins += 5000;
-        Main.getSD().repaint();
+        Main.getPlayer().addCoins(5000);
         healthBar.setVisible(false);
         Main.getContentPane().remove(healthBar);
         boss.setVisible(false);
@@ -156,19 +152,19 @@ public class Stage3Part2 extends Stage {
         redraw();
         Music.stopAudio();
         Music.initAudio("win.wav", false);
-        while (Main.getPlayer().y > 360) {
-            Main.getPlayer().y -= 1;
+        while (Main.getPlayer().yPos() > 360) {
+            Main.getPlayer().movePlayer(0, -1);
             redraw();
             Main.safeSleep(10);
         }
-        Main.getSD().setVisible(false);
+        Main.getPlayer().setSDVisible(false);
         Main.getPlayer().setInventoryVisible(false);
         final Text[] texts = new Text[6];
         texts[0] = new Text("Wow, this is really bright!", 100, -25);
         texts[1] = new Text("Is this the outside world?", 100, -225);
         texts[2] = new Text("I can't believe I'm finally out!", 100, -425);
         texts[3] = new Text("I wonder how long I've been stuck here...", 100, -625);
-        if (Main.getPlayer().isInterviewComplete()){
+        if (Main.getPlayer().interviewComplete()){
                 texts[4] = new Text("5 years, I think?", 100, -825);
                 texts[5] = new Text("Well, time to try out the sequel I made...", 100, -1025);
         } else {

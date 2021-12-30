@@ -44,7 +44,7 @@ public class Stage2 extends Stage {
      */
     public Stage2() {
         super();
-        Main.getPlayer().setLocation(360, 1750);
+        Main.getPlayer().setPosition(360, 1750);
         bossInit = false;
         interviewInit = false;
         ambushInit = false;
@@ -107,15 +107,14 @@ public class Stage2 extends Stage {
         Main.getPlayer().pauseMovement();
         Weapon wp = new Weapon("One Hit Blade", 2000, 1, "ohb.png");
         if (new BasicConfirm("<html>For 3300 coins, Vending Machine offers:<br>" + wp + "<br>Would you like to purchase it?</html>").selection()) {
-            if (Main.getPlayer().coins < 3300) {
-                new BasicPopup("You don't have enough coins!", Color.RED);
-            } else {
+            try {
+                Main.getPlayer().useCoins(3300);
+                Main.getPlayer().addWeapon(wp);
                 changeTile(20, 10, Ground.class);
                 changeTile(17, 10, Ground.class);
                 redraw();
-                Main.getPlayer().coins -= 3300;
-                Main.getPlayer().addWeapon(wp);
-                Main.getSD().repaint();
+            } catch (IllegalArgumentException e) {
+                new BasicPopup("You don't have enough coins!", Color.RED);
             }
         }
         Main.getPlayer().unpauseMovement();
@@ -124,7 +123,7 @@ public class Stage2 extends Stage {
     private void initAmbush() {
         if (ambushInit) return;
         ambushInit = true;
-        Main.getPlayer().setLocation(336, 1000);
+        Main.getPlayer().setPosition(336, 1000);
         Main.getPlayer().pauseMovement();
         changeTile(53, 16, Ground.class);
         changeTile(53, 17, Ground.class);
@@ -178,11 +177,11 @@ public class Stage2 extends Stage {
         interviewInit = true;
         if (!new BasicConfirm("<html>The Dungeon Mester would like to<br>invite you to create new levels.<br>Accept the offer?</html>").selection()) {
             interviewInit = false;
-            Main.getPlayer().setLocation(712, 1408);
+            Main.getPlayer().setPosition(712, 1408);
             return;
         }
         Main.getPlayer().pauseMovement();
-        Main.getPlayer().setLocation(496, 1288);
+        Main.getPlayer().setPosition(496, 1288);
         redraw();
         new BasicDialog("<html>So, you want to help add more levels, eh?<br>You're going to have to pass the test first.</html>").selection();
         BasicQuiz[] quiz = {
@@ -221,9 +220,8 @@ public class Stage2 extends Stage {
             new BasicDialog("<html>After working for two years, you did the unthinkable. "
                     + "Converting from a text-only game to GUI was hard enough, but you "
                     + "somehow created a VR sequel. Amazing!</html>").selection();
-            Main.getPlayer().coins += 1100;
+            Main.getPlayer().addCoins(1100);
             Main.getPlayer().setInterviewComplete();
-            Main.getSD().repaint();
             new BasicDialog("<html>You were paid 1100 coins in exchange.</html>").selection();
         }
         Main.getPlayer().unpauseMovement();
@@ -241,8 +239,7 @@ public class Stage2 extends Stage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Main.getPlayer().x = 930;
-        Main.getPlayer().y = 500;
+        Main.getPlayer().setPosition(930, 500);
         Main.getPlayer().pauseMovement();
         redraw();
         Banner bb = new Banner("BOSS FIGHT!");

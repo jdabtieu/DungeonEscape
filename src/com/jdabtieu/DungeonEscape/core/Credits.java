@@ -1,7 +1,6 @@
 package com.jdabtieu.DungeonEscape.core;
 
 import java.awt.Color;
-import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -9,10 +8,8 @@ import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.tile.Text;
 
 public class Credits extends JPanel {
-
     /**
-     * Create the frame.
-     * @throws IOException 
+     * Create the screen
      */
     public Credits() {
         super();
@@ -21,6 +18,9 @@ public class Credits extends JPanel {
         setBackground(Color.BLACK);
     }
     
+    /**
+     * Start animating the credits
+     */
     public void animate() {
         Main.getPlayer().updateHighScore();
         final String[] creds = {
@@ -47,21 +47,22 @@ public class Credits extends JPanel {
                 "",
                 "Thanks for playing!"
         };
-        
         final Text[] lines = new Text[creds.length];
+        final int totalTime = 38000;
+        final int lineTime = totalTime / (Window.HEIGHT + 50 * creds.length);
+        
         for (int i = 0; i < creds.length; i++) {
             lines[i] = new Text(creds[i], 100, Window.HEIGHT + 50 * i);
             lines[i].setForeground(Color.white);
             lines[i].setFont(Fonts.TITLE);
             add(lines[i]);
         }
-        lines[0].setFont(Fonts.LARGE);
-        lines[0].setBounds(100, Window.HEIGHT, 1000, 32);
-        lines[7].setFont(Fonts.LARGE);
-        lines[7].setBounds(100, Window.HEIGHT + 300, 1000, 32);
+        for (int e : new int[] {0, 7}) {
+            lines[e].setFont(Fonts.LARGE);
+            lines[e].setBounds(100, Window.HEIGHT + 50 * e, 1000, 32);
+        }
+        
         Music.initAudio("win.wav", false);
-        final int totalTime = 38000;
-        final int lineTime = totalTime / (Window.HEIGHT + 50 * creds.length);
         long currTime = System.currentTimeMillis();
         for (int i = 0; i < totalTime; i += lineTime) {
             try {

@@ -27,7 +27,7 @@ public class Coins extends Ground implements Triggerable {
     @Override
     public void trigger() {
         if (value == 0) return;
-        Main.getPlayer().coins += value;
+        Main.getPlayer().addCoins(value);
         value = 0;
         setBackground(Ground.COLOR);
         repaint();

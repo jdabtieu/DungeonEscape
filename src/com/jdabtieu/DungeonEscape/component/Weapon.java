@@ -5,6 +5,8 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.jdabtieu.DungeonEscape.Main;
+
 /**
  * Weapon stores details about a weapon. A weapon deals 1 damage if it has no durability
  * left, and weapons cannot be switched out during battle.
@@ -92,6 +94,7 @@ public class Weapon extends JLabel implements Cloneable {
         }
         
         durability--;
+        Main.getPlayer().repaintInventory();
         if (Math.random() > 0.7) {
             critIndicator.setVisible(true);
             // 220-240% of weapon's damage

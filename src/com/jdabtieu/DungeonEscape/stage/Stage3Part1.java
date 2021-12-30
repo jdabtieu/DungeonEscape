@@ -26,7 +26,7 @@ public class Stage3Part1 extends Stage {
      */
     public Stage3Part1() {
         super();
-        Main.getPlayer().setLocation(360, 1750);
+        Main.getPlayer().setPosition(360, 1750);
         ambushInit = false;
         fillStage("stage3_1");
         texts.add(new Text(">>> I can see clearly now the light is here", 40, 1500));
@@ -46,7 +46,7 @@ public class Stage3Part1 extends Stage {
     private void initAmbush() {
         if (ambushInit) return;
         ambushInit = true;
-        Main.getPlayer().setLocation(340, 1340);
+        Main.getPlayer().setPosition(340, 1340);
         Main.getPlayer().pauseMovement();
         changeTile(69, 16, Ground.class);
         changeTile(69, 17, Ground.class);

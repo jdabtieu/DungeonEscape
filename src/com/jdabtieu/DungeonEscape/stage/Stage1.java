@@ -39,7 +39,7 @@ public class Stage1 extends Stage {
         Music.initAudio("mellohi.wav", true);
         bossInit = false;
         comboLockEnabled = false;
-        Main.getPlayer().setLocation(1200, 500);
+        Main.getPlayer().setPosition(1200, 500);
         fillStage("stage1");
         texts.add(new Text(">>> Where am I?", 880, 450));
         texts.add(new Text(">>> ...", 880, 470));
@@ -80,7 +80,7 @@ public class Stage1 extends Stage {
             changeTile(3, 73, Ground.class);
             new BasicPopup("You found a key!", Color.BLACK);
             redraw();
-            Main.getPlayer().keys++;
+            Main.getPlayer().addKey();
         }, Color.YELLOW);
         
         stage[6][100] = new GroundWeapon(new Weapon("Wooden Axe", 3, 30, "wood_axe.png"));
@@ -101,7 +101,7 @@ public class Stage1 extends Stage {
             e.printStackTrace();
         }
         Main.getPlayer().setHealth(100);
-        Main.getPlayer().setLocation(2760, 184);
+        Main.getPlayer().setPosition(2760, 184);
         Main.getPlayer().pauseMovement();
         redraw();
         Banner bb = new Banner("BOSS FIGHT!");
