@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SECONDS=0
+
 echo "Starting up..."
 rm -rf build
 mkdir build
@@ -12,3 +14,6 @@ jar cmvf META-INF/MANIFEST.MF DungeonEscape.jar -C build .
 
 echo "Cleaning up..."
 rm -rf build
+
+duration=$SECONDS
+echo "Build completed in $(($duration / 60)) minutes and $(($duration % 60)) seconds."
