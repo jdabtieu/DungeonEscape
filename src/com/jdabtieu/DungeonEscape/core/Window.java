@@ -22,6 +22,7 @@ public class Window extends JFrame {
      * The height of the window
      */
     public static final int HEIGHT = 720;
+    
     /**
      * Create the window
      */

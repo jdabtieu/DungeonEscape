@@ -36,13 +36,12 @@ public class QuizShow extends JPanel {
      * @param ans       the answer to the question
      */
     public QuizShow(final String question, final String ans) {
-        JLabel txt;
-        JButton submit;
+        final JLabel txt = new JLabel(question);
+        final JButton submit = new JButton("Submit");;
         
         setBounds(Window.WIDTH / 4, Window.HEIGHT / 2 - 100, Window.WIDTH / 2, 200);
         setLayout(null);
         setBackground(Color.GRAY);
-        txt = new JLabel(question);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 10, getWidth(), 40);
         txt.setFont(Fonts.TITLE);
@@ -59,7 +58,6 @@ public class QuizShow extends JPanel {
         
         this.ans = ans.replace(" ", "").toLowerCase();
         
-        submit = new JButton("Submit");
         submit.setBounds(getWidth() / 2 - 50, 160, 100, 30);
         add(submit);
         submit.addActionListener(e -> {

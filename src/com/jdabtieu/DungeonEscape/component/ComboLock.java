@@ -34,10 +34,10 @@ public class ComboLock extends JPanel {
      */
     public ComboLock(final String combo) {
         super();
-        final JTextField input;
-        final JLabel title;
-        final JButton btnClose;
-        final JLabel lblWrong;
+        final JTextField input = new JTextField();
+        final JLabel title = new JLabel("ComboLock 8100");
+        final JButton btnClose = new JButton("X");
+        final JLabel lblWrong = new JLabel("That's the wrong combination...");
         
         correct = false;
         Main.getPlayer().pauseMovement();
@@ -46,7 +46,6 @@ public class ComboLock extends JPanel {
         setLayout(null);
         
         // Force only numeric digits, with a length up to 6
-        input = new JTextField();
         ((AbstractDocument) input.getDocument()).setDocumentFilter(new DocumentFilter() {
             public void replace(FilterBypass fb, int offset, int len, String str, AttributeSet a) throws BadLocationException {
                 String text = fb.getDocument().getText(0, fb.getDocument().getLength()) + str;
@@ -64,13 +63,11 @@ public class ComboLock extends JPanel {
         input.setBounds(getWidth() / 2 - 50, 85, 100, 30);
         add(input);
         
-        title = new JLabel("ComboLock 8100");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(Fonts.TITLE);
         title.setBounds(0, 0, getWidth(), 40);
         add(title);
         
-        btnClose = new JButton("X");
         btnClose.setBackground(Color.LIGHT_GRAY);
         btnClose.setBorder(null);
         btnClose.setFocusPainted(false);
@@ -78,7 +75,6 @@ public class ComboLock extends JPanel {
         btnClose.setBounds(262, 7, 28, 23);
         add(btnClose);
         
-        lblWrong = new JLabel("That's the wrong combination...");
         lblWrong.setForeground(Color.RED);
         lblWrong.setFont(Fonts.STD_PARA);
         lblWrong.setHorizontalAlignment(SwingConstants.CENTER);

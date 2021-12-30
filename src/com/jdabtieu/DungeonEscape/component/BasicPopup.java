@@ -25,9 +25,9 @@ public class BasicPopup extends JPanel {
      */
     public BasicPopup(final String text, final Color color) {
         super();
-        boolean movementPaused = Main.getPlayer().movementPaused();
-        JButton btnClose;
-        JLabel txt;
+        final boolean movementPaused = Main.getPlayer().movementPaused();
+        final JButton btnClose = new JButton("X");
+        final JLabel txt = new JLabel(text);;
         
         Main.getPlayer().pauseMovement();
         
@@ -36,7 +36,6 @@ public class BasicPopup extends JPanel {
         setLayout(null);
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
-        btnClose = new JButton("X");
         btnClose.setBackground(Color.LIGHT_GRAY);
         btnClose.setBorder(null);
         btnClose.setFocusPainted(false);
@@ -44,7 +43,6 @@ public class BasicPopup extends JPanel {
         btnClose.setBounds(getWidth() - 40, 10, 28, 23);
         add(btnClose);
         
-        txt = new JLabel(text);
         txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 10, getWidth(), getHeight() - 10);

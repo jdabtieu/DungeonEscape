@@ -20,24 +20,25 @@ public class MainMenu extends JPanel {
      */
     public MainMenu() {
         super();
+        final MenuButton btnStart = new MenuButton("Start Game");
+        final MenuButton btnQuit = new MenuButton("Quit");
+        final JLabel lblTitleTxt = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/titleText.png")));
+        final JLabel lblBackgroundImg = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/background.png")));
+        
         setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
         setLayout(null);
         
-        MenuButton btnStart = new MenuButton("Start Game");
         btnStart.setBounds((Window.WIDTH - 400) / 2, 350, 400, 40);
         add(btnStart);
         
-        MenuButton btnQuit = new MenuButton("Quit");
         btnQuit.setBounds((Window.WIDTH - 400) / 2, 410, 400, 40);
         add(btnQuit);
         
-        JLabel labelTitleText = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/titleText.png")));
-        labelTitleText.setBounds((Window.WIDTH - 834) / 2, 140, 834, 65);
-        add(labelTitleText);
+        lblTitleTxt.setBounds((Window.WIDTH - 834) / 2, 140, 834, 65);
+        add(lblTitleTxt);
         
-        JLabel labelBackgroundImg = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/background.png")));
-        labelBackgroundImg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
-        add(labelBackgroundImg);
+        lblBackgroundImg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
+        add(lblBackgroundImg);
         
         btnStart.addActionListener(e -> {
             synchronized(Main.mon) {

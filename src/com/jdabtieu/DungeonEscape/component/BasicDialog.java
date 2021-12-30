@@ -25,8 +25,8 @@ public class BasicDialog extends JPanel {
      */
     public BasicDialog(final String text) {
         super();
-        final JLabel txt;
-        final JButton btn;
+        final JLabel txt = new JLabel(text);
+        final JButton btn = new JButton("OK");
         
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 75, 300, 150);
         setBackground(Color.LIGHT_GRAY);
@@ -34,14 +34,12 @@ public class BasicDialog extends JPanel {
         setVisible(false);
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
-        txt = new JLabel(text);
         txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(10, 11, getWidth() - 20, getHeight() - 75);
         txt.setForeground(Color.BLACK);
         add(txt);
         
-        btn = new JButton("OK");
         btn.setFont(Fonts.STD_PARA);
         btn.setBounds(getWidth() / 2 - 40, getHeight() - 34, 80, 24);
         add(btn);

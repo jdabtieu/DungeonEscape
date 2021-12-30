@@ -52,17 +52,17 @@ public class Player extends Tile {
     /**
      * A reference to the player's inventory
      */
-    private Inventory inv;
+    private final Inventory inv;
     
     /**
      * A reference to the player's status display
      */
-    private StatusDisplay sd;
+    private final StatusDisplay sd;
     
     /**
      * A list of weapons the player is holding
      */
-    private ArrayList<Weapon> weapons;
+    private final ArrayList<Weapon> weapons;
     
     /**
      * A reference to the active weapon
@@ -113,7 +113,7 @@ public class Player extends Tile {
      * @param coins the number of coins to add
      * @throws IllegalArgumentException if coins is negative
      */
-    public void addCoins(int coins) {
+    public void addCoins(final int coins) {
         if (coins < 0) throw new IllegalArgumentException("Cannot add negative coins");
         this.coins += coins;
         sd.repaint();
@@ -124,7 +124,7 @@ public class Player extends Tile {
      * @param coins the number of coins to use
      * @throws IllegalArgumentException if the player doesn't have enough coins
      */
-    public void useCoins(int coins) {
+    public void useCoins(final int coins) {
         if (coins > this.coins) throw new IllegalArgumentException("Not enough coins");
         this.coins -= coins;
         sd.repaint();
@@ -143,7 +143,7 @@ public class Player extends Tile {
      * as a result of this call, a loss will be triggered
      * @param dh    amount to change the health by
      */
-    public void changeHealth(int dh) {
+    public void changeHealth(final int dh) {
         if (health + dh > 0) {
             health += dh;
             sd.repaint();
@@ -165,7 +165,7 @@ public class Player extends Tile {
      * Sets the player's healtth to the specified value
      * @param health    the new health of the player
      */
-    public void setHealth(int health) {
+    public void setHealth(final int health) {
         this.health = health;
         sd.repaint();
     }
@@ -191,7 +191,7 @@ public class Player extends Tile {
      * @param dx    the amount to move the player in the x-direction
      * @param dy    the amount to move the player in the y-direction
      */
-    public void movePlayer(int dx, int dy) {
+    public void movePlayer(final int dx, final int dy) {
         x += dx;
         y += dy;
     }
@@ -201,7 +201,7 @@ public class Player extends Tile {
      * @param x the player's new x-position
      * @param y the player's new y-position
      */
-    public void setPosition(int x, int y) {
+    public void setPosition(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
@@ -238,7 +238,7 @@ public class Player extends Tile {
      * @param aFlag true to make the inventory visible; false to make it invisible
      * @see Inventory#setVisible(boolean)
      */
-    public void setInventoryVisible(boolean aFlag) {
+    public void setInventoryVisible(final boolean aFlag) {
         inv.setVisible(aFlag);
     }
     
@@ -255,7 +255,7 @@ public class Player extends Tile {
      * @param aFlag true to make the status display visible; false to make it invisible
      * @see StatusDisplay#setVisible(boolean)
      */
-    public void setSDVisible(boolean aFlag) {
+    public void setSDVisible(final boolean aFlag) {
         sd.setVisible(aFlag);
     }
     
@@ -280,15 +280,17 @@ public class Player extends Tile {
      * The selected weapon will be set as activeWeapon
      * @param pmt   the prompt text
      */
-    public void weaponSelect(String pmt) {
-        boolean movementPaused = pauseMovement;
+    public void weaponSelect(final String pmt) {
+        final Object mon = this;
+        final boolean movementPaused = pauseMovement;
+        final JPanel contentPane = new JPanel();
+        final JLabel title = new JLabel(pmt);
+        
         pauseMovement = true;
-        JPanel contentPane = new JPanel();
         contentPane.setBounds(Window.WIDTH / 2 - 90, Window.HEIGHT / 2 - 150, 180, 300);
         contentPane.setLayout(null);
         contentPane.setBackground(Color.GREEN);
         
-        JLabel title = new JLabel(pmt);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(Fonts.WEAPON_SELECT);
         title.setBounds(0, 0, 180, 60);
@@ -296,14 +298,14 @@ public class Player extends Tile {
         
         for (int i = 0; i < weapons.size(); i++) {
             final int f = i;
-            final Object mon = this;
-            JPanel container = new JPanel();
+            final JPanel container = new JPanel();
+            final Weapon wp = weapons.get(i).clone();
+            final JLabel lab = new JLabel("<html>" + wp.toString() + "</html>");;
+            
             container.setLayout(null);
             container.setBounds(20, 60 * i + 60, 140, 60);
             container.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-            Weapon wp = weapons.get(i).clone();
             wp.setBounds(0, 10, 40, 40);
-            JLabel lab = new JLabel("<html>" + wp.toString() + "</html>");
             lab.setFont(Fonts.STD_PARA);
             lab.setBounds(40, 0, 200, 60);
             container.add(wp);
@@ -335,7 +337,7 @@ public class Player extends Tile {
      * Adds the specified weapon to the player's inventory. This does not set it as the active weapon
      * @param wp    the weapon to add to the player's inventory
      */
-    public void addWeapon(Weapon wp) {
+    public void addWeapon(final Weapon wp) {
         weapons.add(wp);
         if (weapons.size() > 3) {
             weaponSelect("<html>You found a new weapon,<br>but you can only hold 3.<br>Choose one to discard.</html>");

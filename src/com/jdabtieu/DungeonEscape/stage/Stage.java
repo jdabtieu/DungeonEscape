@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Weapon;
-import com.jdabtieu.DungeonEscape.core.EnemyAttackPattern;
+import com.jdabtieu.DungeonEscape.core.AttackPattern;
 import com.jdabtieu.DungeonEscape.core.Fonts;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Window;
@@ -99,7 +99,7 @@ public abstract class Stage extends JPanel {
         movement.interrupt();
     }
     
-    protected void fight(int enemyHealth, HealthBar enemyHealthBar, EnemyAttackPattern ap) {
+    protected void fight(int enemyHealth, HealthBar enemyHealthBar, AttackPattern ap) {
         while (enemyHealth > 0 && Main.getPlayer().getHealth() > 0) { // simulate attacks
             enemyHealth -= Main.getPlayer().getActiveWeapon().attack(critIndicator);
             Main.getPlayer().changeHealth(-ap.attack());

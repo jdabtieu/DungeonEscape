@@ -37,9 +37,9 @@ public class StatusDisplay extends JPanel {
      */
     public StatusDisplay() {
         super();
-        JLabel imgCoins;
-        JLabel imgHealth;
-        JLabel imgKeys;
+        final JLabel imgCoins = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/coins.png")));
+        final JLabel imgHealth = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/health.png")));
+        final JLabel imgKeys = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/keys.png")));
         
         setBounds(10, 10, 160, 120);
         setLayout(null);
@@ -47,15 +47,12 @@ public class StatusDisplay extends JPanel {
         setBackground(Color.GRAY);
         setVisible(false);
         
-        imgCoins = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/coins.png")));
         imgCoins.setBounds(10, 40, 32, 32);
         add(imgCoins);
         
-        imgHealth = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/health.png")));
         imgHealth.setBounds(10, 0, 32, 32);
         add(imgHealth);
 
-        imgKeys = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/keys.png")));
         imgKeys.setBounds(10, 80, 32, 32);
         add(imgKeys);
         
@@ -77,7 +74,7 @@ public class StatusDisplay extends JPanel {
     
     @Override
     public void repaint() {
-        Player p = Main.getPlayer();
+        final Player p = Main.getPlayer();
         if (p != null) {
             if (healthBar != null) healthBar.setValue(p.getHealth());
             if (coins != null) coins.setText(Integer.toString(p.getCoins()));

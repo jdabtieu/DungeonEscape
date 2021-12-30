@@ -16,6 +16,6 @@ package com.jdabtieu.DungeonEscape.core;
  * </pre></blockquote>
  */
 @FunctionalInterface
-public abstract interface EnemyAttackPattern {
+public abstract interface AttackPattern {
     public abstract int attack();
 }

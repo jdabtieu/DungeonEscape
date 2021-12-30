@@ -22,6 +22,8 @@ public class Credits extends JPanel {
      * Start animating the credits
      */
     public void animate() {
+        long currTime;
+        
         Main.getPlayer().updateHighScore();
         final String[] creds = {
                 "Congratulations! You escaped the Dungeon!",
@@ -63,7 +65,7 @@ public class Credits extends JPanel {
         }
         
         Music.initAudio("win.wav", false);
-        long currTime = System.currentTimeMillis();
+        currTime = System.currentTimeMillis();
         for (int i = 0; i < totalTime; i += lineTime) {
             try {
                 Main.safeSleep((int) (lineTime - System.currentTimeMillis() + currTime));

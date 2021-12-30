@@ -38,7 +38,7 @@ public class BasicQuiz extends JPanel {
      */
     public BasicQuiz(final String text, final int ans, final String... answers) {
         super();
-        final JLabel txt;
+        final JLabel txt = new JLabel("<html>" + text + "</html>");
         final BasicQuiz c = this;
         this.ans = ans;
         
@@ -48,7 +48,6 @@ public class BasicQuiz extends JPanel {
         setVisible(false);
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
-        txt = new JLabel("<html>" + text + "</html>");
         txt.setFont(Fonts.STD_PARA);
         txt.setBounds(5, 5, getWidth() - 10, 50);
         txt.setForeground(Color.BLACK);

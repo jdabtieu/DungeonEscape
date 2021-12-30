@@ -42,8 +42,8 @@ public class Music {
      * @param repeat    whether the music should loop forever
      */
     public static void initAudio(final String relPath, final boolean repeat) {
-        URL is;
-        AudioInputStream ais;
+        final URL is;
+        final AudioInputStream ais;
         try {
             // Loading the audio file from the JAR
             is = new URL("file:assets/music/" + relPath);
@@ -65,9 +65,7 @@ public class Music {
      * Stops the current playing track, if anything is playing
      */
     public static void stopAudio() {
-        if (clip == null) { // Nothing is playing; that's fine
-            return;
-        }
+        if (clip == null) return; // Nothing is playing; that's fine
         clip.removeLineListener(audioListener);
         clip.stop();
         clip.close();
