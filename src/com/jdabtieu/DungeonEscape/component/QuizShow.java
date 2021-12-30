@@ -23,23 +23,26 @@ public class QuizShow extends JPanel {
     /**
      * The correct answer, without spaces, all lowercase
      */
-    private String ans;
+    private final String ans;
     
     /**
      * A list of all the input fields, in order
      */
-    private ArrayList<JTextField> letters;
+    private final ArrayList<JTextField> letters;
     
     /**
      * Creates the question panel
      * @param question  the question to be asked
      * @param ans       the answer to the question
      */
-    public QuizShow(String question, String ans) {
+    public QuizShow(final String question, final String ans) {
+        JLabel txt;
+        JButton submit;
+        
         setBounds(Window.WIDTH / 4, Window.HEIGHT / 2 - 100, Window.WIDTH / 2, 200);
         setLayout(null);
         setBackground(Color.GRAY);
-        JLabel txt = new JLabel(question);
+        txt = new JLabel(question);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 10, getWidth(), 40);
         txt.setFont(Fonts.TITLE);
@@ -48,7 +51,7 @@ public class QuizShow extends JPanel {
         letters = new ArrayList<>();
         for (int i = 0; i < ans.length(); i++) {
             if (ans.charAt(i) == ' ') continue;
-            JTextField f = new JTextField();
+            final JTextField f = new JTextField();
             f.setBounds((10 + 40 * i) % getWidth(), 60 * ((10 + 40 * i) / getWidth() + 1), 30, 30);
             letters.add(f);
             add(f);
@@ -56,7 +59,7 @@ public class QuizShow extends JPanel {
         
         this.ans = ans.replace(" ", "").toLowerCase();
         
-        JButton submit = new JButton("Submit");
+        submit = new JButton("Submit");
         submit.setBounds(getWidth() / 2 - 50, 160, 100, 30);
         add(submit);
         submit.addActionListener(e -> {

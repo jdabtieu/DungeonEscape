@@ -23,7 +23,7 @@ public class BasicQuiz extends JPanel {
     /**
      * Stores the index of the correct answer
      */
-    private int ans;
+    private final int ans;
     
     /**
      * Stores the index of the user-selected answer
@@ -36,16 +36,19 @@ public class BasicQuiz extends JPanel {
      * @param ans       the index of the correct answer
      * @param answers   a list of answer choices
      */
-    public BasicQuiz(String text, int ans, String... answers) {
+    public BasicQuiz(final String text, final int ans, final String... answers) {
+        super();
+        final JLabel txt;
+        final BasicQuiz c = this;
+        this.ans = ans;
+        
         setBounds(Window.WIDTH / 2 - 100, Window.HEIGHT / 2 - 150, 200, 300);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         setVisible(false);
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
-        this.ans = ans;
-        
-        JLabel txt = new JLabel("<html>" + text + "</html>");
+        txt = new JLabel("<html>" + text + "</html>");
         txt.setFont(Fonts.STD_PARA);
         txt.setBounds(5, 5, getWidth() - 10, 50);
         txt.setForeground(Color.BLACK);
@@ -53,8 +56,7 @@ public class BasicQuiz extends JPanel {
         
         for (int i = 0; i < answers.length; i++) {
             final int f = i;
-            final BasicQuiz c = this;
-            JLabel lab = new JLabel("<html>" + answers[i] + "</html>");
+            final JLabel lab = new JLabel("<html>" + answers[i] + "</html>");
             lab.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLUE), BorderFactory.createEmptyBorder(2, 2, 2, 2)));
             lab.setFont(Fonts.STD_PARA);
             lab.setBounds(30, 50 * i + 80, 140, 44);

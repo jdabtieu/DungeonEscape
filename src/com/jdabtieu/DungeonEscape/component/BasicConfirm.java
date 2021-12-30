@@ -28,21 +28,26 @@ public class BasicConfirm extends JPanel {
      * @param text  text to be displayed
      * @param color color of the text
      */
-    public BasicConfirm(String text) {        
+    public BasicConfirm(final String text) {
+        super();
+        final JLabel txt;
+        final JButton btnYes;
+        final JButton btnNo;
+        
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 75, 300, 150);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         setVisible(false);
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
-        JLabel txt = new JLabel(text);
+        txt = new JLabel(text);
         txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 11, getWidth(), getHeight() - 75);
         txt.setForeground(Color.BLACK);
         add(txt);
         
-        JButton btnYes = new JButton("Yes");
+        btnYes = new JButton("Yes");
         btnYes.setFont(Fonts.STD_PARA);
         btnYes.setBounds(30, getHeight() - 34, 80, 24);
         add(btnYes);
@@ -53,7 +58,7 @@ public class BasicConfirm extends JPanel {
             }
         });
         
-        JButton btnNo = new JButton("No");
+        btnNo = new JButton("No");
         btnNo.setFont(Fonts.STD_PARA);
         btnNo.setBounds(getWidth() - 110, getHeight() - 34, 80, 24);
         add(btnNo);

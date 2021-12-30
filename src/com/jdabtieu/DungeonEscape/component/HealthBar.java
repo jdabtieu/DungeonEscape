@@ -16,7 +16,7 @@ public class HealthBar extends JProgressBar {
      * Creates a healthbar with the specified max health.
      * @param maxHealth the maximum possible health
      */
-    public HealthBar(int maxHealth) {
+    public HealthBar(final int maxHealth) {
         super(0, maxHealth);
         setBackground(Color.gray);
         setForeground(Color.red);
@@ -47,7 +47,7 @@ public class HealthBar extends JProgressBar {
     }
     
     @Override
-    public void setValue(int val) {
+    public void setValue(final int val) {
         super.setValue(val);
         setString(Integer.toString(val));
     }

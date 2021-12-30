@@ -18,12 +18,13 @@ public class Banner extends JPanel {
     /**
      * The text to be animated.
      */
-    private JLabel lblFight;
+    private final JLabel lblFight;
     
     /**
      * Create the banner.
      */
-    public Banner(String text) {
+    public Banner(final String text) {
+        super();
         setBackground(Color.RED);
         setBounds(0, 80, Window.WIDTH, 60);
         setLayout(null);

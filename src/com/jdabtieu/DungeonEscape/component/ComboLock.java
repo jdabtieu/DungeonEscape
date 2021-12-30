@@ -32,7 +32,13 @@ public class ComboLock extends JPanel {
      * Create the panel
      * @param combo String representation of the correct combination
      */
-    public ComboLock(String combo) {
+    public ComboLock(final String combo) {
+        super();
+        final JTextField input;
+        final JLabel title;
+        final JButton btnClose;
+        final JLabel lblWrong;
+        
         correct = false;
         Main.getPlayer().pauseMovement();
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 100, 300, 200);
@@ -40,7 +46,7 @@ public class ComboLock extends JPanel {
         setLayout(null);
         
         // Force only numeric digits, with a length up to 6
-        JTextField input = new JTextField();
+        input = new JTextField();
         ((AbstractDocument) input.getDocument()).setDocumentFilter(new DocumentFilter() {
             public void replace(FilterBypass fb, int offset, int len, String str, AttributeSet a) throws BadLocationException {
                 String text = fb.getDocument().getText(0, fb.getDocument().getLength()) + str;
@@ -55,16 +61,16 @@ public class ComboLock extends JPanel {
             }
         });
         input.setFont(Fonts.MONO);
-        input.setBounds(100, 85, 100, 30);
+        input.setBounds(getWidth() / 2 - 50, 85, 100, 30);
         add(input);
         
-        JLabel title = new JLabel("ComboLock 8100");
+        title = new JLabel("ComboLock 8100");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(Fonts.TITLE);
-        title.setBounds(0, 0, 300, 40);
+        title.setBounds(0, 0, getWidth(), 40);
         add(title);
         
-        JButton btnClose = new JButton("X");
+        btnClose = new JButton("X");
         btnClose.setBackground(Color.LIGHT_GRAY);
         btnClose.setBorder(null);
         btnClose.setFocusPainted(false);
@@ -72,11 +78,11 @@ public class ComboLock extends JPanel {
         btnClose.setBounds(262, 7, 28, 23);
         add(btnClose);
         
-        JLabel lblWrong = new JLabel("That's the wrong combination...");
+        lblWrong = new JLabel("That's the wrong combination...");
         lblWrong.setForeground(Color.RED);
         lblWrong.setFont(Fonts.STD_PARA);
         lblWrong.setHorizontalAlignment(SwingConstants.CENTER);
-        lblWrong.setBounds(0, 149, 300, 14);
+        lblWrong.setBounds(0, 149, getWidth(), 14);
         lblWrong.setVisible(false);
         add(lblWrong);
         btnClose.addActionListener(e -> {

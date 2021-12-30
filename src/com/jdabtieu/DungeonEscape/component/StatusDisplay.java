@@ -20,38 +20,42 @@ public class StatusDisplay extends JPanel {
     /**
      * Label for the number of coins
      */
-    private JLabel coins;
+    private final JLabel coins;
     
     /**
      * Label for number of keys
      */
-    private JLabel keys;
+    private final JLabel keys;
     
     /**
      * Healthbar
      */
-    private HealthBar healthBar;
+    private final HealthBar healthBar;
     
     /**
      * Creates the status display.
      */
     public StatusDisplay() {
         super();
+        JLabel imgCoins;
+        JLabel imgHealth;
+        JLabel imgKeys;
+        
         setBounds(10, 10, 160, 120);
         setLayout(null);
         setBorder(BorderFactory.createLineBorder(Color.black, 2));
         setBackground(Color.GRAY);
         setVisible(false);
         
-        JLabel imgCoins = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/coins.png")));
+        imgCoins = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/coins.png")));
         imgCoins.setBounds(10, 40, 32, 32);
         add(imgCoins);
         
-        JLabel imgHealth = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/health.png")));
+        imgHealth = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/health.png")));
         imgHealth.setBounds(10, 0, 32, 32);
         add(imgHealth);
 
-        JLabel imgKeys = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/keys.png")));
+        imgKeys = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/keys.png")));
         imgKeys.setBounds(10, 80, 32, 32);
         add(imgKeys);
         

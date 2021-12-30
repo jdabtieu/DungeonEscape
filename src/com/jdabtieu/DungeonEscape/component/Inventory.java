@@ -21,6 +21,7 @@ public class Inventory extends JPanel {
      * Create the container.
      */
     public Inventory() {
+        super();
         setBounds(Window.WIDTH / 2 - 60, Window.HEIGHT - 100, 120, 40);
         setLayout(null);
         setOpaque(false);
@@ -29,23 +30,26 @@ public class Inventory extends JPanel {
     
     @Override
     public void repaint() {
+        JLabel wp;
+        JLabel durability;
+        JLabel dmg;
+        
         removeAll();
         super.repaint();
         if (Main.getPlayer() == null) return;
         for (int i = 0; i < 3; i++) {
-            JLabel wp;
             if (Main.getPlayer().getWeapons().size() <= i) {
                 wp = new JLabel();
             } else {
                 wp = Main.getPlayer().getWeapons().get(i);
-                JLabel durability = new JLabel(Integer.toString(Main.getPlayer().getWeapons().get(i).getDurability()));
+                durability = new JLabel(Integer.toString(Main.getPlayer().getWeapons().get(i).getDurability()));
                 durability.setFont(Fonts.INVENTORY);
                 durability.setForeground(Color.WHITE);
                 durability.setHorizontalAlignment(SwingConstants.RIGHT);
                 durability.setBounds(i*40, 26, 40, 14);
                 add(durability);
                 
-                JLabel dmg = new JLabel(Integer.toString(Main.getPlayer().getWeapons().get(i).getDamage()));
+                dmg = new JLabel(Integer.toString(Main.getPlayer().getWeapons().get(i).getDamage()));
                 dmg.setFont(Fonts.INVENTORY);
                 dmg.setForeground(Color.WHITE);
                 dmg.setHorizontalAlignment(SwingConstants.RIGHT);

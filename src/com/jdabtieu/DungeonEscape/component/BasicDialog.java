@@ -23,25 +23,29 @@ public class BasicDialog extends JPanel {
      * Creates the dialog
      * @param text  text to be displayed
      */
-    public BasicDialog(String text) {        
+    public BasicDialog(final String text) {
+        super();
+        final JLabel txt;
+        final JButton btn;
+        
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 75, 300, 150);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         setVisible(false);
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
-        JLabel txt = new JLabel(text);
+        txt = new JLabel(text);
         txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(10, 11, getWidth() - 20, getHeight() - 75);
         txt.setForeground(Color.BLACK);
         add(txt);
         
-        JButton btnYes = new JButton("OK");
-        btnYes.setFont(Fonts.STD_PARA);
-        btnYes.setBounds(getWidth() / 2 - 40, getHeight() - 34, 80, 24);
-        add(btnYes);
-        btnYes.addActionListener(e -> {
+        btn = new JButton("OK");
+        btn.setFont(Fonts.STD_PARA);
+        btn.setBounds(getWidth() / 2 - 40, getHeight() - 34, 80, 24);
+        add(btn);
+        btn.addActionListener(e -> {
             synchronized(this) {
                 notify();
             }

@@ -43,6 +43,7 @@ public class Weapon extends JLabel implements Cloneable {
      * @param fileName      file path to find icon
      */
     public Weapon(final String name, final int damage, final int durability, final String fileName) {
+        super();
         this.damage = damage;
         this.durability = durability;
         this.name = name;
@@ -87,7 +88,7 @@ public class Weapon extends JLabel implements Cloneable {
      * @param critIndicator  a JLabel that should be activated when the weapon deals a critical hit
      * @return  how much damage should be dealt
      */
-    public int attack(JLabel critIndicator) {
+    public int attack(final JLabel critIndicator) {
         // no durability! fist attack
         if (durability == 0) {
             return 1;

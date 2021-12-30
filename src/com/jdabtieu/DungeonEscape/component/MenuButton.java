@@ -18,7 +18,7 @@ public class MenuButton extends JButton {
      * Creates a menu button with the specified text
      * @param name  text to be displayed on the button
      */
-    public MenuButton(String name) {
+    public MenuButton(final String name) {
         super(name);
         setForeground(Color.WHITE);
         setBackground(Color.GRAY);
