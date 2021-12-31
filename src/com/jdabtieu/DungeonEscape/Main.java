@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.jdabtieu.DungeonEscape.component.VolumeSlider;
 import com.jdabtieu.DungeonEscape.core.Credits;
 import com.jdabtieu.DungeonEscape.core.GameOver;
 import com.jdabtieu.DungeonEscape.core.GameOverException;
@@ -93,6 +94,7 @@ public class Main {
                 // Stage 1, make player and status display visible
                 swapWindow(Stage1.class, 1);
                 player.setVisible(true);
+                getContentPane().add(new VolumeSlider(), Layer.POPUP, 0);
                
                 pause(); // unpaused by beating Stage 1 boss
                 

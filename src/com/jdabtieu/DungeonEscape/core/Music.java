@@ -53,12 +53,21 @@ public class Music {
                 clip.addLineListener(audioListener);
             }
             clip.open(ais);
-            ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(-15.0f);
             clip.start();
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             clip = null;
             System.err.println("WARN: Audio failed to start.");
         }
+    }
+    
+    /**
+     * Changes the audio volume to the specified percent.
+     * @param percent   the loudness of the audio, where 100 = full volume, 0 = muted
+     */
+    public static void changeVolume(int percent) {
+        System.out.println((float) (-80 + 0.8 * percent));
+        if (clip == null) return;
+        ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue((float) (-80 + 0.8 * percent));
     }
     
     /**

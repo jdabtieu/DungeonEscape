@@ -79,6 +79,7 @@ public class Stage1 extends Stage {
                 comboLockEnabled = false;
                 if (new ComboLock("142342").run()) {
                     changeTile(2, 14, Ground.class);
+                    changeTile(2, 15, Ground.class);
                     changeTile(3, 14, Ground.class);
                     redraw();
                 }

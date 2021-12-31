@@ -92,7 +92,7 @@ public class Stage3Part2 extends Stage {
             new BasicDialog("That's correct! You won 1200 coins.").selection();
             Main.getPlayer().addCoins(1200);
         } else {
-            new BasicConfirm("Sorry, that's not the answer.").selection();
+            new BasicDialog("Sorry, that's not the answer.").selection();
         }
 
         new BasicDialog("Thanks for playing!");
