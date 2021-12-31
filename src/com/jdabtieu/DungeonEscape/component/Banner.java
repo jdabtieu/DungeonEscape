@@ -45,10 +45,10 @@ public class Banner extends JPanel {
         Main.getContentPane().add(this, Layer.ENEMY, 0);
         Main.safeSleep(300);
         
-        for (int i = -200; i <= Window.WIDTH; i++) {
+        for (int i = -200; i <= Window.WIDTH; i += 2) {
             lblFight.setBounds(i, 0, Window.WIDTH, 60);
             repaint();
-            Main.safeSleep(4000 / (Window.WIDTH + 200));
+            Main.safeSleep(8000 / (Window.WIDTH + 200));
         }
         
         Main.safeSleep(300);
