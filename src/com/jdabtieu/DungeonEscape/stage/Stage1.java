@@ -50,12 +50,11 @@ public class Stage1 extends Stage {
      * Create the stage 
      */
     public Stage1() {
-        super();
+        super("stage1");
         Music.initAudio("mellohi.wav", true);
         bossInit = false;
         comboLockEnabled = false;
         Main.getPlayer().setPosition(1200, 500);
-        fillStage("stage1");
         texts.add(new Text(">>> Where am I?", 880, 450));
         texts.add(new Text(">>> ...", 880, 470));
         texts.add(new Text(">>> Maybe I should open my eyes", 880, 490));

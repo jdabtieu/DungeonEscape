@@ -42,11 +42,10 @@ public class Stage3Part2 extends Stage {
      * Create the stage 
      */
     public Stage3Part2() {
-        super();
+        super("stage3_2");
         Main.getPlayer().setPosition(360, 2240);
         bossInit = false;
         activeGameShow = false;
-        fillStage("stage3_2");
         texts.add(new Text(">>> You completed the maze!", 40, 2240));
         texts.add(new Text(">>> Unfortunately, the hallway collapsed, and you fell into this room", 40, 2260));
         texts.add(new Text("Game show this way --->", 1480, 2090));

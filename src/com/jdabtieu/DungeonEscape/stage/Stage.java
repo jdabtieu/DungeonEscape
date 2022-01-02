@@ -75,14 +75,14 @@ public abstract class Stage extends JPanel {
     private final Thread movement;
 
     /**
-     * Create the stage
+     * Create the stage and generate the level data from the provided file.
+     * @param fname  the filename for the data of this stage, without the path or extension
      */
-    public Stage() {
+    public Stage(final String fname) {
         super();
         setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
         setBackground(Color.black);
         setLayout(null);
-        stage = new Tile[0][0];
         texts = new ArrayList<>();
         keysPressed = new HashSet<>();
         
@@ -94,6 +94,7 @@ public abstract class Stage extends JPanel {
         critIndicator.setBounds(Window.WIDTH / 2 - 120, Window.HEIGHT / 2 - 30, 240, 20);
         Main.getContentPane().add(critIndicator, Layer.POPUP, 0);
         
+        fillStage(fname);
         registerKbd();
         movement = new Thread(() -> {
 			long time = System.currentTimeMillis();
@@ -158,7 +159,7 @@ public abstract class Stage extends JPanel {
      * be filled in automatically.
      * @param fname the filename of the stage, without the full path or extension
      */
-    protected void fillStage(final String fname) {
+    private void fillStage(final String fname) {
         final String[] rm;
         try {
             rm = new String(Files.readAllBytes(Paths.get("assets/stage/" + fname + ".txt")), StandardCharsets.UTF_8).split("\n");

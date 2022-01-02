@@ -31,10 +31,9 @@ public class Stage3Part1 extends Stage {
      * Create the stage 
      */
     public Stage3Part1() {
-        super();
+        super("stage3_1");
         Main.getPlayer().setPosition(360, 1750);
         ambushInit = false;
-        fillStage("stage3_1");
         texts.add(new Text(">>> I can see clearly now the light is here", 40, 1500));
         texts.add(new Text(">>> I can see all obstacles in the way", 40, 1520));
         texts.add(new Text(">>> And I can see that this stage is the last one", 40, 1540));

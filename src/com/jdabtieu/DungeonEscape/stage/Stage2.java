@@ -66,13 +66,12 @@ public class Stage2 extends Stage {
      * Create the stage
      */
     public Stage2() {
-        super();
+        super("stage2");
         Main.getPlayer().setPosition(360, 1750);
         bossInit = false;
         interviewInit = false;
         ambushInit = false;
         activeVending = true;
-        fillStage("stage2");
         texts.add(new Text(">>> That was the longest flight of stairs ever", 40, 1600));
         texts.add(new Text(">>> ...", 40, 1620));
         texts.add(new Text(">>> It's brighter now...does that mean I'm closer to the surface?", 40, 1640));
