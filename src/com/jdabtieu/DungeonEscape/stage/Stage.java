@@ -315,6 +315,7 @@ public abstract class Stage extends JPanel {
         testCollision(wx, 0);
         testCollision(0, wy);
         redraw();
+        System.out.println(Main.getPlayer().xPos() + " " + Main.getPlayer().yPos());
         
         // developer easter egg weapon
         if (keysPressed.contains('j') && keysPressed.contains('w') && keysPressed.contains('p')) {

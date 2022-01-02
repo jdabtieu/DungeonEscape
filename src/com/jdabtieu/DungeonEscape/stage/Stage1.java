@@ -63,9 +63,10 @@ public class Stage1 extends Stage {
         texts.add(new Text(">>> Where am I?", 880, 530));
         texts.add(new Text("Tip: Sensors can trigger different actions", 1350, 550));
         texts.add(new Text("Tip: Watch out for spikes! They deal a ton of damage", 1260, 700));
-        texts.add(new Text("Tip: Look around each room for room numbers and clue", 1040, 50));
+        texts.add(new Text("Tip: Look around each room for room numbers and clues", 1040, 50));
         texts.add(new Text("1__34_", 870, 320));
         texts.add(new Text("_42__2", 710, 320));
+        texts.add(new Text("Hey, a combination lock! What could the combination possibly be?", 370, 30));
         texts.add(new Text("Ooh, shiny! It's a weapon! Wonder what it is...", 1900, 96));
         texts.add(new Text("Tip: You can hold up to 3 weapons at a time. Any extras will be discarded.", 1900, 270));
         stage[3][126] = new Sensor(() -> initBoss());

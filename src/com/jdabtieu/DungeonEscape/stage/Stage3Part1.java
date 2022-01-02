@@ -38,7 +38,7 @@ public class Stage3Part1 extends Stage {
         texts.add(new Text(">>> I can see clearly now the light is here", 40, 1500));
         texts.add(new Text(">>> I can see all obstacles in the way", 40, 1520));
         texts.add(new Text(">>> And I can see that this stage is the last one", 40, 1540));
-        texts.add(new Text("Tip: Weapons can't be switched out mid-fight, so make sure your weapon has enough durability.", 30, 1760));
+        texts.add(new Text("Tip: You can't walk through spikes. And they really hurt.", 30, 1760));
         stage[69][16] = new HiddenSensor(() -> initAmbush());
         stage[69][17] = new HiddenSensor(() -> initAmbush());
         stage[69][18] = new HiddenSensor(() -> initAmbush());

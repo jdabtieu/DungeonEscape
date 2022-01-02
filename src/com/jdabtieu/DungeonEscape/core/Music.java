@@ -32,6 +32,11 @@ public class Music {
     };
     
     /**
+     * The current volume level set by the user; default = 90
+     */
+    private static int volume = 90;
+    
+    /**
      * Prevent instantiation of this class
      */
     private Music() {}
@@ -53,6 +58,7 @@ public class Music {
                 clip.addLineListener(audioListener);
             }
             clip.open(ais);
+            changeVolume(volume);
             clip.start();
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             clip = null;
@@ -65,7 +71,7 @@ public class Music {
      * @param percent   the loudness of the audio, where 100 = full volume, 0 = muted
      */
     public static void changeVolume(int percent) {
-        System.out.println((float) (-80 + 0.8 * percent));
+        volume = percent;
         if (clip == null) return;
         ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue((float) (-80 + 0.8 * percent));
     }

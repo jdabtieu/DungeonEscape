@@ -8,6 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.core.Fonts;
@@ -54,6 +58,19 @@ public class QuizShow extends JPanel {
             f.setBounds((10 + 40 * i) % getWidth(), 60 * ((10 + 40 * i) / getWidth() + 1), 30, 30);
             letters.add(f);
             add(f);
+            ((AbstractDocument) f.getDocument()).setDocumentFilter(new DocumentFilter() {
+                public void replace(FilterBypass fb, int offset, int len, String str, AttributeSet a) throws BadLocationException {
+                    String text = fb.getDocument().getText(0, fb.getDocument().getLength()) + str;
+                    if (text.matches("^.?$")) {
+                        super.replace(fb, offset, len, str, a);
+                    }
+                }
+                
+                @SuppressWarnings("unused")
+                public void insertString(FilterBypass fb, int offset, int len, String str, AttributeSet a) throws BadLocationException {
+                    replace(fb, offset, len, str, a);
+                }
+            });
         }
         
         this.ans = ans.replace(" ", "").toLowerCase();

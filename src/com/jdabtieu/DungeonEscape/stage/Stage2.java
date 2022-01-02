@@ -77,10 +77,14 @@ public class Stage2 extends Stage {
         texts.add(new Text(">>> ...", 40, 1620));
         texts.add(new Text(">>> It's brighter now...does that mean I'm closer to the surface?", 40, 1640));
         texts.add(new Text("Tip: Coins can be used at the vending machine, but the more coins you have at the end of the game, the higher your score.", 30, 1860));
+        texts.add(new Text("Tip: Weapons cannot be switched out mid-fight, so make sure the one you", 264, 324));
+        texts.add(new Text("choose can kill the boss!", 284, 344));
         texts.add(new Text("V", 740, 1580));
+        texts.add(new Text("E", 24, 1164));
         texts.add(new Text("C", 740, 1400));
         texts.add(new Text("T", 740, 900));
         texts.add(new Text("O", 740, 530));
+        texts.add(new Text("R", 1580, 620));
         {
             final Text txt = new Text("Interview Room", 500, 1180);
             final Text interviewRoom = new Text("", 470, 1264);
