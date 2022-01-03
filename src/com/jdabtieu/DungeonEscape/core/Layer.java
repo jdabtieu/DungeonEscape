@@ -44,6 +44,11 @@ public class Layer {
     public static final int STAGE3_END = 7;
     
     /**
+     * The bottom layer to be used for visual effects 
+     */
+    public static final int VFX_0 = 1000;
+    
+    /**
      * Prevent instantiation of this class
      */
     private Layer() {}
