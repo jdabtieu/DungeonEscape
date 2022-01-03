@@ -20,6 +20,7 @@ import com.jdabtieu.DungeonEscape.stage.Stage1;
 import com.jdabtieu.DungeonEscape.stage.Stage2;
 import com.jdabtieu.DungeonEscape.stage.Stage3Part1;
 import com.jdabtieu.DungeonEscape.stage.Stage3Part2;
+import com.jdabtieu.DungeonEscape.vfx.ScreenFlicker;
 /**
  * DungeonEscape is an adventure game that follows the main character with amnesia as
  * they traverse a vast dungeon with three floors (stages). Solve puzzles, defeat enemies
@@ -66,6 +67,11 @@ public class Main {
     private static Player player;
     
     /**
+     * Stores a reference to the scren flickering effect
+     */
+    private static ScreenFlicker sf;
+    
+    /**
      * Main method
      * @param args  not used
      */
@@ -76,6 +82,7 @@ public class Main {
             me = new Window();
             me.setFocusable(true);
             me.setVisible(true);
+            sf = new ScreenFlicker();
         });
         
         // Main game loop
@@ -95,6 +102,7 @@ public class Main {
                 swapWindow(Stage1.class, 1);
                 player.setVisible(true);
                 getContentPane().add(new VolumeSlider(), Layer.POPUP, 0);
+                sf.startAnimation();
                
                 pause(); // unpaused by beating Stage 1 boss
                 
@@ -127,6 +135,7 @@ public class Main {
                     me.repaint();
                 });
                 Music.stopAudio();
+                ScreenFlicker.stopAnimation();
             }
         }
     }

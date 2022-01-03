@@ -1,6 +1,8 @@
 package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
@@ -21,6 +23,7 @@ import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
 import com.jdabtieu.DungeonEscape.tile.Sensor;
 import com.jdabtieu.DungeonEscape.tile.Text;
 import com.jdabtieu.DungeonEscape.tile.Wall;
+import com.jdabtieu.DungeonEscape.vfx.ScreenFlicker;
 /**
  * Code for stage 3 part 2
  *
@@ -138,7 +141,25 @@ public class Stage3Part2 extends Stage {
      */
     private void endScene() {
         final Text[] texts = new Text[6];
-        final JPanel creditsbg = new JPanel();
+        final JPanel creditsbg = new JPanel() {
+            private int alpha = 0;
+            
+            @Override
+            public void setBackground(Color c) {
+                alpha = c.getAlpha();
+            }
+            
+            @Override
+            public void paintComponent(Graphics g) {
+                System.out.println(alpha);
+                g.setColor(new Color(0, 0, 0, alpha));
+                Insets insets = getInsets();
+                g.fillRect(insets.left, insets.top, 
+                        getWidth() - insets.left - insets.right, 
+                        getHeight() - insets.top - insets.bottom);
+                super.paintComponent(g);
+            }
+        };
         
         for (int i = 0; i < 33; i++) {
             for (int j = 0; j < stage[i].length; j++) {
@@ -156,10 +177,12 @@ public class Stage3Part2 extends Stage {
                 }
             }
         }
+        ScreenFlicker.stopAnimation();
         redraw();
         Music.stopAudio();
         Music.initAudio("win.wav", false);
         while (Main.getPlayer().yPos() > 360) {
+            if (Main.getPlayer().yPos() % 5 == 0) ScreenFlicker.decreaseAlpha();
             Main.getPlayer().movePlayer(0, -1);
             redraw();
             Main.safeSleep(10);
@@ -187,11 +210,12 @@ public class Stage3Part2 extends Stage {
         }
         
         creditsbg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
-        creditsbg.setBackground(Color.WHITE);
-        Main.getContentPane().add(creditsbg, Layer.STAGE3_END, 0);
-        for (int i = 255; i >= 0; i--) {
+        creditsbg.setOpaque(false);
+        Main.getContentPane().add(creditsbg, Layer.VFX_0, 0);
+        for (int i = 0; i < 256; i++) {
             Main.safeSleep(16);
-            creditsbg.setBackground(new Color(i, i, i));
+            creditsbg.setBackground(new Color(0, 0, 0, i));
+            creditsbg.repaint();
         }
         finish();
         Main.getPlayer().setVisible(false);

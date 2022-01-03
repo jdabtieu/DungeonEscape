@@ -111,6 +111,9 @@ public abstract class Stage extends JPanel {
                 }
 				time = System.currentTimeMillis();
 				threadTgt();
+				if (Thread.currentThread().isInterrupted()) {
+				    return;
+				}
             }
         }, "Movement-Thread");
         movement.start();
