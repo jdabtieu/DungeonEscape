@@ -99,7 +99,11 @@ public class QuizShow extends JPanel {
         }
         Main.getContentPane().remove(this);
         for (int i = 0; i < ans.length(); i++) {
-            if (letters.get(i).getText().toLowerCase().charAt(0) != ans.charAt(i)) return false;
+            try {
+                if (letters.get(i).getText().toLowerCase().charAt(0) != ans.charAt(i)) return false;
+            } catch (IndexOutOfBoundsException e) {
+                return false;
+            }
         }
         return true;
     }
