@@ -8,6 +8,7 @@ import javax.swing.SwingConstants;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.MenuButton;
+import com.jdabtieu.DungeonEscape.vfx.ScreenFlicker;
 /**
  * This class is responsible for rendering the Game Over screen.
  * 
@@ -28,6 +29,8 @@ public class GameOver extends JPanel {
         setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
         setBackground(Color.BLACK);
         setLayout(null);
+        
+        ScreenFlicker.stopAnimation();
         
         btnStart.setBounds((Window.WIDTH - 400) / 2, 450, 400, 40);
         add(btnStart);

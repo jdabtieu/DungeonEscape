@@ -47,10 +47,10 @@ public class StatusDisplay extends JPanel {
         setBackground(Color.GRAY);
         setVisible(false);
         
-        imgCoins.setBounds(10, 40, 32, 32);
+        imgCoins.setBounds(10, 44, 24, 24);
         add(imgCoins);
         
-        imgHealth.setBounds(10, 0, 32, 32);
+        imgHealth.setBounds(10, 4, 24, 24);
         add(imgHealth);
 
         imgKeys.setBounds(10, 80, 32, 32);

@@ -51,7 +51,7 @@ public class Stage3Part2 extends Stage {
         activeGameShow = false;
         texts.add(new Text(">>> You completed the maze!", 40, 2240));
         texts.add(new Text(">>> Unfortunately, the hallway collapsed, and you fell into this room", 40, 2260));
-        texts.add(new Text("Game show this way --->", 1480, 2090));
+        texts.add(new Text("Game show this way → →", 1480, 2090));
         {
             final Text txt = new Text("", 520, 2070);
             txt.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/fountain.png")));
@@ -151,7 +151,6 @@ public class Stage3Part2 extends Stage {
             
             @Override
             public void paintComponent(Graphics g) {
-                System.out.println(alpha);
                 g.setColor(new Color(0, 0, 0, alpha));
                 Insets insets = getInsets();
                 g.fillRect(insets.left, insets.top, 
@@ -201,7 +200,7 @@ public class Stage3Part2 extends Stage {
             texts[5] = new Text("Well, time to catch up on what I missed...", 100, -1025);
         }
         for (final Text t : texts) Main.getContentPane().add(t, Layer.STAGE3_END, 0);
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 1850; i++) {
             Main.safeSleep(10);
             for (final Text t : texts) {
                 t.setLocation(100, t.getY() + 1);

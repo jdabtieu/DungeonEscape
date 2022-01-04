@@ -47,12 +47,9 @@ public class Music {
      * @param repeat    whether the music should loop forever
      */
     public static void initAudio(final String relPath, final boolean repeat) {
-        final URL is;
         final AudioInputStream ais;
         try {
-            // Loading the audio file from the JAR
-            is = new URL("file:assets/music/" + relPath);
-            ais = AudioSystem.getAudioInputStream(is);
+            ais = AudioSystem.getAudioInputStream(new URL("file:assets/music/" + relPath));
             clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, ais.getFormat()));
             if (repeat) {
                 clip.addLineListener(audioListener);

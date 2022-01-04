@@ -2,6 +2,8 @@ package com.jdabtieu.DungeonEscape.component;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -42,6 +44,16 @@ public class VolumeSlider extends JSlider {
         g.fillPolygon(new int[] {20, 20, 30, 30}, new int[] {10, 20, 30, 0}, 4);
         img.setIcon(new ImageIcon(i));
         img.setBounds(Window.WIDTH - 175, 13, 30, 30);
+        img.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(getValue() == 0) {
+                    setValue(80);
+                } else {
+                    setValue(0);
+                }
+            }
+        });
         Main.getContentPane().add(img, Layer.POPUP, 0);
     }
 }
