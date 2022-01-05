@@ -254,7 +254,7 @@ public abstract class Stage extends JPanel {
         if (stage[j1 / 20][i1 / 20] instanceof Triggerable) {
             ((Triggerable) stage[j1 / 20][i1 / 20]).trigger();
         }
-        if (stage[j2 / 20][i2 / 20] instanceof Triggerable) {
+        if (!(j2 / 20 == j1 / 20 && i2 / 20 == i1 / 20) && stage[j2 / 20][i2 / 20] instanceof Triggerable) {
             ((Triggerable) stage[j2 / 20][i2 / 20]).trigger();
         }
         int dy = 0, dx = 0;
