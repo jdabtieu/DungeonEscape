@@ -80,6 +80,7 @@ public abstract class Stage extends JPanel {
      */
     public Stage(final String fname) {
         super();
+        setIgnoreRepaint(true);
         setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
         setBackground(Color.black);
         setLayout(null);
