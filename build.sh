@@ -17,3 +17,16 @@ rm -rf build
 
 duration=$SECONDS
 echo "Build completed in $(($duration / 60)) minutes and $(($duration % 60)) seconds."
+
+SECONDS=0
+
+echo "Packaging..."
+rm -rf DungeonEscape
+rm -f DungeonEscape.exe
+mkdir DungeonEscape
+cp -r DungeonEscape.jar Launcher.exe assets DungeonEscape
+7z a DungeonEscape.exe -sfx DungeonEscape
+rm -rf DungeonEscape
+
+duration=$SECONDS
+echo "Packaging completed in $(($duration / 60)) minutes and $(($duration % 60)) seconds."
