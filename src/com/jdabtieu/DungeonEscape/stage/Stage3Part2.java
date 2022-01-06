@@ -107,7 +107,7 @@ public class Stage3Part2 extends Stage {
     private void initBoss() {
         if (bossInit) return;
         final JLabel boss = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/boss3.png")));
-        final HealthBar healthBar = new HealthBar(850);
+        final HealthBar healthBar = new HealthBar(800);
         
         bossInit = true;
         changeTile(96, 62, Wall.class);
@@ -125,7 +125,7 @@ public class Stage3Part2 extends Stage {
         Main.getContentPane().add(healthBar, 3, 0);
         
         Main.getPlayer().weaponSelect();
-        fight(850, healthBar, () -> (int) (Math.random() + 1.7));
+        fight(800, healthBar, () -> (int) (Math.random() + 1.7));
         
         new BasicDialog("You defeated the boss! 5000 coins acquired!").selection();
         Main.getPlayer().addCoins(5000);
