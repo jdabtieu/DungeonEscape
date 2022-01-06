@@ -13,11 +13,18 @@ import javax.swing.plaf.metal.MetalProgressBarUI;
  */
 public class HealthBar extends JProgressBar {
     /**
+     * The maximum health this healthbar can store
+     */
+    private final int maxHealth;
+    
+    /**
      * Creates a healthbar with the specified max health.
      * @param maxHealth the maximum possible health
      */
     public HealthBar(final int maxHealth) {
         super(0, maxHealth);
+        this.maxHealth = maxHealth;
+        
         setBackground(Color.gray);
         setForeground(Color.red);
         setBorder(BorderFactory.createLineBorder(Color.black, 2));
@@ -50,5 +57,13 @@ public class HealthBar extends JProgressBar {
     public void setValue(final int val) {
         super.setValue(val);
         setString(Integer.toString(val));
+    }
+    
+    /**
+     * Returns the max health of this healthbar
+     * @return the max health of this healthbar
+     */
+    public int getValue() {
+        return maxHealth;
     }
 }

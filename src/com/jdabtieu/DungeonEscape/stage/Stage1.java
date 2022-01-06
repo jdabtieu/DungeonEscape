@@ -130,7 +130,7 @@ public class Stage1 extends Stage {
         Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
         
         Main.getPlayer().weaponSelect();
-        fight(30, healthBar, () -> (int) (Math.random() + 0.3) * (int) (Math.random() * 5 + 1));
+        fight(healthBar, () -> (int) (Math.random() + 0.3) * (int) (Math.random() * 5 + 1));
         
         Main.getPlayer().unpauseMovement();
         new BasicPopup("You defeated the boss!", Color.BLACK);

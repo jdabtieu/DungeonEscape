@@ -125,7 +125,7 @@ public class Stage3Part2 extends Stage {
         Main.getContentPane().add(healthBar, 3, 0);
         
         Main.getPlayer().weaponSelect();
-        fight(800, healthBar, () -> (int) (Math.random() + 1.7));
+        fight(healthBar, () -> (int) (Math.random() + 1.7));
         
         new BasicDialog("You defeated the boss! 5000 coins acquired!").selection();
         Main.getPlayer().addCoins(5000);

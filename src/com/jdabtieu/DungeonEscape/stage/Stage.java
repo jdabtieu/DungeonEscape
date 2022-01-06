@@ -141,11 +141,11 @@ public abstract class Stage extends JPanel {
     /**
      * Fight an enemy. The enemy is defeated if it falls to zero health. The player loses if they
      * fall to zero health.
-     * @param enemyHealth       the amount of health the enemy has
      * @param enemyHealthBar    the enemy's health bar
      * @param ap                the enemy's attack pattern
      */
-    protected void fight(int enemyHealth, final HealthBar enemyHealthBar, final AttackPattern ap) {
+    protected void fight(final HealthBar enemyHealthBar, final AttackPattern ap) {
+        int enemyHealth = enemyHealthBar.getValue();
         while (enemyHealth > 0 && Main.getPlayer().getHealth() > 0) { // simulate attacks
             enemyHealth -= Main.getPlayer().getActiveWeapon().attack(critIndicator);
             Main.getPlayer().changeHealth(-ap.attack());

@@ -114,7 +114,7 @@ public class Stage3Part1 extends Stage {
         Main.getPlayer().weaponSelect();
         
         for (final HealthBar bar : healthBars) {
-            fight(11, bar, () -> (int) (Math.random() + 0.5) * (int) (Math.random() * 5 + 1));
+            fight(bar, () -> (int) (Math.random() + 0.5) * (int) (Math.random() * 5 + 1));
         }
         
         Main.getPlayer().unpauseMovement();
