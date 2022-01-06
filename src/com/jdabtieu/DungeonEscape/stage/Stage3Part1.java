@@ -41,7 +41,7 @@ public class Stage3Part1 extends Stage {
         Main.getPlayer().setPosition(360, 1750);
         ambushInit = false;
         activeVending = false;
-        texts.add(new Text(">>> I can see clearly now the light is here", 40, 1500));
+        texts.add(new Text(">>> I can see clearly now the end is near", 40, 1500));
         texts.add(new Text(">>> I can see all obstacles in the way", 40, 1520));
         texts.add(new Text(">>> And I can see that this stage is the last one", 40, 1540));
         texts.add(new Text("Tip: You can't walk through spikes. And they really hurt.", 30, 1760));
@@ -68,11 +68,11 @@ public class Stage3Part1 extends Stage {
         if (!activeVending) return;
         activeVending = false;
         Main.getPlayer().pauseMovement();
-        if (new BasicConfirm("<html>For 800 coins, Vending Machine offers:<br>" + 
+        if (new BasicConfirm("<html>For 700 coins, Vending Machine offers:<br>" + 
                              "5 HP health potion<br>" +
                              "Would you like to purchase it?</html>").selection()) {
             try {
-                Main.getPlayer().useCoins(800);
+                Main.getPlayer().useCoins(700);
                 Main.getPlayer().changeHealth(5);
             } catch (IllegalArgumentException e) {
                 new BasicPopup("You don't have enough coins!", Color.RED);

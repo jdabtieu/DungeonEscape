@@ -74,7 +74,7 @@ public class Stage2 extends Stage {
         activeVending = true;
         texts.add(new Text(">>> That was the longest flight of stairs ever", 40, 1600));
         texts.add(new Text(">>> ...", 40, 1620));
-        texts.add(new Text(">>> It's brighter now...does that mean I'm closer to the surface?", 40, 1640));
+        texts.add(new Text(">>> I did go up though...does that mean I'm closer to the surface?", 40, 1640));
         texts.add(new Text("Tip: Coins can be used at the vending machine, but the more coins you have at the end of the game, the higher your score.", 30, 1860));
         texts.add(new Text("Tip: Weapons cannot be switched out mid-fight, so make sure the one you", 264, 324));
         texts.add(new Text("choose can kill the boss!", 284, 344));

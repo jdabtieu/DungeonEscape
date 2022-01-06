@@ -73,7 +73,7 @@ public class Music {
         try {
             ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue((float) (-80 + 0.8 * percent));
         } catch (IllegalArgumentException e) {
-            // OpenJDK doesn't support MASTER_GAIN
+            // some OpenJDK implementations doesn't support MASTER_GAIN
             System.err.println("WARN: OpenJDK dosen't support Master Gain, volume slider disabled.");
             e.printStackTrace();
         }

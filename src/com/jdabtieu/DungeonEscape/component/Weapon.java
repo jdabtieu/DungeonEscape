@@ -104,6 +104,7 @@ public class Weapon extends JLabel implements Cloneable {
         }
         
         durability--;
+        if (durability == 0) Main.getPlayer().getWeapons().remove(this);
         Main.getPlayer().repaintInventory();
         if (Math.random() > 0.7) {
             critIndicator.setVisible(true);
