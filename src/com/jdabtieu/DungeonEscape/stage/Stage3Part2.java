@@ -107,7 +107,7 @@ public class Stage3Part2 extends Stage {
     private void initBoss() {
         if (bossInit) return;
         final JLabel boss = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/boss3.png")));
-        final HealthBar healthBar = new HealthBar(800);
+        final HealthBar healthBar = new HealthBar(825);
         
         bossInit = true;
         changeTile(96, 62, Wall.class);

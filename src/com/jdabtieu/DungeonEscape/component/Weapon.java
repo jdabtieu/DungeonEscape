@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.tile.Powerup;
 
 /**
  * Weapon stores details about a weapon. A weapon deals 1 damage if it has no durability
@@ -23,7 +24,7 @@ public class Weapon extends JLabel implements Cloneable {
     /**
      * The amount of damage the weapon does
      */
-    private final int damage;
+    private int damage;
     
     /**
      * The amount of durability the weapon has left
@@ -77,6 +78,14 @@ public class Weapon extends JLabel implements Cloneable {
      */
     public int getDamage() {
         return damage;
+    }
+    
+    /**
+     * Applies a powerup to this weapon
+     * @see Powerup
+     */
+    public void powerup() {
+        damage++;
     }
     
     /**
