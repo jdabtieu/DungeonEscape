@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.Banner;
+import com.jdabtieu.DungeonEscape.component.BasicConfirm;
 import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.core.Layer;
@@ -28,12 +29,18 @@ public class Stage3Part1 extends Stage {
     private boolean ambushInit;
     
     /**
+     * Whether the vending machine is active
+     */
+    private boolean activeVending;
+    
+    /**
      * Create the stage 
      */
     public Stage3Part1() {
         super("stage3_1");
         Main.getPlayer().setPosition(360, 1750);
         ambushInit = false;
+        activeVending = false;
         texts.add(new Text(">>> I can see clearly now the light is here", 40, 1500));
         texts.add(new Text(">>> I can see all obstacles in the way", 40, 1520));
         texts.add(new Text(">>> And I can see that this stage is the last one", 40, 1540));
@@ -44,8 +51,34 @@ public class Stage3Part1 extends Stage {
         stage[30][16] = new HiddenSensor(() -> initDrop());
         stage[30][17] = new HiddenSensor(() -> initDrop());
         stage[30][18] = new HiddenSensor(() -> initDrop());
+        stage[79][32] = new HiddenSensor(() -> activeVending = true);
+        stage[80][31] = new HiddenSensor(() -> activeVending = true);
+        stage[81][31] = new HiddenSensor(() -> activeVending = true);
+        stage[82][31] = new HiddenSensor(() -> activeVending = true);
+        stage[83][32] = new HiddenSensor(() -> activeVending = true);
+        stage[81][33] = new HiddenSensor(() -> vendingMachine());
         
         finishConstructor();
+    }
+    
+    /**
+     * Code for the vending machine
+     */
+    private void vendingMachine() {
+        if (!activeVending) return;
+        activeVending = false;
+        Main.getPlayer().pauseMovement();
+        if (new BasicConfirm("<html>For 800 coins, Vending Machine offers:<br>" + 
+                             "5 HP health potion<br>" +
+                             "Would you like to purchase it?</html>").selection()) {
+            try {
+                Main.getPlayer().useCoins(800);
+                Main.getPlayer().changeHealth(5);
+            } catch (IllegalArgumentException e) {
+                new BasicPopup("You don't have enough coins!", Color.RED);
+            }
+        }
+        Main.getPlayer().unpauseMovement();
     }
     
     /**

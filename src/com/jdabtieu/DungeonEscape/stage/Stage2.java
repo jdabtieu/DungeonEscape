@@ -58,7 +58,7 @@ public class Stage2 extends Stage {
     private boolean bossDone;
     
     /**
-     * Whether the boss fight is active
+     * Whether the vending machine is active
      */
     private boolean activeVending;
     
