@@ -43,6 +43,7 @@ public class Credits extends JPanel {
                 "        Qumu - Doodle Champion Island Games: Ending",
                 "",
                 "Beta Testers:",
+                "        Akshaya Varakunan",
                 "",
                 "More projects:",
                 "        https://github.com/jdabtieu",
