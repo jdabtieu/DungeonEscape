@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 
 import com.jdabtieu.DungeonEscape.Main;
-import com.jdabtieu.DungeonEscape.component.BasicPopup;
+import com.jdabtieu.DungeonEscape.component.BasicDialog;
 import com.jdabtieu.DungeonEscape.component.ComboLock;
 import com.jdabtieu.DungeonEscape.component.Weapon;
 import com.jdabtieu.DungeonEscape.core.Music;
@@ -87,7 +87,7 @@ public class Stage1 extends Stage {
         
         stage[3][73] = new HiddenSensor(() -> {
             changeTile(3, 73, Ground.class);
-            new BasicPopup("You found a key!", Color.BLACK);
+            new BasicDialog("You found a key!").selection();
             redraw();
             Main.getPlayer().addKey();
         }, Color.YELLOW);

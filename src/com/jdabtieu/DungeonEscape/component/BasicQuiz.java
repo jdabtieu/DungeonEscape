@@ -42,17 +42,20 @@ public class BasicQuiz extends JPanel {
         final BasicQuiz c = this;
         this.ans = ans;
         
+        // create the popup
         setBounds(Window.WIDTH / 2 - 100, Window.HEIGHT / 2 - 150, 200, 300);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         setVisible(false);
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
+        // create the question text
         txt.setFont(Fonts.STD_PARA);
         txt.setBounds(5, 5, getWidth() - 10, 50);
         txt.setForeground(Color.BLACK);
         add(txt);
         
+        // create the answer choices
         for (int i = 0; i < answers.length; i++) {
             final int f = i;
             final JLabel lab = new JLabel("<html>" + answers[i] + "</html>");
@@ -63,7 +66,7 @@ public class BasicQuiz extends JPanel {
                 public void mouseClicked(MouseEvent e) {
                     synchronized(c) {
                         selection = f;
-                        c.notify();
+                        c.notify(); // save the selection and unpause
                     }
                 }
             });
@@ -77,15 +80,15 @@ public class BasicQuiz extends JPanel {
      */
     public boolean selection() {
         setVisible(true);
-        try {
-            synchronized(this) {
-                wait();
+        synchronized(this) {
+            try {
+                wait(); // pause
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return false;
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return false;
         }
-        
+
         Main.getContentPane().remove(this);
         Main.getContentPane().repaint();
         return selection == ans;

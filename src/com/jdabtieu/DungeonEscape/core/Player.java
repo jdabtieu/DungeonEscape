@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import com.jdabtieu.DungeonEscape.Main;
-import com.jdabtieu.DungeonEscape.component.BasicPopup;
+import com.jdabtieu.DungeonEscape.component.BasicDialog;
 import com.jdabtieu.DungeonEscape.component.Inventory;
 import com.jdabtieu.DungeonEscape.component.StatusDisplay;
 import com.jdabtieu.DungeonEscape.component.Weapon;
@@ -337,7 +337,8 @@ public class Player extends Tile {
             try { // pause
                 wait();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // rethrow interrupt
+                Thread.currentThread().interrupt();
             }
         }
     }
@@ -354,7 +355,7 @@ public class Player extends Tile {
             weapons.remove(activeWeapon);
             activeWeapon = null;
         } else {
-            new BasicPopup("<html>You found a new weapon!<br>" + wp + "</html>", Color.BLACK);
+            new BasicDialog("<html>You found a new weapon!<br>" + wp + "</html>", Color.BLACK).selection();
         }
         inv.repaint();
     }

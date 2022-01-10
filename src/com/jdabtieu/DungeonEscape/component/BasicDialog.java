@@ -24,20 +24,31 @@ public class BasicDialog extends JPanel {
      * @param text  text to be displayed
      */
     public BasicDialog(final String text) {
+        this(text, Color.BLACK);
+    }
+    
+    /**
+     * Creates the dialog
+     * @param text  text to be displayed
+     * @param clr   color of the text
+     */
+    public BasicDialog(final String text, final Color clr) {
         super();
         final JLabel txt = new JLabel(text);
         final JButton btn = new JButton("OK");
         
+        // create and add popup
         setBounds(Window.WIDTH / 2 - 150, Window.HEIGHT / 2 - 75, 300, 150);
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
         setVisible(false);
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
+        // add text and ok button
         txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(10, 11, getWidth() - 20, getHeight() - 75);
-        txt.setForeground(Color.BLACK);
+        txt.setForeground(clr);
         add(txt);
         
         btn.setFont(Fonts.STD_PARA);
@@ -45,7 +56,7 @@ public class BasicDialog extends JPanel {
         add(btn);
         btn.addActionListener(e -> {
             synchronized(this) {
-                notify();
+                notify(); // unpause when button pressed
             }
         });
     }
@@ -54,10 +65,11 @@ public class BasicDialog extends JPanel {
         setVisible(true);
         try {
             synchronized(this) {
-                wait();
+                wait(); // pause and wait for ok to be pressed
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            // rethrow interrupt
+            Thread.currentThread().interrupt();
         }
         
         Main.getContentPane().remove(this);

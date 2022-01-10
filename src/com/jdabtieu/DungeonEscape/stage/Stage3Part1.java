@@ -10,11 +10,12 @@ import javax.swing.JLabel;
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.BasicConfirm;
-import com.jdabtieu.DungeonEscape.component.BasicPopup;
+import com.jdabtieu.DungeonEscape.component.BasicDialog;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.tile.Ground;
 import com.jdabtieu.DungeonEscape.tile.HiddenSensor;
+import com.jdabtieu.DungeonEscape.tile.Sensor;
 import com.jdabtieu.DungeonEscape.tile.Text;
 /**
  * Code for stage 3 part 1
@@ -56,7 +57,7 @@ public class Stage3Part1 extends Stage {
         stage[81][31] = new HiddenSensor(() -> activeVending = true);
         stage[82][31] = new HiddenSensor(() -> activeVending = true);
         stage[83][32] = new HiddenSensor(() -> activeVending = true);
-        stage[81][33] = new HiddenSensor(() -> vendingMachine());
+        stage[81][33] = new Sensor(() -> vendingMachine());
         
         finishConstructor();
     }
@@ -75,7 +76,7 @@ public class Stage3Part1 extends Stage {
                 Main.getPlayer().useCoins(700);
                 Main.getPlayer().changeHealth(5);
             } catch (IllegalArgumentException e) {
-                new BasicPopup("You don't have enough coins!", Color.RED);
+                new BasicDialog("You don't have enough coins!", Color.RED).selection();
             }
         }
         Main.getPlayer().unpauseMovement();
@@ -118,7 +119,7 @@ public class Stage3Part1 extends Stage {
         }
         
         Main.getPlayer().unpauseMovement();
-        new BasicPopup("You defeated the enemies!", Color.BLACK);
+        new BasicDialog("You defeated the enemies!").selection();
         
         for (final HealthBar bar : healthBars) {
             bar.setVisible(false);

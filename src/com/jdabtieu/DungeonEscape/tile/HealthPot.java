@@ -1,13 +1,12 @@
 package com.jdabtieu.DungeonEscape.tile;
 
-import java.awt.Color;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import com.jdabtieu.DungeonEscape.Main;
-import com.jdabtieu.DungeonEscape.component.BasicPopup;
+import com.jdabtieu.DungeonEscape.component.BasicDialog;
 /**
  * A health potion tile. It restores the player to 80 health.
  *
@@ -38,7 +37,7 @@ public class HealthPot extends Ground implements Triggerable {
         if (!active) return;
         active = false;
         Main.getPlayer().setHealth(Math.max(Main.getPlayer().getHealth(), 80));
-        new BasicPopup("The fountain of youth has restored you to 80 health.", Color.BLACK);
+        new BasicDialog("The fountain of youth has restored you to 80 health.").selection();
         removeAll();
     }
 

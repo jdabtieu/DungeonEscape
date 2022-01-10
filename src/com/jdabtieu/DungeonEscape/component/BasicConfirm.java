@@ -40,12 +40,14 @@ public class BasicConfirm extends JPanel {
         setVisible(false);
         Main.getContentPane().add(this, Layer.POPUP, 0);
         
+        // add confirmation text
         txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 11, getWidth(), getHeight() - 75);
         txt.setForeground(Color.BLACK);
         add(txt);
         
+        // add buttons
         btnYes.setFont(Fonts.STD_PARA);
         btnYes.setBounds(30, getHeight() - 34, 80, 24);
         add(btnYes);
@@ -69,22 +71,22 @@ public class BasicConfirm extends JPanel {
     
     /**
      * Wait for the user to make a selection, and return it.
-     * @return  whether the user clicked Yes
+     * @return  true if the user clicked yes, otherwise no
      */
     public boolean selection() {
         boolean movementPaused = Main.getPlayer().movementPaused();
         Main.getPlayer().pauseMovement();
         setVisible(true);
-        try {
-            synchronized(this) {
-                wait();
+        synchronized(this) {
+            try {
+                wait(); // wait for a button press
+            } catch (InterruptedException e) {
+                selection = false;
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            selection = false;
         }
-        
         if (!movementPaused) Main.getPlayer().unpauseMovement();
+        
+        // remove this popup once player makes a selection
         Main.getContentPane().remove(this);
         Main.getContentPane().repaint();
         return selection;
