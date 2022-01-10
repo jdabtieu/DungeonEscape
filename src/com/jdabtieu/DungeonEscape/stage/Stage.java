@@ -117,9 +117,8 @@ public abstract class Stage extends JPanel {
                     // uh oh, the game is lagging. that's fine though
                     System.err.printf("INFO: Game lagging. Skipped %d ms\n", -delayTime);
                 }
-				//time = System.currentTimeMillis();
-                time += KBD_POLL_DELAY;
-				threadTgt();
+                time = System.currentTimeMillis();
+                threadTgt();
 				if (Thread.currentThread().isInterrupted()) {
 				    return;
 				}
