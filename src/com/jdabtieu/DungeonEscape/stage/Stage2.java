@@ -16,7 +16,6 @@ import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.BasicConfirm;
 import com.jdabtieu.DungeonEscape.component.BasicDialog;
-import com.jdabtieu.DungeonEscape.component.BasicPopup;
 import com.jdabtieu.DungeonEscape.component.BasicQuiz;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Weapon;
@@ -132,17 +131,17 @@ public class Stage2 extends Stage {
         if (!activeVending) return;
         activeVending = false;
         Main.getPlayer().pauseMovement();
-        if (new BasicConfirm("<html>For 3300 coins, Vending Machine offers:<br>" + 
+        if (new BasicConfirm("<html>For 3000 coins, Vending Machine offers:<br>" + 
                              new Weapon("One Hit Blade", 2000, 1, "ohb.png") +
                              "<br>Would you like to purchase it?</html>").selection()) {
             try {
-                Main.getPlayer().useCoins(3300);
+                Main.getPlayer().useCoins(3000);
                 Main.getPlayer().addWeapon(new Weapon("One Hit Blade", 2000, 1, "ohb.png"));
                 changeTile(20, 10, Ground.class);
                 changeTile(17, 10, Ground.class);
                 redraw();
             } catch (IllegalArgumentException e) {
-                new BasicPopup("You don't have enough coins!", Color.RED);
+                new BasicDialog("You don't have enough coins!", Color.RED).selection();
             }
         }
         Main.getPlayer().unpauseMovement();
@@ -179,7 +178,7 @@ public class Stage2 extends Stage {
             fight(bar, () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 5 + 1));
         }
         Main.getPlayer().unpauseMovement();
-        new BasicPopup("You defeated the enemies!", Color.BLACK);
+        new BasicDialog("You defeated the enemies!", Color.BLACK).selection();
         
         for (final HealthBar bar : healthBars) {
             bar.setVisible(false);
