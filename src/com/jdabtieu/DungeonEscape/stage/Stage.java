@@ -72,6 +72,7 @@ public abstract class Stage extends JPanel {
     
     /**
      * The delay for polling the keyboard at the specified poll rate
+     * The game updates at this rate, making it the effective frame rate
      */
     private static final int KBD_POLL_DELAY = 1000 / KBD_POLL_RATE;
     
@@ -116,7 +117,8 @@ public abstract class Stage extends JPanel {
                     // uh oh, the game is lagging. that's fine though
                     System.err.printf("INFO: Game lagging. Skipped %d ms\n", -delayTime);
                 }
-				time = System.currentTimeMillis();
+				//time = System.currentTimeMillis();
+                time += KBD_POLL_DELAY;
 				threadTgt();
 				if (Thread.currentThread().isInterrupted()) {
 				    return;
