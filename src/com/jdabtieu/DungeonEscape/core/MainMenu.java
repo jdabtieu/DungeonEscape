@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.component.BasicDialog;
 import com.jdabtieu.DungeonEscape.component.MenuButton;
 /**
  * This class is responsible for rendering the Main Menu screen.
@@ -22,17 +23,21 @@ public class MainMenu extends JPanel {
         super();
         final MenuButton btnStart = new MenuButton("Start Game");
         final MenuButton btnQuit = new MenuButton("Quit");
+        final MenuButton btnControls = new MenuButton("Controls");
         final JLabel lblTitleTxt = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/titleText.png")));
         final JLabel lblBackgroundImg = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/background.png")));
         
         setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
         setLayout(null);
         
-        btnStart.setBounds((Window.WIDTH - 400) / 2, 350, 400, 40);
+        btnStart.setBounds((Window.WIDTH - 400) / 2, 340, 400, 40);
         add(btnStart);
         
-        btnQuit.setBounds((Window.WIDTH - 400) / 2, 410, 400, 40);
+        btnQuit.setBounds((Window.WIDTH - 400) / 2, 400, 400, 40);
         add(btnQuit);
+        
+        btnControls.setBounds((Window.WIDTH - 400) / 2, 460, 400, 40);
+        add(btnControls);
         
         lblTitleTxt.setBounds((Window.WIDTH - 834) / 2, 140, 834, 65);
         add(lblTitleTxt);
@@ -45,9 +50,9 @@ public class MainMenu extends JPanel {
                 Main.mon.notify();
             }
         });
-        
-        btnQuit.addActionListener(e -> {
-            System.exit(0);
+        btnQuit.addActionListener(e -> System.exit(0));
+        btnControls.addActionListener(e -> {
+            new Thread(() -> new BasicDialog("<html>Controls:<br>WASD to move</html>").selection()).start();
         });
     }
 }
