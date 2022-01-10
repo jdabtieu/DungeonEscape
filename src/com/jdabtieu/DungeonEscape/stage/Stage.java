@@ -1,6 +1,7 @@
 package com.jdabtieu.DungeonEscape.stage;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import com.jdabtieu.DungeonEscape.Main;
+import com.jdabtieu.DungeonEscape.component.Banner;
+import com.jdabtieu.DungeonEscape.component.BasicDialog;
 import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.Weapon;
 import com.jdabtieu.DungeonEscape.core.AttackPattern;
@@ -146,11 +150,11 @@ public abstract class Stage extends JPanel {
      * @param ap                the enemy's attack pattern
      */
     protected void fight(final HealthBar enemyHealthBar, final AttackPattern ap) {
-        int enemyHealth = enemyHealthBar.getValue();
+        int enemyHealth = enemyHealthBar.maxHealth();
         while (enemyHealth > 0 && Main.getPlayer().getHealth() > 0) { // simulate attacks
             enemyHealth -= Main.getPlayer().getActiveWeapon().attack(critIndicator);
             Main.getPlayer().changeHealth(-ap.attack());
-            enemyHealthBar.setHealth(enemyHealth);
+            enemyHealthBar.setValue(enemyHealth);
             try {
                 Thread.sleep(800);
             } catch (InterruptedException e) {}
@@ -352,5 +356,44 @@ public abstract class Stage extends JPanel {
             // Reset original tile if the new tile cannot be added
         }
         add(stage[x][y]);
+    }
+    
+    /**
+     * Performs a boss fight. The calling method is responsible for player rewards and changing tiles.
+     * @param fname     filename for boss image
+     * @param health    health of boss
+     * @param playerX   x position of player
+     * @param playerY   y position of player
+     * @param bossX     x position of boss
+     * @param bossY     x position of boss
+     * @param ap        the attack pattern of the boss
+     */
+    protected void bossFight(String fname, int health, int playerX, int playerY, int bossX, int bossY, AttackPattern ap) {
+        final JLabel boss = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage(fname)));
+        final HealthBar healthBar = new HealthBar(health);
+        final int bossWidth = boss.getIcon().getIconWidth();
+        final int bossHeight = boss.getIcon().getIconWidth();
+        
+        Main.safeSleep(200);
+        Main.getPlayer().setPosition(playerX, playerY);
+        Main.getPlayer().pauseMovement();
+        redraw();
+        
+        new Banner("BOSS FIGHT!").animate();
+        
+        boss.setBounds(bossX, bossY, bossWidth, bossHeight);
+        Main.getContentPane().add(boss, Layer.ENEMY, 0);
+        healthBar.setBounds(bossX, bossY - 25, bossWidth, 20);
+        Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
+        
+        Main.getPlayer().weaponSelect();
+        fight(healthBar, ap);
+        
+        Main.getPlayer().unpauseMovement();
+        new BasicDialog("You defeated the boss!").selection();
+        healthBar.setVisible(false);
+        Main.getContentPane().remove(healthBar);
+        boss.setVisible(false);
+        Main.getContentPane().remove(boss);
     }
 }

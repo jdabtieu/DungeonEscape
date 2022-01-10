@@ -102,6 +102,7 @@ public class Stage2 extends Stage {
             Graphics2D g = (Graphics2D) i.getGraphics();
             g.setColor(Color.RED);
             g.fillRect(0, 0, 20, 20);
+            g.dispose();
             interviewer.setIcon(new ImageIcon(i));
             interviewer.setBounds(642, 1288, 20, 20);
             texts.add(interviewer);
@@ -249,35 +250,15 @@ public class Stage2 extends Stage {
      */
     private void initBoss() {
         if (bossInit) return;
-        final JLabel boss = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/boss2.png")));
-        final HealthBar healthBar = new HealthBar(100);
-        
         bossInit = true;
         bossDone = false;
         changeTile(18, 40, Wall.class);
         changeTile(19, 40, Wall.class);
         changeTile(20, 40, Wall.class);
-        Main.safeSleep(200);
-        Main.getPlayer().setPosition(930, 500);
-        Main.getPlayer().pauseMovement();
-        redraw();
-        new Banner("BOSS FIGHT!").animate();
         
-        boss.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40, 80, 80);
-        Main.getContentPane().add(boss, Layer.ENEMY, 0);
-        healthBar.setBounds(Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 65, 80, 20);
-        Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
-        
-        Main.getPlayer().weaponSelect();
-        fight(healthBar, () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 8 + 1));
-        
-        Main.getPlayer().unpauseMovement();
-        new BasicPopup("You defeated the boss!", Color.BLACK);
-        healthBar.setVisible(false);
-        Main.getContentPane().remove(healthBar);
-        boss.setVisible(false);
-        Main.getContentPane().remove(boss);
-        
+        bossFight("assets/boss2.png", 100, 930, 500, Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40,
+                  () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 8 + 1));
+
         changeTile(22, 65, Coins.class, 1000);
         changeTile(24, 67, Coins.class, 1000);
         changeTile(22, 63, Coins.class, 1000);

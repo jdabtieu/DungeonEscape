@@ -6,14 +6,11 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.jdabtieu.DungeonEscape.Main;
-import com.jdabtieu.DungeonEscape.component.Banner;
 import com.jdabtieu.DungeonEscape.component.BasicConfirm;
 import com.jdabtieu.DungeonEscape.component.BasicDialog;
-import com.jdabtieu.DungeonEscape.component.HealthBar;
 import com.jdabtieu.DungeonEscape.component.QuizShow;
 import com.jdabtieu.DungeonEscape.core.Layer;
 import com.jdabtieu.DungeonEscape.core.Music;
@@ -106,33 +103,15 @@ public class Stage3Part2 extends Stage {
      */
     private void initBoss() {
         if (bossInit) return;
-        final JLabel boss = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/boss3.png")));
-        final HealthBar healthBar = new HealthBar(825);
-        
         bossInit = true;
         changeTile(96, 62, Wall.class);
         changeTile(96, 63, Wall.class);
         changeTile(96, 64, Wall.class);
-        Main.safeSleep(200);
-        Main.getPlayer().setPosition(1260, 1840);
-        Main.getPlayer().pauseMovement();
-        redraw();
-        new Banner("BOSS FIGHT!").animate();
         
-        boss.setBounds(200, 130, 160, 160);
-        Main.getContentPane().add(boss, Layer.ENEMY, 0);
-        healthBar.setBounds(240, 100, 80, 20);
-        Main.getContentPane().add(healthBar, 3, 0);
+        bossFight("assets/boss3.png", 825, 1260, 1840, 200, 130, () -> (int) (Math.random() + 1.7));
         
-        Main.getPlayer().weaponSelect();
-        fight(healthBar, () -> (int) (Math.random() + 1.7));
-        
-        new BasicDialog("You defeated the boss! 5000 coins acquired!").selection();
+        new BasicDialog("5000 coins acquired!").selection();
         Main.getPlayer().addCoins(5000);
-        healthBar.setVisible(false);
-        Main.getContentPane().remove(healthBar);
-        boss.setVisible(false);
-        Main.getContentPane().remove(boss);
         endScene();
     }
     
