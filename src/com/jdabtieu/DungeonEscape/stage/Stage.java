@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -208,6 +209,7 @@ public abstract class Stage extends JPanel {
      * This is different from repaint(), which will only repaint the panel.
      */
     protected void redraw() {
+        final CountDownLatch latch = new CountDownLatch(1);
         SwingUtilities.invokeLater(() -> {
             setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
             for (int i = 0; i < stage.length; i++) {
@@ -227,7 +229,15 @@ public abstract class Stage extends JPanel {
 
             setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
             Main.getPlayer().getSD().repaint();
+            latch.countDown();
         });
+        if (!SwingUtilities.isEventDispatchThread()) {
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
     
     /**
