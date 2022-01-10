@@ -16,7 +16,7 @@ public class Spike extends Wall implements Triggerable {
      */
     public Spike() {
         super();
-        setBackground(Color.red);
+        setBackground(Color.RED);
     }
 
     @Override

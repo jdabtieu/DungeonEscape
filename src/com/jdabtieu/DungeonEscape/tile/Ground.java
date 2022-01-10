@@ -11,7 +11,7 @@ public class Ground extends Tile {
     /**
      * The base ground color
      */
-    public final static Color COLOR = Color.gray;
+    public final static Color COLOR = Color.GRAY;
     
     /**
      * Creates a ground tile

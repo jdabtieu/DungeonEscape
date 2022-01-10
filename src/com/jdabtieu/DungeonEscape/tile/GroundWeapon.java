@@ -38,8 +38,10 @@ public class GroundWeapon extends Ground implements Triggerable {
     @Override
     public void trigger() {
         if (wp == null) return;
+        // transform this tile visually into a ground tile
         removeAll();
         setBorder(null);
+        
         Main.getPlayer().addWeapon(wp);
         wp = null;
     }

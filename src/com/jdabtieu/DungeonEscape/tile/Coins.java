@@ -22,7 +22,7 @@ public class Coins extends Ground implements Triggerable {
     public Coins(int value) {
         super();
         this.value = value;
-        setBackground(Color.yellow);
+        setBackground(Color.YELLOW);
     }
     
     @Override

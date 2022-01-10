@@ -54,6 +54,8 @@ public class ScreenFlicker extends JPanel {
     
     @Override
     public void paintComponent(Graphics g) {
+        // Change transparency of this component
+        // https://stackoverflow.com/questions/4982960/java-swing-translucent-components
         g.setColor(new Color(0, 0, 0, alpha));
         Insets insets = getInsets();
         g.fillRect(insets.left, insets.top, 
@@ -66,11 +68,14 @@ public class ScreenFlicker extends JPanel {
      * Starts the animation.
      */
     public void startAnimation() {
+        // create animation thread
         animThread = new Thread(() -> {
             Main.safeSleep(1000);
             while (true) {
+                // change transparency (scale from 0-255), then repaints the component
                 setAlpha((int) (Math.random() * 170) + 56);
                 repaint();
+                // stop if this thread gets interrupted
                 if (Thread.currentThread().isInterrupted()) {
                     return;
                 }

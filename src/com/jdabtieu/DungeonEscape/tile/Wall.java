@@ -14,6 +14,6 @@ public class Wall extends Tile {
      */
     public Wall() {
         super();
-        setBackground(Color.black);
+        setBackground(Color.BLACK);
     }
 }

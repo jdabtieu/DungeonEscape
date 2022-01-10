@@ -45,9 +45,11 @@ public class Banner extends JPanel {
         Main.getContentPane().add(this, Layer.ENEMY, 0);
         Main.safeSleep(300);
         
+        // loop text from 200 pixels off screen on the left to off screen on the right
         for (int i = -200; i <= Window.WIDTH; i += 2) {
             lblFight.setBounds(i, 0, Window.WIDTH, 60);
             repaint();
+            // target 8s animation
             Main.safeSleep(8000 / (Window.WIDTH + 200));
         }
         

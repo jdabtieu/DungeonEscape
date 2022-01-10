@@ -49,17 +49,21 @@ public class Music {
     public static void initAudio(final String relPath, final boolean repeat) {
         final AudioInputStream ais;
         try {
+            // load audio file
             ais = AudioSystem.getAudioInputStream(new URL("file:assets/music/" + relPath));
             clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, ais.getFormat()));
             if (repeat) {
                 clip.addLineListener(audioListener);
             }
+            
+            // open the file, adjust volume, and start playing
             clip.open(ais);
             changeVolume(volume);
             clip.start();
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             clip = null;
             System.err.println("WARN: Audio failed to start.");
+            e.printStackTrace();
         }
     }
     
@@ -71,6 +75,8 @@ public class Music {
         volume = percent;
         if (clip == null) return;
         try {
+            // -80dB = 0%, 0dB = 100%
+            // open Oracle and some OpenJDK implementations, volume is controlled with MASTER_GAIN
             ((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue((float) (-80 + 0.8 * percent));
         } catch (IllegalArgumentException e) {
             // some OpenJDK implementations doesn't support MASTER_GAIN

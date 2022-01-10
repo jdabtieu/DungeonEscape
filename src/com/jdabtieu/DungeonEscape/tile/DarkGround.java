@@ -1,6 +1,5 @@
 package com.jdabtieu.DungeonEscape.tile;
 
-import java.awt.Color;
 /**
  * A dark ground tile. It is similar to the Ground tile, but with a darker color.
  *
@@ -13,6 +12,6 @@ public class DarkGround extends Tile {
      */
     public DarkGround() {
         super();
-        setBackground(new Color(80, 80, 80));
+        setBackground(Ground.COLOR.darker());
     }
 }

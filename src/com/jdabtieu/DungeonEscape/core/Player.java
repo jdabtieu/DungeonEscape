@@ -149,6 +149,7 @@ public class Player extends Tile {
             sd.repaint();
             return;
         }
+        // player is out of health, game over
         health = 0;
         Main.triggerLoss();
     }
@@ -281,11 +282,13 @@ public class Player extends Tile {
      * @param pmt   the prompt text
      */
     public void weaponSelect(final String pmt) {
+        // get a reference to this object to use for wait/notify
         final Object mon = this;
         final boolean movementPaused = pauseMovement;
         final JPanel contentPane = new JPanel();
         final JLabel title = new JLabel(pmt);
         
+        // create the prompt
         pauseMovement = true;
         contentPane.setBounds(Window.WIDTH / 2 - 90, Window.HEIGHT / 2 - 150, 180, 300);
         contentPane.setLayout(null);
@@ -296,12 +299,14 @@ public class Player extends Tile {
         title.setBounds(0, 0, 180, 60);
         contentPane.add(title);
         
+        // add each weapon to the prompt
         for (int i = 0; i < weapons.size(); i++) {
-            final int f = i;
+            final int f = i; // variables in anonymous classes must be final or effectively final
             final JPanel container = new JPanel();
             final Weapon wp = weapons.get(i).clone();
             final JLabel lab = new JLabel("<html>" + wp.toString() + "</html>");;
             
+            // position the weapon container, add the weapon image, and text to it
             container.setLayout(null);
             container.setBounds(20, 60 * i + 60, 140, 60);
             container.setBorder(BorderFactory.createLineBorder(Color.BLUE));
@@ -310,12 +315,16 @@ public class Player extends Tile {
             lab.setBounds(40, 0, 200, 60);
             container.add(wp);
             container.add(lab);
+            
+            // select the weapon when the user clicks on it
             container.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     activeWeapon = weapons.get(f);
                     pauseMovement = movementPaused;
                     contentPane.setVisible(false);
                     Main.getContentPane().remove(contentPane);
+                    
+                    // unpause
                     synchronized(mon) {
                         mon.notify();
                     }
@@ -325,7 +334,7 @@ public class Player extends Tile {
         }
         Main.getContentPane().add(contentPane, Layer.POPUP, 0);
         synchronized(this) {
-            try {
+            try { // pause
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -334,12 +343,13 @@ public class Player extends Tile {
     }
 
     /**
-     * Adds the specified weapon to the player's inventory. This does not set it as the active weapon
+     * Adds the specified weapon to the player's inventory. This does not set it as the active weapon.
+     * The player can hold up to 3 weapons at once, and extras are discarded.
      * @param wp    the weapon to add to the player's inventory
      */
     public void addWeapon(final Weapon wp) {
         weapons.add(wp);
-        if (weapons.size() > 3) {
+        if (weapons.size() > 3) { // discard if more than 3 weapons
             weaponSelect("<html>You found a new weapon,<br>but you can only hold 3.<br>Choose one to discard.</html>");
             weapons.remove(activeWeapon);
             activeWeapon = null;

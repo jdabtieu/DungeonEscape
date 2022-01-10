@@ -151,6 +151,8 @@ public class Stage3Part2 extends Stage {
             
             @Override
             public void paintComponent(Graphics g) {
+                // Change transparency of this component
+                // https://stackoverflow.com/questions/4982960/java-swing-translucent-components
                 g.setColor(new Color(0, 0, 0, alpha));
                 Insets insets = getInsets();
                 g.fillRect(insets.left, insets.top, 
