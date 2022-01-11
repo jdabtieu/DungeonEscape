@@ -2,7 +2,6 @@ package com.jdabtieu.DungeonEscape.vfx;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Insets;
 
 import javax.swing.JPanel;
 
@@ -54,13 +53,8 @@ public class ScreenFlicker extends JPanel {
     
     @Override
     public void paintComponent(Graphics g) {
-        // Change transparency of this component
-        // https://stackoverflow.com/questions/4982960/java-swing-translucent-components
         g.setColor(new Color(0, 0, 0, alpha));
-        Insets insets = getInsets();
-        g.fillRect(insets.left, insets.top, 
-                getWidth() - insets.left - insets.right, 
-                getHeight() - insets.top - insets.bottom);
+        g.fillRect(0, 0, getWidth(), getHeight());
         super.paintComponent(g);
     }
     
