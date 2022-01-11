@@ -188,7 +188,9 @@ public class Player extends Tile {
     }
     
     /**
-     * Move the player by the specified amount in the x- and y-directions
+     * Move the player by the specified amount in the x- and y-directions.
+     * This method should only be called by the Stage class, since this
+     * method does not update the map position.
      * @param dx    the amount to move the player in the x-direction
      * @param dy    the amount to move the player in the y-direction
      */
@@ -198,7 +200,12 @@ public class Player extends Tile {
     }
     
     /**
-     * Sets the player's position to (x, y), relative to the map
+     * Sets the player's position to (x, y), relative to the map.
+     * This method should only be called by the Stage class or in
+     * the constructor of a Stage subclass, since this
+     * method does not update the map position. Instead, use
+     * Stage.setPlayerPosition(x, y)
+     * 
      * @param x the player's new x-position
      * @param y the player's new y-position
      */

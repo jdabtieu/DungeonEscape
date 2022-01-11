@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.concurrent.CountDownLatch;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -21,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 import com.jdabtieu.DungeonEscape.Main;
 import com.jdabtieu.DungeonEscape.component.Banner;
@@ -132,10 +130,16 @@ public abstract class Stage extends JPanel {
      * makes all the tiles visible and re-renders the map.
      */
     protected void finishConstructor() {
-        redraw();
+        final int height = stage.length;
+        final int width = Arrays.stream(stage).mapToInt(a -> a.length).max().getAsInt();
         texts.stream().forEach(e -> add(e));
-        Arrays.stream(stage).forEach(a -> Arrays.stream(a).forEach(e -> add(e)));
-        setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
+        for (int i = 0; i < stage.length; i++) {
+            for (int j = 0; j < stage[i].length; j++) {
+                stage[i][j].setBounds(j * 20, i * 20, 20, 20);
+                add(stage[i][j]);
+            }
+        }
+        setBounds(-Main.getPlayer().xPos() + Window.WIDTH / 2 - 10, -Main.getPlayer().yPos() + Window.HEIGHT / 2 - 10, width * 20, height * 20);
     }
     
     /**
@@ -206,43 +210,6 @@ public abstract class Stage extends JPanel {
     }
     
     /**
-     * Redraws the stage so that the player is perpetually centered.
-     * This is different from repaint(), which will only repaint the panel.
-     */
-    protected void redraw() {
-        final CountDownLatch latch = new CountDownLatch(1);
-        SwingUtilities.invokeLater(() -> {
-            setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
-            for (int i = 0; i < stage.length; i++) {
-                for (int j = 0; j < stage[i].length; j++) {
-                    stage[i][j].setBounds((j * 20) - Main.getPlayer().xPos() + (Window.WIDTH - 20) / 2,
-                                          (i * 20) - Main.getPlayer().yPos() + (Window.HEIGHT - 20) / 2,
-                                          20,
-                                          20);
-                }
-            }
-            for (final Text lab : texts) {
-                lab.setBounds(lab.getXFixed() - Main.getPlayer().xPos() + (Window.WIDTH - 20) / 2,
-                              lab.getYFixed() - Main.getPlayer().yPos() + (Window.HEIGHT - 20) / 2,
-                              lab.getWidth(),
-                              lab.getHeight());
-            }
-
-            setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
-            Main.getPlayer().getSD().repaint();
-            latch.countDown();
-        });
-        if (!SwingUtilities.isEventDispatchThread()) {
-            try {
-                latch.await();
-            } catch (InterruptedException e) {
-                // rethrow interrupt
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
-    
-    /**
      * Tests if the player touches with any blocks of interest. These include
      * Triggerable tiles, and wall tiles. If no collision occur with walls,
      * move the player to the desired location
@@ -297,6 +264,14 @@ public abstract class Stage extends JPanel {
             }
         }
         p.movePlayer(ox + dx, oy + dy);
+        setLocation(getX() - ox - dx, getY() - oy - dy);
+    }
+    
+    protected void setPlayerPosition(final int x, final int y) {
+        final Player p = Main.getPlayer();
+        setLocation(getX() + p.xPos() - x, getY() + p.yPos() - y);
+        p.setPosition(x, y);
+        repaint();
     }
     
     /**
@@ -339,7 +314,6 @@ public abstract class Stage extends JPanel {
         wy *= 4;
         testCollision(wx, 0);
         testCollision(0, wy);
-        redraw();
         
         // developer easter egg weapon
         if (keysPressed.contains('j') && keysPressed.contains('w') && keysPressed.contains('p')) {
@@ -366,6 +340,7 @@ public abstract class Stage extends JPanel {
             e.printStackTrace();
             // Reset original tile if the new tile cannot be added
         }
+        stage[x][y].setBounds(y * 20, x * 20, 20, 20);
         add(stage[x][y]);
     }
     
@@ -386,9 +361,8 @@ public abstract class Stage extends JPanel {
         final int bossHeight = boss.getIcon().getIconWidth();
         
         Main.safeSleep(200);
-        Main.getPlayer().setPosition(playerX, playerY);
+        setPlayerPosition(playerX, playerY);
         Main.getPlayer().pauseMovement();
-        redraw();
         
         new Banner("BOSS FIGHT!").animate();
         

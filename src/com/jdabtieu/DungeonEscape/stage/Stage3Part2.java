@@ -158,13 +158,12 @@ public class Stage3Part2 extends Stage {
             }
         }
         ScreenFlicker.stopAnimation();
-        redraw();
+        repaint();
         Music.stopAudio();
         Music.initAudio("win.wav", false);
         while (Main.getPlayer().yPos() > 360) {
             if (Main.getPlayer().yPos() % 5 == 0) ScreenFlicker.decreaseAlpha();
-            Main.getPlayer().movePlayer(0, -1);
-            redraw();
+            setPlayerPosition(Main.getPlayer().xPos(), Main.getPlayer().yPos() - 1);
             Main.safeSleep(10);
         }
         Main.getPlayer().setSDVisible(false);

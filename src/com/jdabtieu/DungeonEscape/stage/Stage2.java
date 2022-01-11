@@ -139,7 +139,7 @@ public class Stage2 extends Stage {
                 Main.getPlayer().addWeapon(new Weapon("One Hit Blade", 2000, 1, "ohb.png"));
                 changeTile(20, 10, Ground.class);
                 changeTile(17, 10, Ground.class);
-                redraw();
+                repaint();
             } catch (IllegalArgumentException e) {
                 new BasicDialog("You don't have enough coins!", Color.RED).selection();
             }
@@ -156,12 +156,12 @@ public class Stage2 extends Stage {
         final HealthBar[] healthBars = new HealthBar[offsets.length];
 
         ambushInit = true;
-        Main.getPlayer().setPosition(336, 1000);
+        setPlayerPosition(336, 1000);
         Main.getPlayer().pauseMovement();
         changeTile(53, 16, Ground.class);
         changeTile(53, 17, Ground.class);
         changeTile(53, 18, Ground.class);
-        redraw();
+        repaint();
         Main.safeSleep(200);
         new Banner("AMBUSH!").animate();
         
@@ -186,7 +186,6 @@ public class Stage2 extends Stage {
         }
         enemy.setVisible(false);
         Main.getContentPane().remove(enemy);
-        redraw();
     }
     
     /**
@@ -222,12 +221,11 @@ public class Stage2 extends Stage {
         interviewInit = true;
         if (!new BasicConfirm("<html>The Dungeon Mester would like to<br>invite you to create new levels.<br>Accept the offer?</html>").selection()) {
             interviewInit = false;
-            Main.getPlayer().setPosition(712, 1408);
+            setPlayerPosition(712, 1408);
             return;
         }
         Main.getPlayer().pauseMovement();
-        Main.getPlayer().setPosition(496, 1288);
-        redraw();
+        setPlayerPosition(496, 1288);
         new BasicDialog("<html>So, you want to help add more levels, eh?<br>You're going to have to pass the test first.</html>").selection();
         
         if (Arrays.stream(quiz).mapToInt(q -> q.selection() ? 1 : 0).sum() < 4) {
@@ -289,6 +287,6 @@ public class Stage2 extends Stage {
                 }
             }
         });
-        redraw();
+        repaint();
     }
 }

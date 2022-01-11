@@ -37,7 +37,7 @@ public class HealthPot extends Ground implements Triggerable {
         if (!active) return;
         active = false;
         Main.getPlayer().setHealth(Math.max(Main.getPlayer().getHealth(), 80));
-        new BasicDialog("The fountain of youth has restored you to 80 health.").selection();
+        new BasicDialog("<html>The fountain of youth has<br>restored you to 80 health.</html>").selection();
         removeAll();
     }
 

@@ -74,7 +74,7 @@ public class Stage1 extends Stage {
                     changeTile(2, 14, Ground.class);
                     changeTile(2, 15, Ground.class);
                     changeTile(3, 14, Ground.class);
-                    redraw();
+                    repaint();
                 }
             }
         });
@@ -88,7 +88,7 @@ public class Stage1 extends Stage {
         stage[3][73] = new HiddenSensor(() -> {
             changeTile(3, 73, Ground.class);
             new BasicDialog("You found a key!").selection();
-            redraw();
+            repaint();
             Main.getPlayer().addKey();
         }, Color.YELLOW);
         
@@ -141,6 +141,6 @@ public class Stage1 extends Stage {
                 }
             }
         });
-        redraw();
+        repaint();
     }
 }

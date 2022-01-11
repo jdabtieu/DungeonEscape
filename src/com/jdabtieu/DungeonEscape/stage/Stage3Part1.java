@@ -98,9 +98,8 @@ public class Stage3Part1 extends Stage {
         changeTile(69, 17, Ground.class);
         changeTile(69, 18, Ground.class);
         Main.safeSleep(200);
-        Main.getPlayer().setPosition(340, 1340);
+        setPlayerPosition(340, 1340);
         Main.getPlayer().pauseMovement();
-        redraw();
         new Banner("AMBUSH!").animate();
         
         enemy.setBounds(156, 90, 740, 320);
@@ -127,7 +126,6 @@ public class Stage3Part1 extends Stage {
         }
         enemy.setVisible(false);
         Main.getContentPane().remove(enemy);
-        redraw();
     }
     
     /**

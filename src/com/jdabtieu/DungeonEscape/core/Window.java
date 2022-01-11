@@ -35,6 +35,7 @@ public class Window extends JFrame {
         setLocationRelativeTo(null);
         setContentPane(new JLayeredPane());
         getContentPane().setLayout(null);
+        ((JLayeredPane) getContentPane()).setOpaque(true);
         getContentPane().setBackground(Color.BLACK);
     }
 }
