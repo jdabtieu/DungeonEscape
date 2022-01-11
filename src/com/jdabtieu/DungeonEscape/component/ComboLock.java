@@ -59,6 +59,8 @@ public class ComboLock extends JPanel {
                 replace(fb, offset, len, str, a);
             }
         });
+        
+        // add input field, title, close button, and incorrect text
         input.setFont(Fonts.MONO);
         input.setBounds(getWidth() / 2 - 50, 85, 100, 30);
         add(input);
@@ -81,6 +83,8 @@ public class ComboLock extends JPanel {
         lblWrong.setBounds(0, 149, getWidth(), 14);
         lblWrong.setVisible(false);
         add(lblWrong);
+        
+        // close window when button pressed
         btnClose.addActionListener(e -> {
             setVisible(false);
             Main.getContentPane().remove(this);
@@ -91,6 +95,7 @@ public class ComboLock extends JPanel {
             }
         });
 
+        // check answer when button pressed
         input.addActionListener(e -> {
             if (!input.getText().equals(combo)) {
                 lblWrong.setVisible(true);
@@ -114,7 +119,7 @@ public class ComboLock extends JPanel {
     public boolean run() {
         synchronized(this) {
             try {
-                wait();
+                wait(); // pause until close button or correct answer
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

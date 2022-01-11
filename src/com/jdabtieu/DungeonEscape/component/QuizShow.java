@@ -46,11 +46,14 @@ public class QuizShow extends JPanel {
         setBounds(Window.WIDTH / 4, Window.HEIGHT / 2 - 100, Window.WIDTH / 2, 200);
         setLayout(null);
         setBackground(Color.GRAY);
+        
+        // add question text
         txt.setHorizontalAlignment(SwingConstants.CENTER);
         txt.setBounds(0, 10, getWidth(), 40);
         txt.setFont(Fonts.TITLE);
         add(txt);
         
+        // add letterse one by one
         letters = new ArrayList<>();
         for (int i = 0; i < ans.length(); i++) {
             if (ans.charAt(i) == ' ') continue;
@@ -58,6 +61,8 @@ public class QuizShow extends JPanel {
             f.setBounds((10 + 40 * i) % getWidth(), 60 * ((10 + 40 * i) / getWidth() + 1), 30, 30);
             letters.add(f);
             add(f);
+            
+            // force each input field to only accept up to one character
             ((AbstractDocument) f.getDocument()).setDocumentFilter(new DocumentFilter() {
                 public void replace(FilterBypass fb, int offset, int len, String str, AttributeSet a) throws BadLocationException {
                     String text = fb.getDocument().getText(0, fb.getDocument().getLength()) + str;
@@ -73,13 +78,14 @@ public class QuizShow extends JPanel {
             });
         }
         
+        // strip spaces and convert into lowercase
         this.ans = ans.replace(" ", "").toLowerCase();
         
         submit.setBounds(getWidth() / 2 - 50, 160, 100, 30);
         add(submit);
         submit.addActionListener(e -> {
             synchronized(this) {
-                notify();
+                notify(); // unpause
             }
         });
         Main.getContentPane().add(this, Layer.POPUP, 0);
@@ -92,12 +98,14 @@ public class QuizShow extends JPanel {
     public boolean selection() {
         synchronized(this) {
             try {
-                wait();
+                wait(); // pause until submit button pressed
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         Main.getContentPane().remove(this);
+        
+        // check answer one character at a time
         for (int i = 0; i < ans.length(); i++) {
             try {
                 if (letters.get(i).getText().toLowerCase().charAt(0) != ans.charAt(i)) return false;
