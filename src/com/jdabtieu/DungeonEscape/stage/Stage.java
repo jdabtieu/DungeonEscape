@@ -85,10 +85,14 @@ public abstract class Stage extends JPanel {
      */
     public Stage(final String fname) {
         super();
+        // draw the stage offscreen and do not automatically repaint, since
+        // we repaint manually when it's updated
         setIgnoreRepaint(true);
         setBounds(Window.WIDTH, 0, Window.WIDTH, Window.HEIGHT);
-        setBackground(Color.black);
+        
+        setBackground(Color.BLACK);
         setLayout(null);
+        
         texts = new ArrayList<>();
         keysPressed = new HashSet<>();
         
@@ -100,16 +104,19 @@ public abstract class Stage extends JPanel {
         critIndicator.setBounds(Window.WIDTH / 2 - 120, Window.HEIGHT / 2 - 30, 240, 20);
         Main.getContentPane().add(critIndicator, Layer.POPUP, 0);
         
+        // create tiles, start listening for keypresses
         fillStage(fname);
         registerKbd();
         movement = new Thread(() -> {
 			long time = System.currentTimeMillis();
 			long delayTime;
             while (true) {
+                // time to the next frame, if it's negative, the game is lagging
                 delayTime = KBD_POLL_DELAY + time - System.currentTimeMillis();
                 try {
                     Thread.sleep(delayTime);
                 } catch (InterruptedException e) {
+                    // interrupt happens if we want to stop listening for keypresses
                     return;
                 } catch (IllegalArgumentException e) {
                     // uh oh, the game is lagging. that's fine though
@@ -117,9 +124,6 @@ public abstract class Stage extends JPanel {
                 }
                 time = System.currentTimeMillis();
                 threadTgt();
-				if (Thread.currentThread().isInterrupted()) {
-				    return;
-				}
             }
         }, "Movement-Thread");
         movement.start();
@@ -132,13 +136,21 @@ public abstract class Stage extends JPanel {
     protected void finishConstructor() {
         final int height = stage.length;
         final int width = Arrays.stream(stage).mapToInt(a -> a.length).max().getAsInt();
+        // adds all texts
         texts.stream().forEach(e -> add(e));
+        
+        // adds all tiles
         for (int i = 0; i < stage.length; i++) {
             for (int j = 0; j < stage[i].length; j++) {
                 stage[i][j].setBounds(j * 20, i * 20, 20, 20);
                 add(stage[i][j]);
             }
         }
+        
+        // moves the map to the right place, relative to the player
+        // since the player doesn't move, the map moves opposite the direction of the player
+        // mathematically, x-position is -(player's x pos - half the window's width + half a tile's width)
+        // same for y-position
         setBounds(-Main.getPlayer().xPos() + Window.WIDTH / 2 - 10, -Main.getPlayer().yPos() + Window.HEIGHT / 2 - 10, width * 20, height * 20);
     }
     
@@ -157,13 +169,17 @@ public abstract class Stage extends JPanel {
      */
     protected void fight(final HealthBar enemyHealthBar, final AttackPattern ap) {
         int enemyHealth = enemyHealthBar.maxHealth();
-        while (enemyHealth > 0 && Main.getPlayer().getHealth() > 0) { // simulate attacks
+        // keep attacking until someone is out of health
+        while (enemyHealth > 0 && Main.getPlayer().getHealth() > 0) {
             enemyHealth -= Main.getPlayer().getActiveWeapon().attack(critIndicator);
             Main.getPlayer().changeHealth(-ap.attack());
             enemyHealthBar.setValue(enemyHealth);
             try {
                 Thread.sleep(800);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                // rethrow interrupt
+                Thread.currentThread().interrupt();
+            }
             critIndicator.setVisible(false);
         }
     }
@@ -176,6 +192,7 @@ public abstract class Stage extends JPanel {
      */
     private void fillStage(final String fname) {
         final String[] rm;
+        // read the entire stage file line-by-line into the rm array
         try {
             rm = new String(Files.readAllBytes(Paths.get("assets/stage/" + fname + ".txt")), StandardCharsets.UTF_8).split("\n");
         } catch (IOException e) {
@@ -183,6 +200,8 @@ public abstract class Stage extends JPanel {
             System.exit(-1);
             return;
         }
+        
+        // parse the rm array and turn characters into tiles
         stage = new Tile[rm.length][];
         for (int i = 0; i < rm.length; i++) {
             stage[i] = new Tile[rm[i].length()];
@@ -218,34 +237,51 @@ public abstract class Stage extends JPanel {
      */
     private void testCollision(final int ox, final int oy) {
         final Player p = Main.getPlayer();
+        // when moving, the player can step on up to two new tiles at once
+        // (i1, j1) and (i2, j2)
         int i1 = p.xPos(), i2 = i1;
         int j1 = p.yPos(), j2 = j1;
         if (ox < 0) {
+            // to the left
             i1 += ox;
             i2 += ox;
-            j2 += 19;
+            j2 += 19; // could overlap the tile directly above
         } else if (ox > 0) {
+            // to the right
             i1 += 19 + ox;
             i2 += 19 + ox;
-            j2 += 19;
+            j2 += 19; // could overlap the tile directly above
         }
         if (oy < 0) {
+            // down
             j1 += oy;
             j2 += oy;
-            i2 += 19;
+            i2 += 19; // could overlap the tile directly to the right
         } else if (oy > 0) {
+            // up
             j1 += 19 + oy;
             j2 += 19 + oy;
-            i2 += 19;
+            i2 += 19; // could overlap the tile directly to the right
         }
-        if (stage[j1 / 20][i1 / 20] instanceof Triggerable) {
-            ((Triggerable) stage[j1 / 20][i1 / 20]).trigger();
+        // convert player x, y to tile x, y
+        i1 /= 20;
+        i2 /= 20;
+        j1 /= 20;
+        j2 /= 20;
+        
+        // trigger tile
+        if (stage[j1][i1] instanceof Triggerable) {
+            ((Triggerable) stage[j1][i1]).trigger();
         }
-        if (!(j2 / 20 == j1 / 20 && i2 / 20 == i1 / 20) && stage[j2 / 20][i2 / 20] instanceof Triggerable) {
-            ((Triggerable) stage[j2 / 20][i2 / 20]).trigger();
+        
+        // trigger second tile, but only if it's different from the first one
+        if (!(j2 == j1 && i2 == i1) && stage[j2][i2] instanceof Triggerable) {
+            ((Triggerable) stage[j2][i2]).trigger();
         }
+        
+        // prevent player running into the wall by adding adjustment factors
         int dy = 0, dx = 0;
-        if (stage[j1 / 20][i1 / 20] instanceof Wall || stage[j2 / 20][i2 / 20] instanceof Wall) {
+        if (stage[j1][i1] instanceof Wall || stage[j2][i2] instanceof Wall) {
             if (oy < 0) {
                 dy = p.yPos() % 20;
                 if (dy == 0) dy = -oy;
@@ -263,10 +299,19 @@ public abstract class Stage extends JPanel {
                 if (dx == -20) dx = -ox;
             }
         }
+        
+        // move the player and the map
         p.movePlayer(ox + dx, oy + dy);
         setLocation(getX() - ox - dx, getY() - oy - dy);
     }
     
+    /**
+     * Sets the player's position to (x, y). This method should be used
+     * over Player.setPosition(x, y) in any method that is not a Stage
+     * constructor.
+     * @param x new x-position of player
+     * @param y new y-position of player
+     */
     protected void setPlayerPosition(final int x, final int y) {
         final Player p = Main.getPlayer();
         setLocation(getX() + p.xPos() - x, getY() + p.yPos() - y);
@@ -303,6 +348,8 @@ public abstract class Stage extends JPanel {
      */
     private void threadTgt() {
         if (Main.getPlayer().movementPaused()) return;
+        
+        // grab the x- and y-velocities
         int wx = 0;
         int wy = 0;
         if (keysPressed.contains('w')) wy--;
@@ -310,10 +357,12 @@ public abstract class Stage extends JPanel {
         if (keysPressed.contains('s')) wy++;
         if (keysPressed.contains('d')) wx++;
         if (wx == 0 && wy == 0) return;
+        
+        // player moves 4 pixels per input
         wx *= 4;
         wy *= 4;
-        testCollision(wx, 0);
-        testCollision(0, wy);
+        if (wx != 0) testCollision(wx, 0);
+        if (wy != 0) testCollision(0, wy);
         
         // developer easter egg weapon
         if (keysPressed.contains('j') && keysPressed.contains('w') && keysPressed.contains('p')) {
@@ -329,8 +378,11 @@ public abstract class Stage extends JPanel {
      * @param args      any arguments required to initialize the new tile
      */
     protected void changeTile(final int x, final int y, final Class<?> newTile, final Object... args) {
+        // remove the old tile
         remove(stage[x][y]);
         try {
+            // find the constructor corresponding to the arguments and call it,
+            // creating a new tile
             for (final Constructor<?> cons : newTile.getConstructors()) {
                 if (cons.getParameterCount() == args.length) {
                     stage[x][y] = (Tile) cons.newInstance(args);
@@ -338,7 +390,7 @@ public abstract class Stage extends JPanel {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // Reset original tile if the new tile cannot be added
+            // reset original tile if the new tile cannot be added
         }
         stage[x][y].setBounds(y * 20, x * 20, 20, 20);
         add(stage[x][y]);
@@ -360,20 +412,24 @@ public abstract class Stage extends JPanel {
         final int bossWidth = boss.getIcon().getIconWidth();
         final int bossHeight = boss.getIcon().getIconWidth();
         
+        // pause the player and set them at the specified location
         Main.safeSleep(200);
         setPlayerPosition(playerX, playerY);
         Main.getPlayer().pauseMovement();
         
         new Banner("BOSS FIGHT!").animate();
         
+        // create the boss & healthbar
         boss.setBounds(bossX, bossY, bossWidth, bossHeight);
         Main.getContentPane().add(boss, Layer.ENEMY, 0);
         healthBar.setBounds(bossX, bossY - 25, bossWidth, 20);
         Main.getContentPane().add(healthBar, Layer.ENEMY, 0);
         
+        // make the player select a weapon and fight
         Main.getPlayer().weaponSelect();
         fight(healthBar, ap);
         
+        // player beat the boss!
         Main.getPlayer().unpauseMovement();
         new BasicDialog("You defeated the boss!").selection();
         healthBar.setVisible(false);

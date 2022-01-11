@@ -35,14 +35,20 @@ public class Inventory extends JPanel {
         JLabel durability;
         JLabel dmg;
         
+        // clear the inventory
         removeAll();
         super.repaint();
         if (Main.getPlayer() == null) return;
+        
+        // loop through the player's weapons
         for (int i = 0; i < 3; i++) {
             if (Main.getPlayer().getWeapons().size() <= i) {
+                // no weapon = empty slot
                 wp = new JLabel();
             } else {
+                // get the weapon, durability, and damage
                 wp = Main.getPlayer().getWeapons().get(i);
+                
                 durability = new JLabel(Integer.toString(Main.getPlayer().getWeapons().get(i).getDurability()));
                 durability.setFont(Fonts.INVENTORY);
                 durability.setForeground(Color.WHITE);
@@ -57,6 +63,7 @@ public class Inventory extends JPanel {
                 dmg.setBounds(i*40, 0, 40, 14);
                 add(dmg);
             }
+            // add the weapon or empty slot to the inventory
             wp.setBounds(i*40, 0, 40, 40);
             wp.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
             add(wp);

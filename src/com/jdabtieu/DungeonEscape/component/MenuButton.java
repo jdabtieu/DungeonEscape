@@ -20,6 +20,8 @@ public class MenuButton extends JButton {
      */
     public MenuButton(final String name) {
         super(name);
+        
+        // override all the default styles
         setForeground(Color.WHITE);
         setBackground(Color.GRAY);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -30,6 +32,7 @@ public class MenuButton extends JButton {
     
     @Override
     protected void paintComponent(Graphics g) {
+        // use our custom press/hover animation
         if (getModel().isPressed() || getModel().isRollover()) {
             g.setColor(Color.GRAY.brighter());
         } else {

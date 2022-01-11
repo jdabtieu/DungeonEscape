@@ -47,15 +47,15 @@ public class StatusDisplay extends JPanel {
         setBackground(Color.GRAY);
         setVisible(false);
         
+        // add icons
         imgCoins.setBounds(10, 44, 24, 24);
         add(imgCoins);
-        
         imgHealth.setBounds(10, 4, 24, 24);
         add(imgHealth);
-
         imgKeys.setBounds(10, 80, 32, 32);
         add(imgKeys);
         
+        // add counters and healthbar
         healthBar = new HealthBar(100);
         healthBar.setBounds(50, 6, 100, 20);
         add(healthBar);
@@ -69,16 +69,17 @@ public class StatusDisplay extends JPanel {
         keys.setBounds(50, 80, 100, 32);
         keys.setForeground(Color.white);
         add(keys);
-        repaint();
     }
     
     @Override
     public void repaint() {
         final Player p = Main.getPlayer();
+        // since statusdisplay is created in player's constructor,
+        // player could still be null
         if (p != null) {
-            if (healthBar != null) healthBar.setValue(p.getHealth());
-            if (coins != null) coins.setText(Integer.toString(p.getCoins()));
-            if (keys != null) keys.setText(Integer.toString(p.getKeys()));
+            healthBar.setValue(p.getHealth());
+            coins.setText(Integer.toString(p.getCoins()));
+            keys.setText(Integer.toString(p.getKeys()));
         }
         super.repaint();
     }

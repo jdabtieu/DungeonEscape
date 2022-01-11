@@ -30,6 +30,7 @@ public class Banner extends JPanel {
         setBounds(0, 80, Window.WIDTH, 60);
         setLayout(null);
         
+        // add the text
         lblFight = new JLabel(text);
         lblFight.setFont(Fonts.LARGE);
         lblFight.setForeground(Color.WHITE);

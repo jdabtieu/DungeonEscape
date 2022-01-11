@@ -30,8 +30,10 @@ public class GameOver extends JPanel {
         setBackground(Color.BLACK);
         setLayout(null);
         
+        // stop the screen flickering
         ScreenFlicker.stopAnimation();
         
+        // add buttons and text
         btnStart.setBounds((Window.WIDTH - 400) / 2, 450, 400, 40);
         add(btnStart);
         
@@ -53,6 +55,7 @@ public class GameOver extends JPanel {
         lblScore.setBounds(0, 300, Window.WIDTH, 20);
         add(lblScore);
         
+        // trigger a GameOverException in main, which restarts the game
         btnStart.addActionListener(e -> {
             Main.gameOver = true;
             Main.getMainThread().interrupt();
