@@ -46,7 +46,7 @@ public class StatusDisplay extends JPanel {
         
         setBounds(10, 10, 160, 80);
         setLayout(null);
-        setBackground(Color.GRAY);
+        setBackground(new Color(89, 89, 89));
         setVisible(false);
         setOpaque(false);
         
