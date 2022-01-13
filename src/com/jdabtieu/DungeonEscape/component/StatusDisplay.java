@@ -1,9 +1,12 @@
 package com.jdabtieu.DungeonEscape.component;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,18 +44,18 @@ public class StatusDisplay extends JPanel {
         final JLabel imgHealth = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/health.png")));
         final JLabel imgKeys = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/keys.png")));
         
-        setBounds(10, 10, 160, 120);
+        setBounds(10, 10, 160, 80);
         setLayout(null);
-        setBorder(BorderFactory.createLineBorder(Color.black, 2));
         setBackground(Color.GRAY);
         setVisible(false);
+        setOpaque(false);
         
         // add icons
         imgCoins.setBounds(10, 44, 24, 24);
         add(imgCoins);
         imgHealth.setBounds(10, 4, 24, 24);
         add(imgHealth);
-        imgKeys.setBounds(10, 80, 32, 32);
+        imgKeys.setBounds(92, 44, 24, 24);
         add(imgKeys);
         
         // add counters and healthbar
@@ -61,13 +64,13 @@ public class StatusDisplay extends JPanel {
         add(healthBar);
         
         coins = new JLabel();
-        coins.setBounds(50, 40, 100, 32);
-        coins.setForeground(Color.white);
+        coins.setBounds(44, 44, 38, 24);
+        coins.setForeground(Color.WHITE);
         add(coins);
         
         keys = new JLabel();
-        keys.setBounds(50, 80, 100, 32);
-        keys.setForeground(Color.white);
+        keys.setBounds(124, 44, 28, 24);
+        keys.setForeground(Color.WHITE);
         add(keys);
     }
     
@@ -82,5 +85,20 @@ public class StatusDisplay extends JPanel {
             if (keys != null) keys.setText(Integer.toString(p.getKeys()));
         }
         super.repaint();
+    }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(getBackground());
+        g.fillRoundRect(1, 1, getWidth() - 2, getHeight() - 2, 10, 10);
+        super.paintComponent(g);
+    }
+    
+    @Override
+    protected void paintBorder(Graphics g) {
+        Graphics2D gd = (Graphics2D) g;
+        gd.setColor(Color.BLACK);
+        gd.setStroke(new BasicStroke(2));
+        gd.draw(new RoundRectangle2D.Float(1, 1, getWidth()-2, getHeight()-2, 10, 10));
     }
 }
