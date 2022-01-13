@@ -55,7 +55,7 @@ if [ "$1" == "package" ]; then
   rm -f DungeonEscape.exe
   mkdir DungeonEscape
   cp -r DungeonEscape.jar Launcher.exe assets DungeonEscape
-  7z a DungeonEscape.exe -sfx DungeonEscape
+  7z a DungeonEscape.exe -sfx7z.sfx DungeonEscape
   rm -rf DungeonEscape
 
   duration=$SECONDS
