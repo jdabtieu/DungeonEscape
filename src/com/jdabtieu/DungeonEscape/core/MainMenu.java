@@ -17,6 +17,10 @@ import com.jdabtieu.DungeonEscape.component.MenuButton;
  */
 public class MainMenu extends JPanel {
     /**
+     * Disable buttons if the controls window is open
+     */
+    boolean controlsOpen;
+    /**
      * Create the screen
      */
     public MainMenu() {
@@ -26,6 +30,7 @@ public class MainMenu extends JPanel {
         final MenuButton btnControls = new MenuButton("Controls");
         final JLabel lblTitleTxt = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/titleText.png")));
         final JLabel lblBackgroundImg = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/background.png")));
+        controlsOpen = false;
         
         setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
         setLayout(null);
@@ -46,13 +51,22 @@ public class MainMenu extends JPanel {
         add(lblBackgroundImg);
         
         btnStart.addActionListener(e -> {
+            if (controlsOpen) return;
             synchronized(Main.mon) {
                 Main.mon.notify();
             }
         });
-        btnQuit.addActionListener(e -> System.exit(0));
+        btnQuit.addActionListener(e -> {
+            if (controlsOpen) return;
+            System.exit(0);
+        });
         btnControls.addActionListener(e -> {
-            new Thread(() -> new BasicDialog("<html>Controls:<br>WASD to move</html>").selection()).start();
+            if (controlsOpen) return;
+            new Thread(() -> { // have to create a new thread because BasicDialog.selection() is blocking
+                controlsOpen = true;
+                new BasicDialog("<html>Controls:<br>WASD to move</html>").selection();
+                controlsOpen = false;
+            }).start();
         });
     }
 }
