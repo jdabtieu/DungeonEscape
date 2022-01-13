@@ -77,9 +77,9 @@ public class StatusDisplay extends JPanel {
         // since statusdisplay is created in player's constructor,
         // player could still be null
         if (p != null) {
-            healthBar.setValue(p.getHealth());
-            coins.setText(Integer.toString(p.getCoins()));
-            keys.setText(Integer.toString(p.getKeys()));
+            if (healthBar != null) healthBar.setValue(p.getHealth());
+            if (coins != null) coins.setText(Integer.toString(p.getCoins()));
+            if (keys != null) keys.setText(Integer.toString(p.getKeys()));
         }
         super.repaint();
     }

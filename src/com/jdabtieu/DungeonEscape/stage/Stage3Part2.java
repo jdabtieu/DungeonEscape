@@ -45,15 +45,20 @@ public class Stage3Part2 extends Stage {
         Main.getPlayer().setPosition(360, 2240);
         bossInit = false;
         activeGameShow = false;
+        
+        // add texts
         texts.add(new Text(">>> You completed the maze!", 40, 2240));
         texts.add(new Text(">>> Unfortunately, the hallway collapsed, and you fell into this room", 40, 2260));
         texts.add(new Text("Game show this way → →", 1480, 2090));
         {
+            // fountain image
             final Text txt = new Text("", 520, 2070);
             txt.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/fountain.png")));
             txt.setBounds(520, 2070, 200, 180);
             texts.add(txt);
         }
+        
+        // add dynamic tiles
         stage[104][102] = new Sensor(() -> initGameShow());
         stage[105][102] = new Sensor(() -> initGameShow());
         stage[104][100] = new HiddenSensor(() -> activeGameShow = true);
@@ -71,6 +76,7 @@ public class Stage3Part2 extends Stage {
     private void initGameShow() {
         if (!activeGameShow) return;
         activeGameShow = false;
+        // make sure user has enough keys
         if (Main.getPlayer().getKeys() < 1) {
             new BasicDialog("Sorry, but admission requires one key.").selection();
             return;
@@ -79,6 +85,8 @@ public class Stage3Part2 extends Stage {
         }
         Main.getPlayer().useKey();
         Main.getPlayer().pauseMovement();
+        
+        // question 1
         if (new QuizShow("Guess the Phrase (80s Song Lyrics)", "never gonna give you up").selection()) {
             new BasicDialog("That's correct! You won 1200 coins.").selection();
             Main.getPlayer().addCoins(1200);
@@ -86,6 +94,7 @@ public class Stage3Part2 extends Stage {
             new BasicDialog("Sorry, that's not the answer.").selection();
         }
         
+        // question 2
         if (new QuizShow("Finish the word (clues were in stage 2)", "vector").selection()) {
             new BasicDialog("That's correct! You won 1200 coins.").selection();
             Main.getPlayer().addCoins(1200);
@@ -103,6 +112,8 @@ public class Stage3Part2 extends Stage {
     private void initBoss() {
         if (bossInit) return;
         bossInit = true;
+        
+        // block off entrance
         changeTile(96, 62, Wall.class);
         changeTile(96, 63, Wall.class);
         changeTile(96, 64, Wall.class);
@@ -111,7 +122,7 @@ public class Stage3Part2 extends Stage {
         
         new BasicDialog("5000 coins acquired!").selection();
         Main.getPlayer().addCoins(5000);
-        endScene();
+        endScene(); // trigger endscene
     }
     
     /**
@@ -124,6 +135,8 @@ public class Stage3Part2 extends Stage {
             
             @Override
             public void setBackground(Color c) {
+                // we never change the background of this JPanel, so turn it into
+                // setAlpha (transparency) instead
                 alpha = c.getAlpha();
             }
             
@@ -135,6 +148,7 @@ public class Stage3Part2 extends Stage {
             }
         };
         
+        // slowly fade walls and ground into white
         for (int i = 0; i < 33; i++) {
             for (int j = 0; j < stage[i].length; j++) {
                 stage[i][j].setBackground(Color.WHITE);
@@ -151,15 +165,22 @@ public class Stage3Part2 extends Stage {
                 }
             }
         }
-        ScreenFlicker.stopAnimation();
         repaint();
+        
+        // stop the screen flicker & change music
+        ScreenFlicker.stopAnimation();
         Music.stopAudio();
         Music.initAudio("win.wav", false);
+        
+        // make the player move and fade out any leftover flicker darkness
         while (Main.getPlayer().yPos() > 360) {
             if (Main.getPlayer().yPos() % 5 == 0) ScreenFlicker.decreaseAlpha();
             setPlayerPosition(Main.getPlayer().xPos(), Main.getPlayer().yPos() - 1);
             Main.safeSleep(10);
         }
+        
+        // once the player hits the pure white section, hide inventory & status display
+        // and start scrolling text
         Main.getPlayer().setSDVisible(false);
         Main.getPlayer().setInventoryVisible(false);
         texts[0] = new Text("Wow, this is really bright!", 100, -25);
@@ -182,6 +203,7 @@ public class Stage3Part2 extends Stage {
             }
         }
         
+        // fade out effect
         creditsbg.setBounds(0, 0, Window.WIDTH, Window.HEIGHT);
         creditsbg.setOpaque(false);
         Main.getContentPane().add(creditsbg, Layer.VFX_0, 0);
@@ -191,6 +213,8 @@ public class Stage3Part2 extends Stage {
             creditsbg.repaint();
         }
         finish();
+        
+        // clean up
         Main.getPlayer().setVisible(false);
         for (final Text t : texts) Main.getContentPane().remove(t);
         Main.getContentPane().remove(creditsbg);

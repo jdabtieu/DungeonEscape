@@ -42,10 +42,14 @@ public class Stage3Part1 extends Stage {
         Main.getPlayer().setPosition(360, 1750);
         ambushInit = false;
         activeVending = false;
+        
+        // add texts
         texts.add(new Text(">>> I can see clearly now the end is near", 40, 1500));
         texts.add(new Text(">>> I can see all obstacles in the way", 40, 1520));
         texts.add(new Text(">>> And I can see that this stage is the last one", 40, 1540));
         texts.add(new Text("Tip: You can't walk through spikes. And they really hurt.", 30, 1760));
+        
+        // add dynamic tiles
         stage[69][16] = new HiddenSensor(() -> initAmbush());
         stage[69][17] = new HiddenSensor(() -> initAmbush());
         stage[69][18] = new HiddenSensor(() -> initAmbush());
@@ -63,7 +67,7 @@ public class Stage3Part1 extends Stage {
     }
     
     /**
-     * Code for the vending machine
+     * Code for the vending machine. This vending machine has unlimited uses.
      */
     private void vendingMachine() {
         if (!activeVending) return;
@@ -94,32 +98,37 @@ public class Stage3Part1 extends Stage {
         final HealthBar[] healthBars = new HealthBar[offsets.length];
 
         ambushInit = true;
+        
+        // remove sensors that trigger ambush
         changeTile(69, 16, Ground.class);
         changeTile(69, 17, Ground.class);
         changeTile(69, 18, Ground.class);
+        
         Main.safeSleep(200);
         setPlayerPosition(340, 1340);
         Main.getPlayer().pauseMovement();
         new Banner("AMBUSH!").animate();
         
+        // add enemies and health bars
         enemy.setBounds(156, 90, 740, 320);
         Main.getContentPane().add(enemy, Layer.ENEMY, 0);
-        
         for (int i = 0; i < offsets.length; i++) {
             healthBars[i] = new HealthBar(11);
             healthBars[i].setBounds(enemy.getX() + offsets[i].x, enemy.getY() + offsets[i].y, 80, 20);
             Main.getContentPane().add(healthBars[i], Layer.ENEMY, 0);
         }
         
+        // fight
         Main.getPlayer().weaponSelect();
-        
         for (final HealthBar bar : healthBars) {
             fight(bar, () -> (int) (Math.random() + 0.5) * (int) (Math.random() * 5 + 1));
         }
         
+        
         Main.getPlayer().unpauseMovement();
         new BasicDialog("You defeated the enemies!").selection();
         
+        // clean up
         for (final HealthBar bar : healthBars) {
             bar.setVisible(false);
             Main.getContentPane().remove(bar);

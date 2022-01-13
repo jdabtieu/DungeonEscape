@@ -71,6 +71,8 @@ public class Stage2 extends Stage {
         interviewInit = false;
         ambushInit = false;
         activeVending = true;
+        
+        // add texts
         texts.add(new Text(">>> That was the longest flight of stairs ever", 40, 1600));
         texts.add(new Text(">>> ...", 40, 1620));
         texts.add(new Text(">>> I did go up though...does that mean I'm closer to the surface?", 40, 1640));
@@ -84,9 +86,13 @@ public class Stage2 extends Stage {
         texts.add(new Text("O", 740, 530));
         texts.add(new Text("R", 1580, 620));
         {
+            // create interview room: title, table, interviewer
             final Text txt = new Text("Interview Room", 500, 1180);
             final Text interviewRoom = new Text("", 470, 1264);
             final Text interviewer = new Text("", 642, 1288);
+            final BufferedImage i;
+            final Graphics2D g;
+            
             txt.setHorizontalAlignment(SwingConstants.CENTER);
             txt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             txt.setBounds(500, 1180, 148, 40);
@@ -97,8 +103,9 @@ public class Stage2 extends Stage {
             interviewRoom.setBounds(470, 1264, 220, 80);
             texts.add(interviewRoom);
             
-            BufferedImage i = new BufferedImage(20, 20, BufferedImage.TYPE_INT_RGB);
-            Graphics2D g = (Graphics2D) i.getGraphics();
+            // draw the interviewer as a 20x20 red square
+            i = new BufferedImage(20, 20, BufferedImage.TYPE_INT_RGB);
+            g = (Graphics2D) i.getGraphics();
             g.setColor(Color.RED);
             g.fillRect(0, 0, 20, 20);
             g.dispose();
@@ -106,6 +113,8 @@ public class Stage2 extends Stage {
             interviewer.setBounds(642, 1288, 20, 20);
             texts.add(interviewer);
         }
+        
+        // add dynamic tiles
         stage[69][36] = new Sensor(() -> initInterview());
         stage[69][35] = new Sensor(() -> initInterview());
         stage[53][16] = new HiddenSensor(() -> initAmbush());
@@ -121,6 +130,7 @@ public class Stage2 extends Stage {
         stage[18][42] = new Sensor(() -> initBoss());
         stage[19][42] = new Sensor(() -> initBoss());
         stage[20][42] = new Sensor(() -> initBoss());
+        
         finishConstructor();
     }
     
@@ -128,7 +138,7 @@ public class Stage2 extends Stage {
      * Code for the vending machine
      */
     private void vendingMachine() {
-        if (!activeVending) return;
+        if (!activeVending) return; // can only use vending machine once
         activeVending = false;
         Main.getPlayer().pauseMovement();
         if (new BasicConfirm("<html>For 3000 coins, Vending Machine offers:<br>" + 
@@ -137,6 +147,8 @@ public class Stage2 extends Stage {
             try {
                 Main.getPlayer().useCoins(3000);
                 Main.getPlayer().addWeapon(new Weapon("One Hit Blade", 2000, 1, "ohb.png"));
+                
+                // delete the sensor and groundweapon tiles that are part of the vending machine
                 changeTile(20, 10, Ground.class);
                 changeTile(17, 10, Ground.class);
                 repaint();
@@ -148,7 +160,7 @@ public class Stage2 extends Stage {
     }
     
     private void initAmbush() {
-        if (ambushInit) return;
+        if (ambushInit) return; // ambush only happens once
         final JLabel enemy = new JLabel(new ImageIcon(Toolkit.getDefaultToolkit().getImage("assets/ambush.png")));
         final Point[] offsets = {new Point(115, 4), new Point(38, 60), new Point(40, 190),
                 new Point(172, 161), new Point(260, 63), new Point(304, 184),
@@ -158,13 +170,17 @@ public class Stage2 extends Stage {
         ambushInit = true;
         setPlayerPosition(336, 1000);
         Main.getPlayer().pauseMovement();
+        
+        // remove ambush sensors
         changeTile(53, 16, Ground.class);
         changeTile(53, 17, Ground.class);
         changeTile(53, 18, Ground.class);
         repaint();
+        
         Main.safeSleep(200);
         new Banner("AMBUSH!").animate();
         
+        // draw enemies and health bars
         enemy.setBounds(156, 90, 740, 320);
         Main.getContentPane().add(enemy, Layer.ENEMY, 0);
         for (int i = 0; i < offsets.length; i++) {
@@ -172,14 +188,16 @@ public class Stage2 extends Stage {
             healthBars[i].setBounds(enemy.getX() + offsets[i].x, enemy.getY() + offsets[i].y, 80, 20);
             Main.getContentPane().add(healthBars[i], Layer.ENEMY, 0);
         }
-        Main.getPlayer().weaponSelect();
         
+        // fight
+        Main.getPlayer().weaponSelect();
         for (final HealthBar bar : healthBars) {
             fight(bar, () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 5 + 1));
         }
         Main.getPlayer().unpauseMovement();
         new BasicDialog("You defeated the enemies!", Color.BLACK).selection();
         
+        // clean up
         for (final HealthBar bar : healthBars) {
             bar.setVisible(false);
             Main.getContentPane().remove(bar);
@@ -192,42 +210,44 @@ public class Stage2 extends Stage {
      * Code for the interview
      */
     private void initInterview() {
-        if (interviewInit) return;
+        if (interviewInit) return; // only one chance at interview
         final BasicQuiz[] quiz = {
             new BasicQuiz("For a complex project with over 35 classes, how will you use to manage them?", 2,
-                          "a) Online collaborative IDE, such as Replit",
-                          "b) Local IDE, such as Eclipse",
-                          "c) Local IDE + Git, such as Eclipse"),
+                "a) Online collaborative IDE, such as Replit",
+                "b) Local IDE, such as Eclipse",
+                "c) Local IDE + Git, such as Eclipse"),
             new BasicQuiz("Which of the following would give an experienced programmer an aneurism?", 0,
-                          "a) if (!someBool == true)",
-                          "b) if (someBool)",
-                          "c) if (someBool && someNumber > 3)"),
+                "a) if (!someBool == true)",
+                "b) if (someBool)",
+                "c) if (someBool && someNumber > 3)"),
             new BasicQuiz("Which thread should do the bulk of rendering jobs?", 1,
-                          "a) Main thread",
-                          "b) AWT event thread",
-                          "c) A seperate thread",
-                          "d) Doesn't matter"),
+                "a) Main thread",
+                "b) AWT event thread",
+                "c) A seperate thread",
+                "d) Doesn't matter"),
             new BasicQuiz("If an object s is a subclass of Tile and implements Interactive, which would be true?", 2,
-                          "a) s instanceof Tile",
-                          "b) s instanceof Interactive",
-                          "c) All of the above",
-                          "d) None of the above"),
+                "a) s instanceof Tile",
+                "b) s instanceof Interactive",
+                "c) All of the above",
+                "d) None of the above"),
             new BasicQuiz("What is the best way to wait for a GUI event to happen in the near future?", 2,
-                    "a) while true, check condition",
-                    "b) while !condition, sleep",
-                    "c) wait + notify",
-                    "d) pause + resume"),
+                "a) while true, check condition",
+                "b) while !condition, sleep",
+                "c) wait + notify",
+                "d) pause + resume"),
         };
-        interviewInit = true;
         if (!new BasicConfirm("<html>The Dungeon Mester would like to<br>invite you to create new levels.<br>Accept the offer?</html>").selection()) {
-            interviewInit = false;
             setPlayerPosition(712, 1408);
             return;
         }
+        interviewInit = true;
         Main.getPlayer().pauseMovement();
         setPlayerPosition(496, 1288);
+        
+        // start the interview
         new BasicDialog("<html>So, you want to help add more levels, eh?<br>You're going to have to pass the test first.</html>").selection();
         
+        // run through each question, and make sure at least 4 are correct
         if (Arrays.stream(quiz).mapToInt(q -> q.selection() ? 1 : 0).sum() < 4) {
             new BasicDialog("<html>You didn't pass the interview.</html>").selection();
         } else {
@@ -249,6 +269,8 @@ public class Stage2 extends Stage {
         if (bossInit) return;
         bossInit = true;
         bossDone = false;
+        
+        // block off entrance
         changeTile(18, 40, Wall.class);
         changeTile(19, 40, Wall.class);
         changeTile(20, 40, Wall.class);
@@ -256,13 +278,13 @@ public class Stage2 extends Stage {
         bossFight("assets/boss2.png", 100, 930, 500, Window.WIDTH * 7 / 10, Window.HEIGHT / 2 - 40,
                   () -> (int) (Math.random() + 0.4) * (int) (Math.random() * 8 + 1));
 
+        // create tunnel to next stage
         changeTile(22, 65, Coins.class, 1000);
         changeTile(24, 67, Coins.class, 1000);
         changeTile(22, 63, Coins.class, 1000);
         changeTile(23, 64, Coins.class, 1000);
         changeTile(21, 65, Coins.class, 1000);
         changeTile(24, 63, GroundWeapon.class, new Weapon("Shiny Axe", 20, 40, "shiny_axe.png"));
-        
         for (int i = 2; i < 16; i++) {
             changeTile(i, 62, Ground.class);
             changeTile(i, 63, Ground.class);
