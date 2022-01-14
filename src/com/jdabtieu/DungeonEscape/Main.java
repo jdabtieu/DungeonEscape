@@ -170,12 +170,14 @@ public class Main {
     public static void triggerLoss() {
         player.setVisible(false);
         getContentPane().remove(player);
+        ScreenFlicker.stopAnimation();
+        getContentPane().remove(sf);
         
         // Stop keyboard listener
         if (currScene instanceof Stage) {
             ((Stage) currScene).finish();
         }
-        swapWindow(GameOver.class, 100);
+        swapWindow(GameOver.class, Layer.MAP);
     }
     
     /**
