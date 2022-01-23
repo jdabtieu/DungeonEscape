@@ -64,7 +64,7 @@ public class MainMenu extends JPanel {
             if (controlsOpen) return;
             new Thread(() -> { // have to create a new thread because BasicDialog.selection() is blocking
                 controlsOpen = true;
-                new BasicDialog("<html>Controls:<br>WASD to move</html>").selection();
+                new BasicDialog("<html>Controls:<br><br>W - up<br>A - left<br>S - down<br>D - right</html>").selection();
                 controlsOpen = false;
             }).start();
         });

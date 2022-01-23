@@ -47,7 +47,7 @@ public class BasicDialog extends JPanel {
         // add text and ok button
         txt.setFont(Fonts.STD_PARA);
         txt.setHorizontalAlignment(SwingConstants.CENTER);
-        txt.setBounds(10, 11, getWidth() - 20, getHeight() - 75);
+        txt.setBounds(10, 11, getWidth() - 20, getHeight() - 60);
         txt.setForeground(clr);
         add(txt);
         
