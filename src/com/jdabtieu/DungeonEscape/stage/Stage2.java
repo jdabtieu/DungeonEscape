@@ -212,7 +212,7 @@ public class Stage2 extends Stage {
     private void initInterview() {
         if (interviewInit) return; // only one chance at interview
         final BasicQuiz[] quiz = {
-            new BasicQuiz("For a complex project with over 35 classes, how will you use to manage them?", 2,
+            new BasicQuiz("For a large and complex collaborative project, how should it be shared?", 2,
                 "a) Online collaborative IDE, such as Replit",
                 "b) Local IDE, such as Eclipse",
                 "c) Local IDE + Git, such as Eclipse"),

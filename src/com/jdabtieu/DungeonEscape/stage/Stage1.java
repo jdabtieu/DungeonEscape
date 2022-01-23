@@ -61,7 +61,7 @@ public class Stage1 extends Stage {
         texts.add(new Text("1__34_", 870, 320));
         texts.add(new Text("_42__2", 710, 320));
         texts.add(new Text("Hey, a combination lock! What could the combination possibly be?", 370, 30));
-        texts.add(new Text("Ooh, shiny! It's a weapon! Wonder what it is...", 1900, 96));
+        texts.add(new Text("Ooh, a mystery item. Wonder what it is...", 1920, 96));
         texts.add(new Text("Tip: You can hold up to 3 weapons at a time. Any extras will be discarded.", 1900, 270));
         
         // add dynamic tiles
