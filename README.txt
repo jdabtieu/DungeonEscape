@@ -11,7 +11,7 @@ Playing the Game
     
     System Requirements (Required):
       Java 8+
-      Dual-Core CPU, at least 2.6 GHz
+      Dual-Core CPU, at least 2.0 GHz
       2GB RAM
       1024x768 monitor resolution
     
@@ -20,7 +20,7 @@ Playing the Game
       Quad-Core CPU, at least 2.6 GHz
       4GB RAM
       1280x1024 monitor resolution
-      Dedicated GPU
+      AMD Vega / Intel Iris integrated graphics or dedicated GPU
 
 
 
