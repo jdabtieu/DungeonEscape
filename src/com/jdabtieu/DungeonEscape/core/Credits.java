@@ -50,11 +50,12 @@ public class Credits extends JPanel {
                 "",
                 "Beta Testers:",
                 "        Akshaya Varakunan",
+                "        Ray Hang",
                 "",
                 "More projects:",
                 "        https://github.com/jdabtieu",
                 "",
-                "Thanks for playing!"
+                "Thanks for playing!",
         };
         final Text[] lines = new Text[creds.length];
         final int totalTime = 38000; // 38s animation time
