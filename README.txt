@@ -42,7 +42,8 @@ Assets:
 Build tools:
     The build.sh script is used to compile and build the game. It runs on Bash,
     whether through a Linux Bash shell, WSL, or Git Bash for Windows. It will
-    not run on cmd or Powershell. If you do not have access to a bash shell, use
+    not run on cmd or Powershell. If you do not have access to a bash shell, you
+    may use the runMe.bat file to compile (no packaging or launcher), or use
     the precompiled version of the game.
     
     To simply compile and build to a JAR file, the bash shell is all that's
