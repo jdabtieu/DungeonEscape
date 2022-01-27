@@ -311,7 +311,7 @@ public class Player extends Tile {
             final int f = i; // variables in anonymous classes must be final or effectively final
             final JPanel container = new JPanel();
             final Weapon wp = weapons.get(i).clone();
-            final JLabel lab = new JLabel("<html>" + wp.toString() + "</html>");;
+            final JLabel lab = new JLabel("<html>" + wp + "</html>");
             
             // position the weapon container, add the weapon image, and text to it
             container.setLayout(null);
