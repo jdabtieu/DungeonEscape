@@ -15,8 +15,8 @@ if [ "$1" == "launcher" ]; then
 
   echo "Building..."
   cd launcher-build
-  cmd //C 'windres icon.rc -O coff -o icon.res'
-  cmd //C 'windres launcher.rc -O coff -o launcher.res'
+  windres icon.rc -O coff -o icon.res || cmd //C 'windres icon.rc -O coff -o icon.res'
+  windres launcher.rc -O coff -o launcher.res || cmd //C 'windres launcher.rc -O coff -o launcher.res'
   gcc Launcher.c icon.res launcher.res -o ../Launcher.exe -mwindows -s -O3
   rm icon.res
   rm launcher.res
